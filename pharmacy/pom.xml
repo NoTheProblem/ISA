@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>pharmacy</name>
-	<description>As part of the project task, it is necessary to implement a web application that represents a centralized pharmacy information system through which users will be able to book preparations (medicines) and make an appointment with a pharmacist or dermatologist. Both pharmacists and doctors who can enter have access to the system reports on performed examinations, as well as to schedule the same for registered ones users. The system manages a large number of pharmacies registered in within the information system. The main purpose of the application is to keep records on employees, registered pharmacies, drug reservations, appointments for scheduling reviews, users and their profiles.</description>
+	<description>System of unified pharmacies</description>
 
 	<properties>
 		<java.version>11</java.version>
