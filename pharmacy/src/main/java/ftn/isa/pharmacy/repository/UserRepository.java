@@ -1,13 +1,13 @@
 package ftn.isa.pharmacy.repository;
 
-import ftn.isa.pharmacy.model.Sysadmin;
+import ftn.isa.pharmacy.model.SysAdmin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<Sysadmin, Long> {
+public interface UserRepository extends JpaRepository<SysAdmin, Long> {
 
-    List<Sysadmin> findByFirstNameAndLastNameAllIgnoringCase(String firstName, String lastName);
-    List<Sysadmin> findAllByLastName(String lastName);
-    List<Sysadmin> findAllByFirstName(String firsName);
+    List<SysAdmin> findByFirstNameAndLastNameAllIgnoringCase(String firstName, String lastName);
+    List<SysAdmin> findAllByLastName(String lastName);
+    List<SysAdmin> findAllByFirstName(String firsName);
 
 }

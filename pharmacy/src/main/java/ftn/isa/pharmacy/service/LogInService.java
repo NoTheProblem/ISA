@@ -2,7 +2,7 @@ package ftn.isa.pharmacy.service;
 
 import java.util.List;
 
-import ftn.isa.pharmacy.model.Sysadmin;
+import ftn.isa.pharmacy.model.SysAdmin;
 import ftn.isa.pharmacy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,15 +15,15 @@ public class LogInService {
     private UserRepository userRepository;
 
 
-    public Sysadmin findOne(Long id) {
+    public SysAdmin findOne(Long id) {
         return userRepository.findById(id).orElseGet(null);
     }
 
-    public List<Sysadmin> findByLastName(String lastName) {
+    public List<SysAdmin> findByLastName(String lastName) {
         return userRepository.findAllByLastName(lastName);
     }
 
-    public List<Sysadmin> findAll() {
+    public List<SysAdmin> findAll() {
         return userRepository.findAll();
 
     }
