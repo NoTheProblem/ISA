@@ -1,5 +1,2 @@
-insert into SysAdmin (first_name, last_name) values ('Marko', 'Marković');
-insert into SysAdmin (first_name, last_name) values ('Jovan', 'Krstitelj');
-insert into SysAdmin (first_name, last_name) values ('Zirko', 'Peric');
-insert into SysAdmin (first_name, last_name) values ('Pera', 'Zarkovic');
-insert into SysAdmin (first_name, last_name) values ('Kristijan', 'Stamenkovic');
+insert into registeredusers (id,tip,first_name,last_name,username,password,email,country,city,address ) values (1,'sysadmin','Aleksa','Milenovic','aleksaMilenovic','sifrazaaleksu','aleska@gmail.com','Srbija','Novi Sad','Negde u NS');
+
