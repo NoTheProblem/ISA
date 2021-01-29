@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Date;
 
@@ -21,9 +20,7 @@ import static javax.persistence.DiscriminatorType.STRING;
 public abstract class  User {
 
     @Id
-    @SequenceGenerator(name = "mySeqGenV2", sequenceName = "mySeqV2", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "mySeqGenV2")
-    @Column(unique=true, nullable=false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
@@ -51,13 +48,15 @@ public abstract class  User {
     private String address;
 
     @Column
-    private Date birthDate;
+    private String phoneNumber;
 
+    @Column
+    private Date birthDate;
 
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String username, String password, String email, String country, String city, String adress, Date birthDate) {
+    public User(Long id, String firstName, String lastName, String username, String password, String email, String country, String city, String address, String phoneNumber, Date birthDate) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -66,7 +65,8 @@ public abstract class  User {
         this.email = email;
         this.country = country;
         this.city = city;
-        this.address = adress;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
     }
 
@@ -74,72 +74,84 @@ public abstract class  User {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getFirstName() {
         return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getAdress() {
-        return address;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setCountry(String drzava) {
-        this.country = drzava;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCity(String grad) {
-        this.city = grad;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public void setAdress(String adresa) {
-        this.address = adresa;
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
     }
 
     public void setBirthDate(Date birthDate) {
