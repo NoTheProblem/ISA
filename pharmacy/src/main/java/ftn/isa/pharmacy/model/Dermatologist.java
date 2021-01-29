@@ -1,9 +1,7 @@
 package ftn.isa.pharmacy.model;
 
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,7 +9,16 @@ import java.util.Set;
 @DiscriminatorValue("derma")
 public class Dermatologist extends User{
 
+    @Column
+    private String evaluationGrade;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<WorkingHours> workingHours = new HashSet<WorkingHours>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Examination> examinations = new HashSet<Examination>();
 
     @ManyToMany(mappedBy = "dermatologists")
     private Set<Pharmacy> pharmacys = new HashSet<Pharmacy>();
+
 }

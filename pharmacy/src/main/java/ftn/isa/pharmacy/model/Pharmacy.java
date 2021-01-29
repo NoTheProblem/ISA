@@ -24,92 +24,48 @@ public class Pharmacy {
     @Column(nullable = false)
     private String address;
 
-    @Column()
-    private float averageRating;
+    @Column
+    private String pharmacyDescription;
+
+    @Column
+    private float evaluationGrade;
+
+    @Column
+    private float counselingPrice;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<MedicineQuantityPharmacy> medicationQuantities = new HashSet<MedicineQuantityPharmacy>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Pharmacist> pharmacists = new HashSet<Pharmacist>();
 
     @ManyToMany
-    @JoinTable(name = "pharmacy_medicine", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))
-    private Set<Medicine> medicines = new HashSet<Medicine>();
-
-    @ManyToMany
     @JoinTable(name = "pharmacy_dermatologist", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dermatologist_id", referencedColumnName = "id"))
     private Set<Dermatologist> dermatologists = new HashSet<Dermatologist>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PriceMediceList> priceMediceLists = new HashSet<PriceMediceList>();
 
-    public Pharmacy() {
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PriceExaminationList> priceExaminationLists = new HashSet<PriceExaminationList>();
 
-    public Pharmacy(Long id, String name, String country, String city, String address, float averageRating, Set<Pharmacist> pharmacists, Set<Dermatologist> dermatologists) {
-        this.id = id;
-        this.name = name;
-        this.country = country;
-        this.city = city;
-        this.address = address;
-        this.averageRating = averageRating;
-        this.pharmacists = pharmacists;
-        this.dermatologists = dermatologists;
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<WorkingHours> workingHours = new HashSet<WorkingHours>();
 
-    public Long getId() {
-        return id;
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Promotion> promotions = new HashSet<Promotion>();
 
-    public String getName() {
-        return name;
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PharmacyAdmin> pharmacyAdmins = new HashSet<PharmacyAdmin>();
 
-    public String getCountry() {
-        return country;
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Examination> listOfFreeExamination = new HashSet<Examination>();
 
-    public String getCity() {
-        return city;
-    }
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Reservation> reservations = new HashSet<Reservation>();
 
-    public String getAddress() {
-        return address;
-    }
+    @ManyToMany
+    @JoinTable(name = "pharmaci_missmedicine", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))
+    private Set<Medicine> missingMedicine = new HashSet<Medicine>();
 
-    public float getAverageRating() {
-        return averageRating;
-    }
-
-    public Set<Pharmacist> getPharmacists() {
-        return pharmacists;
-    }
-
-    public Set<Dermatologist> getDermatologists() {
-        return dermatologists;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void setAverageRating(float averageRating) {
-        this.averageRating = averageRating;
-    }
-
-    public void setPharmacists(Set<Pharmacist> pharmacists) {
-        this.pharmacists = pharmacists;
-    }
-
-    public void setDermatologists(Set<Dermatologist> dermatologists) {
-        this.dermatologists = dermatologists;
-    }
 }

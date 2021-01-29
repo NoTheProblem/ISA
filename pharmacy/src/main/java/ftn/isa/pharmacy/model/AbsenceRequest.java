@@ -4,7 +4,7 @@ package ftn.isa.pharmacy.model;
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "absence")
+@Entity
 public class AbsenceRequest {
 
     @Id

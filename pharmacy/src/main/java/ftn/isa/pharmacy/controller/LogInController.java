@@ -18,19 +18,4 @@ public class LogInController {
     private LogInService logInService;
 
 
-    @GetMapping(value = "/all")
-    public ResponseEntity<List<SysAdmin>> getAllStudents() {
-        System.out.println("pozdrav iz contorlera");
-        List<SysAdmin> users = logInService.findAll();
-
-        // convert students to DTOs
-        List<SysAdmin> usersDTO = new ArrayList<SysAdmin>();
-        for (SysAdmin u : users) {
-            usersDTO.add(new SysAdmin(u));
-        }
-
-        return new ResponseEntity<>(usersDTO, HttpStatus.OK);
-    }
-
-
 }

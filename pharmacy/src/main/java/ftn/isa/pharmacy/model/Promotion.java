@@ -3,6 +3,8 @@ package ftn.isa.pharmacy.model;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity(name = "promotion")
 public class Promotion {
@@ -25,6 +27,12 @@ public class Promotion {
 
     @Column
     private String type;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Pharmacy pharmacy;
+
+    @ManyToMany(mappedBy = "subscribedPromotions")
+    private Set<Patient> subscribedPatients = new HashSet<Patient>();
 
 
     public Promotion() {

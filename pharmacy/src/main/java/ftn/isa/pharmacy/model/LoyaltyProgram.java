@@ -5,16 +5,25 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Supplier {
+public class LoyaltyProgram {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<MedicineQuantitySupplier> medicines = new HashSet<MedicineQuantitySupplier>();
+    @Column
+    private int downScore;
+
+    @Column
+    private int upScore;
+
+    @Column
+    private float discountPercentage;
+
+    @Column
+    private String typeOfLoyalty;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Bid> bids = new HashSet<Bid>();
+    private Set<Patient> patients = new HashSet<Patient>();
 
 }
