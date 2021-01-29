@@ -41,4 +41,100 @@ public class Patient extends User{
     @JoinTable(name = "patient_promotion", joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "promotion_id", referencedColumnName = "id"))
     private Set<Promotion> subscribedPromotions = new HashSet<Promotion>();
 
+
+    public Patient() {
+    }
+
+    public Patient(int loyaltyScore, int penaltyScore, LoyaltyProgram loyaltyProgram, Set<EPrescription> ePrescriptions, Set<Complaint> complaints, Set<Counseling> counselings, Set<Examination> examinations, Set<Reservation> reservations, Set<Medicine> allergicMedicines, Set<Promotion> subscribedPromotions) {
+        this.loyaltyScore = loyaltyScore;
+        this.penaltyScore = penaltyScore;
+        this.loyaltyProgram = loyaltyProgram;
+        this.ePrescriptions = ePrescriptions;
+        this.complaints = complaints;
+        this.counselings = counselings;
+        this.examinations = examinations;
+        this.reservations = reservations;
+        this.allergicMedicines = allergicMedicines;
+        this.subscribedPromotions = subscribedPromotions;
+    }
+
+    public int getLoyaltyScore() {
+        return loyaltyScore;
+    }
+
+    public void setLoyaltyScore(int loyaltyScore) {
+        this.loyaltyScore = loyaltyScore;
+    }
+
+    public int getPenaltyScore() {
+        return penaltyScore;
+    }
+
+    public void setPenaltyScore(int penaltyScore) {
+        this.penaltyScore = penaltyScore;
+    }
+
+    public LoyaltyProgram getLoyaltyProgram() {
+        return loyaltyProgram;
+    }
+
+    public void setLoyaltyProgram(LoyaltyProgram loyaltyProgram) {
+        this.loyaltyProgram = loyaltyProgram;
+    }
+
+    public Set<EPrescription> getePrescriptions() {
+        return ePrescriptions;
+    }
+
+    public void setePrescriptions(Set<EPrescription> ePrescriptions) {
+        this.ePrescriptions = ePrescriptions;
+    }
+
+    public Set<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(Set<Complaint> complaints) {
+        this.complaints = complaints;
+    }
+
+    public Set<Counseling> getCounselings() {
+        return counselings;
+    }
+
+    public void setCounselings(Set<Counseling> counselings) {
+        this.counselings = counselings;
+    }
+
+    public Set<Examination> getExaminations() {
+        return examinations;
+    }
+
+    public void setExaminations(Set<Examination> examinations) {
+        this.examinations = examinations;
+    }
+
+    public Set<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        this.reservations = reservations;
+    }
+
+    public Set<Medicine> getAllergicMedicines() {
+        return allergicMedicines;
+    }
+
+    public void setAllergicMedicines(Set<Medicine> allergicMedicines) {
+        this.allergicMedicines = allergicMedicines;
+    }
+
+    public Set<Promotion> getSubscribedPromotions() {
+        return subscribedPromotions;
+    }
+
+    public void setSubscribedPromotions(Set<Promotion> subscribedPromotions) {
+        this.subscribedPromotions = subscribedPromotions;
+    }
 }

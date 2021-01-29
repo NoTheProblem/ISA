@@ -38,65 +38,79 @@ public class Promotion {
     public Promotion() {
     }
 
-    public Promotion(Long id, String title, String text, Date startDate, Date endDate, String type) {
+    public Promotion(Long id, String title, String text, Date startDate, Date endDate, String type, Pharmacy pharmacy, Set<Patient> subscribedPatients) {
         this.id = id;
         this.title = title;
         this.text = text;
         this.startDate = startDate;
         this.endDate = endDate;
         this.type = type;
-    }
-    public Promotion(Promotion promotion) {
-        this.id = promotion.id;
-        this.title = promotion.title;
-        this.text = promotion.text;
-        this.startDate = promotion.startDate;
-        this.endDate = promotion.endDate;
-        this.type = promotion.type;
+        this.pharmacy = pharmacy;
+        this.subscribedPatients = subscribedPatients;
     }
 
     public Long getId() {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public String getType() {
-        return type;
     }
 
     public void setTitle(String title) {
         this.title = title;
     }
 
+    public String getText() {
+        return text;
+    }
+
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Date getStartDate() {
+        return startDate;
     }
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
+
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
+    public String getType() {
+        return type;
+    }
+
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public Set<Patient> getSubscribedPatients() {
+        return subscribedPatients;
+    }
+
+    public void setSubscribedPatients(Set<Patient> subscribedPatients) {
+        this.subscribedPatients = subscribedPatients;
     }
 }
 

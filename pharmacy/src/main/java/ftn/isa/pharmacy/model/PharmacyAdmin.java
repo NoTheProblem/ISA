@@ -17,4 +17,27 @@ public class PharmacyAdmin extends User {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PurchaseOrder> purchaseOrders = new HashSet<PurchaseOrder>();
 
+    public PharmacyAdmin() {
+    }
+
+    public PharmacyAdmin(Pharmacy pharmacy, Set<PurchaseOrder> purchaseOrders) {
+        this.pharmacy = pharmacy;
+        this.purchaseOrders = purchaseOrders;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public Set<PurchaseOrder> getPurchaseOrders() {
+        return purchaseOrders;
+    }
+
+    public void setPurchaseOrders(Set<PurchaseOrder> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
+    }
 }

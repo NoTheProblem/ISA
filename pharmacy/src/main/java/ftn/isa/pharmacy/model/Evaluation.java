@@ -19,4 +19,45 @@ public class Evaluation {
     private String typeOfEvaluation;
 
 
+    public Evaluation() {
+    }
+
+    public Evaluation(Long id, Patient patient, Long idOfEvaluated, String typeOfEvaluation) {
+        this.id = id;
+        this.patient = patient;
+        this.idOfEvaluated = idOfEvaluated;
+        this.typeOfEvaluation = typeOfEvaluation;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Long getIdOfEvaluated() {
+        return idOfEvaluated;
+    }
+
+    public void setIdOfEvaluated(Long idOfEvaluated) {
+        this.idOfEvaluated = idOfEvaluated;
+    }
+
+    public String getTypeOfEvaluation() {
+        return typeOfEvaluation;
+    }
+
+    public void setTypeOfEvaluation(String typeOfEvaluation) {
+        this.typeOfEvaluation = typeOfEvaluation;
+    }
 }
