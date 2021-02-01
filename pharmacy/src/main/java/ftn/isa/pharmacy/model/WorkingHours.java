@@ -12,10 +12,10 @@ public class WorkingHours {
     private Long id;
 
     @Column
-    private Time beginning;
+    private Time startTime;
 
     @Column
-    private Time end;
+    private Time endTime;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Pharmacy pharmacy;
@@ -26,10 +26,10 @@ public class WorkingHours {
     public WorkingHours() {
     }
 
-    public WorkingHours(Long id, Time beginning, Time end, Pharmacy pharmacy, Dermatologist dermatologist) {
+    public WorkingHours(Long id, Time startTime, Time endTime, Pharmacy pharmacy, Dermatologist dermatologist) {
         this.id = id;
-        this.beginning = beginning;
-        this.end = end;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.pharmacy = pharmacy;
         this.dermatologist = dermatologist;
     }
@@ -42,20 +42,20 @@ public class WorkingHours {
         this.id = id;
     }
 
-    public Time getBeginning() {
-        return beginning;
+    public Time getStartTime() {
+        return startTime;
     }
 
-    public void setBeginning(Time beginning) {
-        this.beginning = beginning;
+    public void setStartTime(Time beginning) {
+        this.startTime = beginning;
     }
 
-    public Time getEnd() {
-        return end;
+    public Time getEndTime() {
+        return endTime;
     }
 
-    public void setEnd(Time end) {
-        this.end = end;
+    public void setEndTime(Time end) {
+        this.endTime = end;
     }
 
     public Pharmacy getPharmacy() {

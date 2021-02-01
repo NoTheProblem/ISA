@@ -8,12 +8,16 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
+import { HomeComponent } from './home/home.component';
+import { PharmaciesComponent } from './pharmacies/pharmacies.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    HomeComponent,
+    PharmaciesComponent
   ],
   imports: [
     BrowserModule,

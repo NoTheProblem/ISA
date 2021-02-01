@@ -13,11 +13,11 @@ public class Pharmacist extends User {
     @Column
     private float evaluationGrade;
 
-    @Column(nullable = false)
-    private Time beginning;
+    @Column
+    private Time startTime;
 
-    @Column(nullable = false)
-    private Time end;
+    @Column
+    private Time endTime;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Counseling> counselings = new HashSet<Counseling>();
@@ -28,10 +28,10 @@ public class Pharmacist extends User {
     public Pharmacist() {
     }
 
-    public Pharmacist(float evaluationGrade, Time beginning, Time end, Set<Counseling> counselings, Pharmacy pharmacy) {
+    public Pharmacist(float evaluationGrade, Time startTime, Time endTime, Set<Counseling> counselings, Pharmacy pharmacy) {
         this.evaluationGrade = evaluationGrade;
-        this.beginning = beginning;
-        this.end = end;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.counselings = counselings;
         this.pharmacy = pharmacy;
     }
@@ -44,20 +44,20 @@ public class Pharmacist extends User {
         this.evaluationGrade = evaluationGrade;
     }
 
-    public Time getBeginning() {
-        return beginning;
+    public Time getStartTime() {
+        return startTime;
     }
 
-    public void setBeginning(Time beginning) {
-        this.beginning = beginning;
+    public void setStartTime(Time beginning) {
+        this.startTime = beginning;
     }
 
-    public Time getEnd() {
-        return end;
+    public Time getEndTime() {
+        return endTime;
     }
 
-    public void setEnd(Time end) {
-        this.end = end;
+    public void setEndTime(Time end) {
+        this.endTime = end;
     }
 
     public Set<Counseling> getCounselings() {

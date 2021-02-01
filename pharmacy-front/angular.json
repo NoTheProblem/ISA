@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "pharmacy-front"
+    }
+  },
+  "defaultProject": "pharmacy-front",
+  "cli": {
+    "analytics": false
+  }
 }
