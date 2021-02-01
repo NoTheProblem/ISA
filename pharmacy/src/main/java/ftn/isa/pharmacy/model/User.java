@@ -17,7 +17,7 @@ import static javax.persistence.DiscriminatorType.STRING;
 @Table
 @Inheritance(strategy=SINGLE_TABLE)
 @DiscriminatorColumn(name="tip", discriminatorType=STRING)
-public abstract class  User {
+public class  User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
