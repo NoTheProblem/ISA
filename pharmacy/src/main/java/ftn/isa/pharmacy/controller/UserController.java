@@ -34,7 +34,6 @@ public class UserController {
     }
 
 
-
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
 
@@ -47,6 +46,7 @@ public class UserController {
 
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
     }
+/* IMA URAJDENO U USERSERVISU I USER SERVICE IMPL
 
     @PostMapping(consumes = "application/json")
     public ResponseEntity<UserDTO> saveUser(@RequestBody UserDTO userDTO) {
@@ -104,7 +104,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        }*/
     }
 
 
@@ -117,4 +117,4 @@ public class UserController {
 
 
 
-}
+

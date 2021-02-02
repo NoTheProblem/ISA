@@ -1,42 +1,47 @@
 package ftn.isa.pharmacy.model;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.Table;
-import java.util.Date;
+import javax.persistence.*;
+
+import java.util.*;
+import java.sql.Timestamp;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 import static javax.persistence.DiscriminatorType.STRING;
 
 @Entity(name="registeredusers")
-@Table
+@Table(name="USERS")
 @Inheritance(strategy=SINGLE_TABLE)
 @DiscriminatorColumn(name="tip", discriminatorType=STRING)
-public class  User {
+public class  User implements UserDetails {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String  firstName;
+    @Column(name="tip", insertable = false, updatable = false)
+    protected String tip;
 
     @Column(nullable = false)
-    private String  lastName;
-
-    @Column(nullable = false,unique = true)
-    private String  username;
+    private String firstName;
 
     @Column(nullable = false)
-    private String  password;
+    private String lastName;
 
     @Column(nullable = false, unique = true)
-    private String  email;
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column
     private String country;
@@ -53,11 +58,21 @@ public class  User {
     @Column
     private Date birthDate;
 
+    @Column
+    private boolean enabled;
+
+    @Column
+    private Timestamp lastPasswordResetDate;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Authority authority;
+
     public User() {
     }
 
-    public User(Long id, String firstName, String lastName, String username, String password, String email, String country, String city, String address, String phoneNumber, Date birthDate) {
+    public User(Long id, String tip, String firstName, String lastName, String username, String password, String email, String country, String city, String address, String phoneNumber, Date birthDate) {
         this.id = id;
+        this.tip = tip;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -76,6 +91,14 @@ public class  User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
     }
 
     public String getFirstName() {
@@ -104,10 +127,6 @@ public class  User {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -157,4 +176,55 @@ public class  User {
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Timestamp getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Timestamp lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
+    }
+
+    public void setPassword(String password) {
+        Timestamp now = new Timestamp(new Date().getTime());
+        this.setLastPasswordResetDate(now);
+        this.password = password;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+
+    public Authority getAuthorities() {
+        return this.authority;
+    }
+
+    public void setAuthority(Authority authority) {
+        this.authority = authority;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @JsonIgnore
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
 }

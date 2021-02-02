@@ -10,6 +10,7 @@ import java.util.Date;
 public class UserDTO {
 
     private Long id;
+    private String tip;
     private String  firstName;
     private String  lastName;
     private String  username;
@@ -26,6 +27,7 @@ public class UserDTO {
 
     public UserDTO(User user) {
         this.id = user.getId();
+        this.tip = user.getTip();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.username = user.getUsername();
@@ -39,8 +41,9 @@ public class UserDTO {
     }
 
 
-    public UserDTO(Long id, String firstName, String lastName, String username, String password, String email, String country, String city, String address, String phoneNumber, Date birthDate) {
+    public UserDTO(Long id, String tip, String firstName, String lastName, String username, String password, String email, String country, String city, String address, String phoneNumber, Date birthDate) {
         this.id = id;
+        this.tip = tip;
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -55,6 +58,10 @@ public class UserDTO {
 
     public Long getId() {
         return id;
+    }
+
+    public String getTip() {
+        return tip;
     }
 
     public String getFirstName() {
