@@ -5,11 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Supplier {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@DiscriminatorValue("ROLE_SUPPLIER")
+public class Supplier extends User {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantitySupplier> medicines = new HashSet<MedicineQuantitySupplier>();
@@ -21,17 +18,8 @@ public class Supplier {
     }
 
     public Supplier(Long id, Set<MedicineQuantitySupplier> medicines, Set<Bid> bids) {
-        this.id = id;
         this.medicines = medicines;
         this.bids = bids;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Set<MedicineQuantitySupplier> getMedicines() {

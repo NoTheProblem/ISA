@@ -33,6 +33,63 @@ public class UserController {
         return new ResponseEntity<>(usersDTO, HttpStatus.OK);
     }
 
+    @GetMapping(value="/sysadmins")
+    public ResponseEntity<List<UserDTO>> getSystemAdmins(){
+        List<User> users = userService.findAllbyType("ROLE_SYSADMIN");
+
+        List<UserDTO> usersDTO = new ArrayList<>();
+        for (User u : users) {
+            usersDTO.add(new UserDTO(u));
+        }
+
+        return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+
+    }
+
+    @GetMapping(value="/admins")
+    public ResponseEntity<List<UserDTO>> getAdmins(){
+        List<User> users = userService.findAllbyType("ROLE_ADMIN");
+
+        List<UserDTO> usersDTO = new ArrayList<>();
+        for (User u : users) {
+            usersDTO.add(new UserDTO(u));
+        }
+        return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/patients")
+    public ResponseEntity<List<UserDTO>> getPatients(){
+        List<User> users = userService.findAllbyType("ROLE_USER");
+
+        List<UserDTO> usersDTO = new ArrayList<>();
+        for (User u : users) {
+            usersDTO.add(new UserDTO(u));
+        }
+        return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/dermatologists")
+    public ResponseEntity<List<UserDTO>> getDermatologists(){
+        List<User> users = userService.findAllbyType("ROLE_DERMATOLOGIST");
+
+        List<UserDTO> usersDTO = new ArrayList<>();
+        for (User u : users) {
+            usersDTO.add(new UserDTO(u));
+        }
+        return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+    }
+
+    @GetMapping(value="/pharmacist")
+    public ResponseEntity<List<UserDTO>> getPharmacists(){
+        List<User> users = userService.findAllbyType("ROLE_PHARMACIST");
+
+        List<UserDTO> usersDTO = new ArrayList<>();
+        for (User u : users) {
+            usersDTO.add(new UserDTO(u));
+        }
+        return new ResponseEntity<>(usersDTO, HttpStatus.OK);
+    }
+
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
@@ -46,6 +103,12 @@ public class UserController {
 
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
     }
+
+
+
+
+
+
 /* IMA URAJDENO U USERSERVISU I USER SERVICE IMPL
 
     @PostMapping(consumes = "application/json")

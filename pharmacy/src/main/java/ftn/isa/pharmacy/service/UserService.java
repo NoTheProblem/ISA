@@ -10,7 +10,14 @@ public interface UserService {
     User findOne(Long id);
     User findByUsername(String username);
     List<User> findAll ();
-    User save(UserDTO userDTO);
+    User saveSupplier(UserDTO userDTO);
+    User saveAdmin(UserDTO userDTO);
+    User savePharmacist(UserDTO userDTO);
+    User saveDermatologist(UserDTO userDTO);
+    User saveSYSadmin(UserDTO userDTO);
+    User saveUser(UserDTO userDTO);
+    User saveEmployee(UserDTO userDTO);
+    List<User> findAllbyType (String type);
 
 
 }

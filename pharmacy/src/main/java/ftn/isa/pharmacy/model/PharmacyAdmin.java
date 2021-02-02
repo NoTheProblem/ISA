@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("phaadmin")
+@DiscriminatorValue("ROLE_ADMIN")
 public class PharmacyAdmin extends User {
 
 

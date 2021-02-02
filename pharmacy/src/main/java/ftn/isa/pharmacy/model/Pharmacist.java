@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("pha")
+@DiscriminatorValue("ROLE_PHARMACIST")
 public class Pharmacist extends User {
 
     @Column

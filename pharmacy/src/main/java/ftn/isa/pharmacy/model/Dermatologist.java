@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("derma")
+@DiscriminatorValue("ROLE_DERMATOLOGIST")
 public class Dermatologist extends User{
 
     @Column

@@ -1,18 +1,16 @@
 package ftn.isa.pharmacy.service.impl;
 
-
 import java.util.List;
 
 import ftn.isa.pharmacy.dto.UserDTO;
+import ftn.isa.pharmacy.model.*;
+import ftn.isa.pharmacy.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ftn.isa.pharmacy.model.Authority;
-import ftn.isa.pharmacy.model.User;
-import ftn.isa.pharmacy.repository.UserRepository;
 import ftn.isa.pharmacy.service.AuthorityService;
 import ftn.isa.pharmacy.service.UserService;
 
@@ -21,6 +19,24 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
+
+    @Autowired
+    private PharmacistRepository pharmacistRepository;
+
+    @Autowired
+    private DermatologistRepository dermatologistRepository;
+
+    @Autowired
+    private PharmacyAdminRepository pharmacyAdminRepository;
+
+    @Autowired
+    private SysAdminRepository sysAdminRepository;
+
+    @Autowired
+    private SupplierRepository supplierRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -44,11 +60,31 @@ public class UserServiceImpl implements UserService {
         return result;
     }
 
+
     @Override
-    public User save(UserDTO userDTO) {
-        User u = new User();
+    public User saveEmployee(UserDTO userDTO) {
+        if(userDTO.getTip().equals("ROLE_SYSADMIN")){
+            return this.saveSYSadmin(userDTO);
+        }
+        if(userDTO.getTip().equals("ROLE_ADMIN")){
+            return this.saveAdmin(userDTO);
+        }
+        if(userDTO.getTip().equals("ROLE_DERMATOLOGIST")){
+            return this.saveDermatologist(userDTO);
+        }
+        if(userDTO.getTip().equals("ROLE_PHARMACIST")){
+            return this.savePharmacist(userDTO);
+        }
+        if(userDTO.getTip().equals("ROLE_SUPPLIER")){
+            return this.saveSupplier(userDTO);
+        }
+        return null;
+    }
+
+    @Override
+    public User saveUser(UserDTO userDTO) {
+        Patient u = new Patient();
         u.setUsername(userDTO.getUsername());
-        // pre nego sto postavimo lozinku u atribut hesiramo je
         u.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         u.setFirstName(userDTO.getFirstName());
         u.setLastName(userDTO.getLastName());
@@ -57,17 +93,132 @@ public class UserServiceImpl implements UserService {
         u.setCity(userDTO.getCity());
         u.setCountry(userDTO.getCountry());
         u.setEmail(userDTO.getEmail());
-        u.setPassword(userDTO.getPassword());
         u.setUsername(userDTO.getUsername());
         u.setPhoneNumber(userDTO.getPhoneNumber());
         u.setEnabled(true);
-
-        Authority auth = authService.findByname("ROLE_USER");
-        // u primeru se registruju samo obicni korisnici i u skladu sa tim im se i dodeljuje samo rola USER
-        u.setAuthority(auth);
-
-        u = this.userRepository.save(u);
+        u.setTip((userDTO.getTip()));
+        List<Authority> auth = authService.findByname(u.getTip());
+        u.setAuthorities(auth);
+        u = this.patientRepository.save(u);
         return u;
+    }
+
+
+    @Override
+    public User saveSYSadmin(UserDTO userDTO) {
+        SysAdmin u = new SysAdmin();
+        u.setUsername(userDTO.getUsername());
+        u.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        u.setFirstName(userDTO.getFirstName());
+        u.setLastName(userDTO.getLastName());
+        u.setAddress(userDTO.getAddress());
+        u.setBirthDate(userDTO.getBirthDate());
+        u.setCity(userDTO.getCity());
+        u.setCountry(userDTO.getCountry());
+        u.setEmail(userDTO.getEmail());
+        u.setUsername(userDTO.getUsername());
+        u.setPhoneNumber(userDTO.getPhoneNumber());
+        u.setEnabled(true);
+        u.setTip((userDTO.getTip()));
+        List<Authority> auth = authService.findByname(u.getTip());
+        u.setAuthorities(auth);
+        u = this.sysAdminRepository.save(u);
+        return u;
+    }
+
+    @Override
+    public User saveDermatologist(UserDTO userDTO) {
+        Dermatologist u = new Dermatologist();
+        u.setUsername(userDTO.getUsername());
+        u.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        u.setFirstName(userDTO.getFirstName());
+        u.setLastName(userDTO.getLastName());
+        u.setAddress(userDTO.getAddress());
+        u.setBirthDate(userDTO.getBirthDate());
+        u.setCity(userDTO.getCity());
+        u.setCountry(userDTO.getCountry());
+        u.setEmail(userDTO.getEmail());
+        u.setUsername(userDTO.getUsername());
+        u.setPhoneNumber(userDTO.getPhoneNumber());
+        u.setEnabled(true);
+        u.setTip((userDTO.getTip()));
+        List<Authority> auth = authService.findByname(u.getTip());
+        u.setAuthorities(auth);
+        u = this.dermatologistRepository.save(u);
+        return u;
+    }
+
+    @Override
+    public User savePharmacist(UserDTO userDTO) {
+        Pharmacist u = new Pharmacist();
+        u.setUsername(userDTO.getUsername());
+        u.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        u.setFirstName(userDTO.getFirstName());
+        u.setLastName(userDTO.getLastName());
+        u.setAddress(userDTO.getAddress());
+        u.setBirthDate(userDTO.getBirthDate());
+        u.setCity(userDTO.getCity());
+        u.setCountry(userDTO.getCountry());
+        u.setEmail(userDTO.getEmail());
+        u.setUsername(userDTO.getUsername());
+        u.setPhoneNumber(userDTO.getPhoneNumber());
+        u.setEnabled(true);
+        u.setTip((userDTO.getTip()));
+        List<Authority> auth = authService.findByname(u.getTip());
+        u.setAuthorities(auth);
+        u = this.pharmacistRepository.save(u);
+        return u;
+    }
+
+    @Override
+    public User saveAdmin(UserDTO userDTO) {
+        PharmacyAdmin u = new PharmacyAdmin();
+        u.setUsername(userDTO.getUsername());
+        u.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        u.setFirstName(userDTO.getFirstName());
+        u.setLastName(userDTO.getLastName());
+        u.setAddress(userDTO.getAddress());
+        u.setBirthDate(userDTO.getBirthDate());
+        u.setCity(userDTO.getCity());
+        u.setCountry(userDTO.getCountry());
+        u.setEmail(userDTO.getEmail());
+        u.setUsername(userDTO.getUsername());
+        u.setPhoneNumber(userDTO.getPhoneNumber());
+        u.setEnabled(true);
+        u.setTip((userDTO.getTip()));
+        List<Authority> auth = authService.findByname(u.getTip());
+        u.setAuthorities(auth);
+        u = this.pharmacyAdminRepository.save(u);
+        return u;
+    }
+
+    @Override
+    public User saveSupplier(UserDTO userDTO) {
+        Supplier u = new Supplier();
+        u.setUsername(userDTO.getUsername());
+        u.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        u.setFirstName(userDTO.getFirstName());
+        u.setLastName(userDTO.getLastName());
+        u.setAddress(userDTO.getAddress());
+        u.setBirthDate(userDTO.getBirthDate());
+        u.setCity(userDTO.getCity());
+        u.setCountry(userDTO.getCountry());
+        u.setEmail(userDTO.getEmail());
+        u.setUsername(userDTO.getUsername());
+        u.setPhoneNumber(userDTO.getPhoneNumber());
+        u.setEnabled(true);
+        u.setTip((userDTO.getTip()));
+        List<Authority> auth = authService.findByname(u.getTip());
+        u.setAuthorities(auth);
+        u = this.supplierRepository.save(u);
+        return u;
+    }
+
+
+
+    @Override
+    public List<User> findAllbyType(String type) {
+        return this.userRepository.findAllByTip(type);
     }
 
 }

@@ -15,11 +15,11 @@ public class Authority implements GrantedAuthority {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Column(name="id")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(name="name")
+    @Column
     String name;
 
     @Override

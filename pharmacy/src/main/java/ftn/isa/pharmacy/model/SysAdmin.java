@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("sysadmin")
+@DiscriminatorValue("ROLE_SYSADMIN")
 public class SysAdmin extends User {
 
 

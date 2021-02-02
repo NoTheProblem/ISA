@@ -80,8 +80,20 @@ public class AuthenticationController {
         if (existUser != null) {
             throw new ResourceConflictException(userRequest.getId(), "Username already exists");
         }
+        User user = this.userService.saveUser(userRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
 
-        User user = this.userService.save(userRequest);
+    @PostMapping("/signupemployee")
+    public ResponseEntity<User> addEmployee(@RequestBody UserDTO userRequest, UriComponentsBuilder ucBuilder) {
+
+        User existUser = this.userService.findByUsername(userRequest.getUsername());
+        if (existUser != null) {
+            throw new ResourceConflictException(userRequest.getId(), "Username already exists");
+        }
+        User user = this.userService.saveEmployee(userRequest);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
         return new ResponseEntity<>(user, HttpStatus.CREATED);

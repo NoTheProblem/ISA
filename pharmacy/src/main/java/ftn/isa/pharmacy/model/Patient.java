@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@DiscriminatorValue("pat")
+@DiscriminatorValue("ROLE_USER")
 public class Patient extends User{
 
     @Column

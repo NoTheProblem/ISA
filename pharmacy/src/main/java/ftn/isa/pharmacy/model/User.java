@@ -14,7 +14,6 @@ import static javax.persistence.InheritanceType.SINGLE_TABLE;
 import static javax.persistence.DiscriminatorType.STRING;
 
 @Entity(name="registeredusers")
-@Table(name="USERS")
 @Inheritance(strategy=SINGLE_TABLE)
 @DiscriminatorColumn(name="tip", discriminatorType=STRING)
 public class  User implements UserDetails {
@@ -64,8 +63,11 @@ public class  User implements UserDetails {
     @Column
     private Timestamp lastPasswordResetDate;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Authority authority;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authority",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "authority_id", referencedColumnName = "id"))
+    private List<Authority> authorities;
 
     public User() {
     }
@@ -201,12 +203,13 @@ public class  User implements UserDetails {
     }
 
 
-    public Authority getAuthorities() {
-        return this.authority;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
     }
 
-    public void setAuthority(Authority authority) {
-        this.authority = authority;
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
     }
 
     @JsonIgnore
@@ -227,4 +230,24 @@ public class  User implements UserDetails {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", tip='" + tip + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", birthDate=" + birthDate +
+                ", enabled=" + enabled +
+                ", lastPasswordResetDate=" + lastPasswordResetDate +
+                ", authority=" + authorities +
+                '}';
+    }
 }
