@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
         u.setPhoneNumber(userDTO.getPhoneNumber());
         u.setEnabled(true);
         u.setTip((userDTO.getTip()));
-        List<Authority> auth = authService.findByname(u.getTip());
+        List<Authority> auth = authService.findByName(u.getTip());
         u.setAuthorities(auth);
         u = this.patientRepository.save(u);
         return u;
@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
         u.setPhoneNumber(userDTO.getPhoneNumber());
         u.setEnabled(true);
         u.setTip((userDTO.getTip()));
-        List<Authority> auth = authService.findByname(u.getTip());
+        List<Authority> auth = authService.findByName(u.getTip());
         u.setAuthorities(auth);
         u = this.sysAdminRepository.save(u);
         return u;
@@ -142,7 +142,7 @@ public class UserServiceImpl implements UserService {
         u.setPhoneNumber(userDTO.getPhoneNumber());
         u.setEnabled(true);
         u.setTip((userDTO.getTip()));
-        List<Authority> auth = authService.findByname(u.getTip());
+        List<Authority> auth = authService.findByName(u.getTip());
         u.setAuthorities(auth);
         u = this.dermatologistRepository.save(u);
         return u;
@@ -164,7 +164,7 @@ public class UserServiceImpl implements UserService {
         u.setPhoneNumber(userDTO.getPhoneNumber());
         u.setEnabled(true);
         u.setTip((userDTO.getTip()));
-        List<Authority> auth = authService.findByname(u.getTip());
+        List<Authority> auth = authService.findByName(u.getTip());
         u.setAuthorities(auth);
         u = this.pharmacistRepository.save(u);
         return u;
@@ -186,7 +186,7 @@ public class UserServiceImpl implements UserService {
         u.setPhoneNumber(userDTO.getPhoneNumber());
         u.setEnabled(true);
         u.setTip((userDTO.getTip()));
-        List<Authority> auth = authService.findByname(u.getTip());
+        List<Authority> auth = authService.findByName(u.getTip());
         u.setAuthorities(auth);
         u = this.pharmacyAdminRepository.save(u);
         return u;
@@ -208,7 +208,7 @@ public class UserServiceImpl implements UserService {
         u.setPhoneNumber(userDTO.getPhoneNumber());
         u.setEnabled(true);
         u.setTip((userDTO.getTip()));
-        List<Authority> auth = authService.findByname(u.getTip());
+        List<Authority> auth = authService.findByName(u.getTip());
         u.setAuthorities(auth);
         u = this.supplierRepository.save(u);
         return u;

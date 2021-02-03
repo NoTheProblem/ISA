@@ -12,6 +12,7 @@ import { HomeComponent } from './home/home.component';
 import { PharmaciesComponent } from './pharmacies/pharmacies.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import {ServicesModule} from './services/services.module';
 
 @NgModule({
   declarations: [
@@ -27,9 +28,9 @@ import { RegisterComponent } from './register/register.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ServicesModule
   ],
-
   bootstrap: [AppComponent]
 })
 export class AppModule { }
