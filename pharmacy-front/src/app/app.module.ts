@@ -10,6 +10,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { PharmaciesComponent } from './pharmacies/pharmacies.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { PharmaciesComponent } from './pharmacies/pharmacies.component';
     FooterComponent,
     HeaderComponent,
     HomeComponent,
-    PharmaciesComponent
+    PharmaciesComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

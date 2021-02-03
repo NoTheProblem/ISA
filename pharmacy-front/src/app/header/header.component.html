@@ -12,9 +12,18 @@
 <!--      <li><a class="nav-link">Profil</a></li>-->
     </ul>
 
-    <ul class="navbar-nav navbar-collapse justify-content-end">
-      <li><a class="nav-link">Prijava</a></li>
-      <li><a class="nav-link">Registracija</a></li>
+    <ul class="navbar-nav navbar-collapse justify-content-end"  *ngIf="!isLoggedIn">
+      <li><a class="nav-link" routerLink="login" >Prijava</a></li>
+      <li><a class="nav-link" routerLink="register" >Registracija</a></li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
+      <li class="nav-link">
+        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+      </li>
+      <li class="nav-link">
+        <a href class="nav-link" (click)="logout()">LogOut</a>
+      </li>
     </ul>
   </nav>
 </header>

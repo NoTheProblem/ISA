@@ -6,14 +6,16 @@ public class JwtAuthenticationRequest {
 
     private String username;
     private String password;
+    private String role;
 
     public JwtAuthenticationRequest() {
         super();
     }
 
-    public JwtAuthenticationRequest(String username, String password) {
+    public JwtAuthenticationRequest(String username, String password, String role) {
         this.setUsername(username);
         this.setPassword(password);
+        this.setPassword(role);
     }
 
     public String getUsername() {
@@ -30,5 +32,12 @@ public class JwtAuthenticationRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+    public void setRole(String role) {
+        this.role = role;
     }
 }
