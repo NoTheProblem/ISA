@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sound.midi.SysexMessage;
 
 import ftn.isa.pharmacy.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,8 +57,6 @@ public class AuthenticationController {
     public ResponseEntity<UserTokenState> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest,
                                                                     HttpServletResponse response) {
 
-        //
-
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(),
                         authenticationRequest.getPassword()));
@@ -68,7 +67,9 @@ public class AuthenticationController {
 
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
-        String jwt = tokenUtils.generateToken(user.getUsername());
+        System.out.println(user);
+        String jwt = tokenUtils.generateToken(user.getUsername(), user.getTip());
+        System.out.println(jwt);
         int expiresIn = tokenUtils.getExpiredIn();
 
         // Vrati token kao odgovor na uspesnu autentifikaciju
