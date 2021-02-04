@@ -1,7 +1,7 @@
 package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.PharmacyDto;
-import ftn.isa.pharmacy.mapper.PharmacyMapper;
+import ftn.isa.pharmacy.mapper.impl.PharmacyMapperImpl;
 import ftn.isa.pharmacy.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +17,10 @@ import java.util.List;
 public class PharmacyController {
 
     private final PharmacyService pharmacyService;
-    private final PharmacyMapper pharmacyMapper;
+    private final PharmacyMapperImpl pharmacyMapper;
 
     @Autowired
-    public PharmacyController(PharmacyService pharmacyService, PharmacyMapper pharmacyMapper) {
+    public PharmacyController(PharmacyService pharmacyService, PharmacyMapperImpl pharmacyMapper) {
         this.pharmacyService = pharmacyService;
         this.pharmacyMapper = pharmacyMapper;
     }

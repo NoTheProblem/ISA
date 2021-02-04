@@ -1,7 +1,5 @@
 package ftn.isa.pharmacy.dto;
 
-import ftn.isa.pharmacy.model.Pharmacy;
-
 public class PharmacyDto {
 
     private Long id;
@@ -19,13 +17,6 @@ public class PharmacyDto {
     private float evaluationGrade;
 
     private float counselingPrice;
-
-    public PharmacyDto() {
-    }
-
-    public PharmacyDto(Pharmacy pharmacy) {
-        this.name = pharmacy.getName();
-    }
 
     public Long getId() {
         return id;
