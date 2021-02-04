@@ -13,6 +13,7 @@ import { PharmaciesComponent } from './pharmacies/pharmacies.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {ServicesModule} from './services/services.module';
+import {MedicinesComponent} from './medicines/medicines.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {ServicesModule} from './services/services.module';
     HomeComponent,
     PharmaciesComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    MedicinesComponent
   ],
   imports: [
     BrowserModule,
