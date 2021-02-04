@@ -10,6 +10,7 @@ export class MedicineModel {
     public additionalNotes: string = '',
     public evaluationGrade: string = '',
     public loyaltyScore: string = '',
+    public contraidications: string = ''
   ) {
   }
 }

@@ -14,6 +14,10 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {ServicesModule} from './services/services.module';
 import {MedicinesComponent} from './medicines/medicines.component';
+import { FilterPipe } from './filter.pipe';
+import {Ng2SearchPipeModule} from 'ng2-search-filter';
+
+
 
 @NgModule({
   declarations: [
@@ -25,13 +29,16 @@ import {MedicinesComponent} from './medicines/medicines.component';
     LoginComponent,
     RegisterComponent,
     MedicinesComponent
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ServicesModule
+    ServicesModule,
+    FormsModule,
+    Ng2SearchPipeModule
   ],
   bootstrap: [AppComponent]
 })

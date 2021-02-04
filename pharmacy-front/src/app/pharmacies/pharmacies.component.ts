@@ -10,6 +10,8 @@ import {PharmacyModel} from '../model/pharmacy.model';
 export class PharmaciesComponent implements OnInit {
 
   public pharmacies: Array<PharmacyModel>;
+  searchTerm: string;
+  term: string;
 
   constructor(
     private pharmacyService: PharmacyService

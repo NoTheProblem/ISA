@@ -1,28 +1,39 @@
-<p>medicines works!</p>
-<p *ngFor="let medicine of medicines">{{medicine.additionalNotes}}</p>
-
-
-<div>
-  <h1>Lekovi</h1>
-  <table>
-    <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let medicine of medicines">
-      <th>{{ medicine.additionalNotes}}</th>
-      <td>{{ medicine.code }}</td>
-      <td>{{ medicine.composition }}</td>
-
-    </tr>
-    </tbody>
-  </table>
+<div class="m-3">
+  <h3>Lekovi</h3>
+  <div class="wrap">
+    <div class="search">
+      <input type="text" [(ngModel)]="term" class="searchTerm" placeholder="Unesite pretragu">
+    </div>
+  </div>
 </div>
 
 
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Šifra</th>
+    <th scope="col">Ime</th>
+    <th scope="col">Vrsta</th>
+    <th scope="col">Oblik</th>
+    <th scope="col">Sastav</th>
+    <th scope="col">Proizvođač</th>
 
+
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let medicine of medicines | filter:term" >
+    <th scope="row">{{ medicine.id }}</th>
+    <td>{{ medicine.code }}</td>
+    <td>{{ medicine.name}}</td>
+    <td>{{ medicine.type}}</td>
+    <td>{{ medicine.shape}}</td>
+    <td>{{ medicine.composition}}</td>
+    <td>{{ medicine.manufacturer}}</td>
+
+
+  </tr>
+  </tbody>
+</table>
