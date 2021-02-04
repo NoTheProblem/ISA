@@ -1,1 +1,29 @@
 <p>pharmacies works!</p>
+<p *ngFor="let pharmacy of pharmacies">{{pharmacy.name}}</p>
+
+
+<div>
+  <h1>Lekovi</h1>
+  <table>
+    <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let pharmacy of pharmacies">
+      <th>{{ pharmacy.name}}</th>
+      <td>{{ pharmacy.country }}</td>
+      <td>{{ pharmacy.city }}</td>
+      <td>{{ pharmacy.address }}</td>
+      <td>{{ pharmacy.pharmacyDescription }}</td>
+      <td>{{ pharmacy.evaluationGrade }}</td>
+      <td>{{ pharmacy.counselingPrice }}</td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>

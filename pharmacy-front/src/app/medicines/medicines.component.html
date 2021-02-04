@@ -1,0 +1,28 @@
+<p>medicines works!</p>
+<p *ngFor="let medicine of medicines">{{medicine.additionalNotes}}</p>
+
+
+<div>
+  <h1>Lekovi</h1>
+  <table>
+    <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let medicine of medicines">
+      <th>{{ medicine.additionalNotes}}</th>
+      <td>{{ medicine.code }}</td>
+      <td>{{ medicine.composition }}</td>
+
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
