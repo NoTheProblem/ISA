@@ -8,7 +8,6 @@ import {AuthService} from '../_services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  private roles: string[];
   isLoggedIn = false;
   showSYSADMIN = false;
   showADMIN = false;
@@ -26,7 +25,7 @@ export class HeaderComponent implements OnInit {
 
     if (this.isLoggedIn) {
       const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
+      this.role = this.tokenStorageService.getUserType();
       this.username = this.tokenStorageService.getUsername();
     }
   }

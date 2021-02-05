@@ -15,10 +15,10 @@ INSERT INTO medicine (code, name, type, shape, composition, manufacturer, prescr
 INSERT INTO medicine (code, name, type, shape, composition, manufacturer, prescription_requirement, additional_notes, evaluation_grade, loyalty_score, contraindications, rdiot) values ('N02BE03', 'Paracetamol', 'Analgetik', 'Tablete' ,'Sastav', 'Srbija', TRUE, 'Radi bilo koji posao', 0.0 , 0, 'Nema', '2');
 INSERT INTO medicine (code, name, type, shape, composition, manufacturer, prescription_requirement, additional_notes, evaluation_grade, loyalty_score, contraindications, rdiot) values ('N02BE04', 'Paracetamol', 'Analgetik', 'Tablete' ,'Sastav', 'Srbija', TRUE, 'Radi bilo koji posao', 0.0 , 0, 'Nema', '2');
 
-INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Jankovic', 'Srbija', 'Novi Sad', 'Bulevar Despota Stefana 7', 'Apoteka', 0.0, 1000.0);
-INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Ja', 'Srbij', 'Nov Sad', 'Bulevar ', 'Apoteka', 1.0, 10.0)
-
-
+INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Jankovic', 'Srbija', 'Novi Sad', 'Bulevar Despota Stefana 7', 'Apoteka', 2.0, 1000.0);
+INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Ja', 'Srbij', 'Nov Sad', 'Bulevar ', 'Apoteka', 0.0, 10.0);
+INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Ja', 'Srbij', 'Nov Sad', 'Bulevar ', 'Apoteka', 1.0, 10.0);
+INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Ja', 'Srbij', 'Nov Sad', 'Bulevar ', 'Apoteka', 5.0, 10.0);
 
 
 

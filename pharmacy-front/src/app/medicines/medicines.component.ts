@@ -15,6 +15,9 @@ export class MedicinesComponent implements OnInit {
   public medicines: Array<MedicineModel>;
   searchTerm: string;
   term: string;
+  reverse = false;
+  name = '';
+  key = '';
 
 
   constructor(
@@ -27,6 +30,31 @@ export class MedicinesComponent implements OnInit {
 
       this.medicines = medicineList;
     });
+  }
+
+  sort(key): void {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  Search(){
+    if (this.name === ''){
+      this.ngOnInit();
+    }
+    else{
+      this.medicines = this.medicines.filter(res => {
+        return (
+          res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.code.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.type.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.shape.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.manufacturer.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.composition.toLocaleLowerCase().match(this.name.toLocaleLowerCase())
+        );
+
+      });
+
+    }
   }
 
 }

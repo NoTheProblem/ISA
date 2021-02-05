@@ -1,15 +1,25 @@
 <header>
   <nav class="navbar navbar-ligh navbar-expand-md" style="background-color: #e3f2fd;">
+
     <div>
-      <a class="navbar-brand">Najjaci sistem apoteka</a>
+      <a *ngIf="isLoggedIn" class="navbar-brand">{{ username }}</a>
     </div>
-    <ul class="navbar-nav">
+
+    <ul class="navbar-nav" *ngIf="!isLoggedIn || (isLoggedIn && role==='ROLE_USER')" >
       <li><a class="nav-link" routerLink="pharmacies">Apoteke</a></li>
+    </ul>
+
+    <ul class="navbar-nav" *ngIf="!isLoggedIn" >
       <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
-      <!--      <li><a class="nav-link">Rezervacija</a></li>-->
-      <!--      <li><a class="nav-link">Profil</a></li>-->
-      <!--      <li><a class="nav-link">Narudzbenica</a></li>-->
-      <!--      <li><a class="nav-link">Profil</a></li>-->
+    </ul>
+
+    <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_USER'" >
+      <li><a class="nav-link" routerLink="pharmacies">Istorija poseta</a></li>
+      <li><a class="nav-link" routerLink="medicines">Zakazani termini</a></li>
+      <li><a class="nav-link" routerLink="medicines">Lekovi </a></li>
+      <li><a class="nav-link" routerLink="medicines">Zakazivanje termina</a></li>
+      <li><a class="nav-link" routerLink="medicines">Pisanje žalbi</a></li>
+      <li><a class="nav-link" routerLink="medicines">Profil korisnika</a></li>
     </ul>
 
     <ul class="navbar-nav navbar-collapse justify-content-end" *ngIf="!isLoggedIn">
@@ -17,13 +27,16 @@
       <li><a class="nav-link" routerLink="register">Registracija</a></li>
     </ul>
 
+
+
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-      <li class="nav-link">
-        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
-      </li>
+
       <li class="nav-link">
         <a href class="nav-link" (click)="logout()">LogOut</a>
       </li>
     </ul>
+
+
+
   </nav>
 </header>

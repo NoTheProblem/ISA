@@ -16,6 +16,8 @@ import {ServicesModule} from './services/services.module';
 import {MedicinesComponent} from './medicines/medicines.component';
 import { FilterPipe } from './filter.pipe';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import {Ng2OrderModule} from 'ng2-order-pipe';
 
 
 
@@ -28,7 +30,8 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
     PharmaciesComponent,
     LoginComponent,
     RegisterComponent,
-    MedicinesComponent
+    MedicinesComponent,
+    UserProfileComponent
 
   ],
   imports: [
@@ -38,7 +41,8 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
     HttpClientModule,
     ServicesModule,
     FormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    Ng2OrderModule
   ],
   bootstrap: [AppComponent]
 })

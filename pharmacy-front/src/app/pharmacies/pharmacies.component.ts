@@ -9,14 +9,19 @@ import {PharmacyModel} from '../model/pharmacy.model';
 })
 export class PharmaciesComponent implements OnInit {
 
-  public pharmacies: Array<PharmacyModel>;
-  searchTerm: string;
-  term: string;
-
   constructor(
     private pharmacyService: PharmacyService
   ) {
   }
+
+  public pharmacies: Array<PharmacyModel>;
+  term: string;
+  order: string;
+  reverse = false;
+  key = '';
+  name: any;
+  city: any;
+  lowerGrade = 0;
 
   ngOnInit(): void {
     this.pharmacyService.getAll().subscribe((pharmacyList: Array<PharmacyModel>) => {
@@ -24,5 +29,47 @@ export class PharmaciesComponent implements OnInit {
       this.pharmacies = pharmacyList;
     });
   }
+
+  sort(key): void {
+    this.key = key;
+    this.reverse = !this.reverse;
+  }
+
+  Search(){
+    if (this.name === ''){
+      this.ngOnInit();
+    }
+    else{
+        this.pharmacies = this.pharmacies.filter(res => {
+          return (
+            res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+            res.city.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+            res.pharmacyDescription.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+            res.country.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+            res.address.toLocaleLowerCase().match(this.name.toLocaleLowerCase())
+          );
+
+        });
+
+    }
+  }
+
+  FilterEvaluationGrade(){
+    if (this.lowerGrade === 0){
+      this.ngOnInit();
+    }
+    else{
+      this.pharmacies = this.pharmacies.filter(res => {
+        return (
+          res.evaluationGrade >= Number(this.lowerGrade)
+        );
+
+      });
+    }
+  }
+
+
+
+
 
 }

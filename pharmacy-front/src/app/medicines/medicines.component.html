@@ -2,29 +2,30 @@
   <h3>Lekovi</h3>
   <div class="wrap">
     <div class="search">
-      <input type="text" [(ngModel)]="term" class="searchTerm" placeholder="Unesite pretragu">
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="Search()"  class="searchTerm" placeholder="">
     </div>
   </div>
+
 </div>
 
 
 <table class="table table-striped">
   <thead>
   <tr>
-    <th scope="col">#</th>
-    <th scope="col">Šifra</th>
-    <th scope="col">Ime</th>
-    <th scope="col">Vrsta</th>
-    <th scope="col">Oblik</th>
-    <th scope="col">Sastav</th>
-    <th scope="col">Proizvođač</th>
+    <th scope="row" (click)="sort('id')">#</th>
+    <th scope="row" (click)="sort('code')">Šifra</th>
+    <th scope="row" (click)="sort('name')">Ime</th>
+    <th scope="row" (click)="sort('type')">Vrsta</th>
+    <th scope="row" (click)="sort('shape')">Oblik</th>
+    <th scope="row" (click)="sort('composition')">Sastav</th>
+    <th scope="row" (click)="sort('manufacturer')">Proizvođač</th>
 
 
   </tr>
   </thead>
   <tbody>
 
-  <tr *ngFor="let medicine of medicines | filter:term" >
+  <tr *ngFor="let medicine of medicines | orderBy: key: reverse" >
     <th scope="row">{{ medicine.id }}</th>
     <td>{{ medicine.code }}</td>
     <td>{{ medicine.name}}</td>
