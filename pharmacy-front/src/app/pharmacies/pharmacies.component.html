@@ -2,7 +2,7 @@
   <h3>Apoteke</h3>
   <div class="wrap">
     <div class="search">
-      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="Search()"  class="searchTerm" placeholder="">
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
     </div>
   </div>
 
@@ -15,9 +15,7 @@
       <input type="number" min="0" max='10' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="FilterEvaluationGrade()"  class="searchTerm" placeholder="">
     </div>
   </div>
-
 </div>
-
 <table class="table table-striped">
   <thead>
   <tr>
@@ -31,7 +29,6 @@
   </tr>
   </thead>
   <tbody>
-
   <tr *ngFor="let pharmacy of pharmacies | orderBy: key: reverse " >
     <th scope="row" >{{ pharmacy.id }}</th>
     <td>{{ pharmacy.name }}</td>

@@ -5,7 +5,6 @@ import {RegisterComponent} from './register/register.component';
 import {PharmaciesComponent} from './pharmacies/pharmacies.component';
 import {MedicinesComponent} from './medicines/medicines.component';
 
-
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},

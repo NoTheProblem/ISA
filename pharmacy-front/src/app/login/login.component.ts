@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../_services/auth.service';
 import {TokenStorageService} from '../_services/token-storage.service';
-import {getToken} from 'codelyzer/angular/styles/cssLexer';
-import jwt_decode from 'jwt-decode';
-
 
 @Component({
   selector: 'app-login',
@@ -20,7 +17,8 @@ export class LoginComponent implements OnInit {
   roles: string;
   private user: any;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) {
+  }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {

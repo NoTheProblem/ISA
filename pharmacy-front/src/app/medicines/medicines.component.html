@@ -2,7 +2,7 @@
   <h3>Lekovi</h3>
   <div class="wrap">
     <div class="search">
-      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="Search()"  class="searchTerm" placeholder="">
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
     </div>
   </div>
 
@@ -19,8 +19,7 @@
     <th scope="row" (click)="sort('shape')">Oblik</th>
     <th scope="row" (click)="sort('composition')">Sastav</th>
     <th scope="row" (click)="sort('manufacturer')">Proizvođač</th>
-
-
+    <th scope="col">#</th>
   </tr>
   </thead>
   <tbody>
@@ -33,8 +32,9 @@
     <td>{{ medicine.shape}}</td>
     <td>{{ medicine.composition}}</td>
     <td>{{ medicine.manufacturer}}</td>
-
-
+    <td>
+      <button class="btn btn-primary" (click)="addAllergy(medicine)">Dodaj alergiju</button>
+    </td>
   </tr>
   </tbody>
 </table>

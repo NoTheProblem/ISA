@@ -1,9 +1,8 @@
-import {Component, OnInit, Pipe, PipeTransform} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MedicineService} from '../services/medicine.service';
 import {MedicineModel} from '../model/medicine.model';
-import {PharmacyModel} from '../model/pharmacy.model';
-import {PharmacyService} from '../services/pharmacy.service';
-import { Subject } from 'rxjs';
+import {PatientService} from '../services/patient.service';
+import {TokenStorageService} from '../_services/token-storage.service';
 
 @Component({
   selector: 'app-medicines',
@@ -21,27 +20,29 @@ export class MedicinesComponent implements OnInit {
 
 
   constructor(
-    private medicineService: MedicineService
+    private medicineService: MedicineService,
+    private tokenStorageService: TokenStorageService,
+    private patientService: PatientService
   ) {
   }
 
   ngOnInit(): void {
-    this.medicineService.getAll().subscribe((medicineList: Array<MedicineModel>) => {
-
-      this.medicines = medicineList;
-    });
+    this.initMedicines();
   }
 
-  sort(key): void {
+  public addAllergy(medicine: MedicineModel): void {
+    this.patientService.addAllergy(medicine);
+  }
+
+  public sort(key): void {
     this.key = key;
     this.reverse = !this.reverse;
   }
 
-  Search(){
-    if (this.name === ''){
-      this.ngOnInit();
-    }
-    else{
+  public search(): void {
+    if (this.name === '') {
+      this.initMedicines();
+    } else {
       this.medicines = this.medicines.filter(res => {
         return (
           res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
@@ -55,6 +56,13 @@ export class MedicinesComponent implements OnInit {
       });
 
     }
+  }
+
+  private initMedicines(): void {
+    this.medicineService.getAll()
+      .subscribe((medicineList: Array<MedicineModel>) => {
+        this.medicines = medicineList;
+      });
   }
 
 }
