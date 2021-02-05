@@ -18,6 +18,9 @@ import { FilterPipe } from './filter.pipe';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import {Ng2OrderModule} from 'ng2-order-pipe';
+import { ExaminationComponent } from './examination/examination.component';
+import { CounselingComponent } from './counseling/counseling.component';
+import {DlDateTimeDateModule, DlDateTimePickerModule} from 'angular-bootstrap-datetimepicker';
 
 
 
@@ -31,7 +34,9 @@ import {Ng2OrderModule} from 'ng2-order-pipe';
     LoginComponent,
     RegisterComponent,
     MedicinesComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    ExaminationComponent,
+    CounselingComponent
 
   ],
   imports: [
@@ -42,8 +47,11 @@ import {Ng2OrderModule} from 'ng2-order-pipe';
     ServicesModule,
     FormsModule,
     Ng2SearchPipeModule,
-    Ng2OrderModule
+    Ng2OrderModule,
+    DlDateTimeDateModule,  // <--- Determines the data type of the model
+    DlDateTimePickerModule
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  providers: [FormsModule]
 })
 export class AppModule { }

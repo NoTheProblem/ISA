@@ -15,6 +15,12 @@ public class ExaminationMapperImpl  extends AbstractMapper<Examination, Examinat
     public ExaminationDto entity2Bean(Examination entity) {
         ExaminationDto bean = new ExaminationDto();
         BeanUtils.copyProperties(entity, bean);
+        bean.setDermatologistId(entity.getDermatologist().getId());
+        bean.setDermatologistEvaluationGrade(entity.getDermatologist().getEvaluationGrade());
+        bean.setDermatologistLastname(entity.getDermatologist().getLastName());
+        bean.setDermatologistName(entity.getDermatologist().getFirstName());
+        bean.setDate(entity.getDate());
+        System.out.println(bean.getDate());
         return bean;
     }
 

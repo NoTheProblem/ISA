@@ -10,7 +10,7 @@ import java.util.Set;
 public class Dermatologist extends User{
 
     @Column
-    private String evaluationGrade;
+    private Float evaluationGrade;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<WorkingHours> workingHours = new HashSet<WorkingHours>();
@@ -24,18 +24,18 @@ public class Dermatologist extends User{
     public Dermatologist() {
     }
 
-    public Dermatologist(String evaluationGrade, Set<WorkingHours> workingHours, Set<Examination> examinations, Set<Pharmacy> pharmacys) {
+    public Dermatologist(Float evaluationGrade, Set<WorkingHours> workingHours, Set<Examination> examinations, Set<Pharmacy> pharmacys) {
         this.evaluationGrade = evaluationGrade;
         this.workingHours = workingHours;
         this.examinations = examinations;
         this.pharmacys = pharmacys;
     }
 
-    public String getEvaluationGrade() {
+    public Float getEvaluationGrade() {
         return evaluationGrade;
     }
 
-    public void setEvaluationGrade(String evaluationGrade) {
+    public void setEvaluationGrade(Float evaluationGrade) {
         this.evaluationGrade = evaluationGrade;
     }
 

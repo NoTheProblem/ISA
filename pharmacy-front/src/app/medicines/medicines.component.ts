@@ -37,7 +37,7 @@ export class MedicinesComponent implements OnInit {
     this.reverse = !this.reverse;
   }
 
-  Search(){
+  search(){
     if (this.name === ''){
       this.ngOnInit();
     }

@@ -21,15 +21,17 @@ public class ExaminationController {
     private final ExaminationService examinationService;
     private final ExaminationMapperImpl examinationMapper;
 
+
     @Autowired
     public ExaminationController(ExaminationService examinationService, ExaminationMapperImpl examinationMapper) {
         this.examinationService = examinationService;
         this.examinationMapper = examinationMapper;
     }
 
-    @GetMapping(value = "/getAll")
+    @GetMapping(value = "/getAllFree")
     public ResponseEntity<Collection<ExaminationDto>> getAll() {
-        Collection<ExaminationDto> examinationDtoList = examinationMapper.entity2Bean(examinationService.getAll());
+        Collection<ExaminationDto> examinationDtoList = examinationMapper.entity2Bean(examinationService.getAllFree(Boolean.TRUE));
+        System.out.println(examinationDtoList);
         return ResponseEntity.ok(examinationDtoList);
     }
 

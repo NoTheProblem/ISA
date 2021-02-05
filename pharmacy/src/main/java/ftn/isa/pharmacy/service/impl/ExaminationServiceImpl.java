@@ -19,8 +19,9 @@ public class ExaminationServiceImpl implements ExaminationService {
         this.examinationRepository = examinationRepository;
     }
 
+
     @Override
-    public List<Examination> getAll() {
-        return examinationRepository.findAll();
+    public List<Examination> getAllFree(Boolean free) {
+        return examinationRepository.findAllByIsFree(free);
     }
 }

@@ -1,0 +1,36 @@
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime dermatologa</th>
+    <th scope="row" >Prezime dermatologa</th>
+    <th scope="row" (click)="sort('dermatologistEvaluationGrade')" >Ocena dermatologa</th>
+    <th scope="row" (click)="sort('date')" >Cena pregleda</th>
+    <th scope="row" >Datum pregleda</th>
+    <th scope="row" >Vreme pregleda</th>
+
+
+
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let medicine of examinations | orderBy: key: reverse" >
+    <th ></th>
+    <th >{{ medicine.dermatologistName }}</th>
+    <th >{{ medicine.dermatologistLastname }}</th>
+    <th >{{ medicine.dermatologistEvaluationGrade }}</th>
+    <th >{{ medicine.price }}</th>
+    <th >{{ medicine.date }}</th>
+    <th >{{ medicine.time }}</th>
+    <th ><button class="Zakaži">Zakaži</button></th>
+
+
+
+  </tr>
+  </tbody>
+</table>
+
+
+

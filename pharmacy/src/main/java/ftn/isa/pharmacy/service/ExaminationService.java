@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ExaminationService {
 
-    List<Examination> getAll();
+    public List<Examination> getAllFree(Boolean free);
+
 
 }

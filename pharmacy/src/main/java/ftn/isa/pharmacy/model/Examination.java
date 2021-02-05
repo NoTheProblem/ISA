@@ -28,6 +28,24 @@ public class Examination {
     @Column
     private Time time;
 
+    @Override
+    public String toString() {
+        return "Examination{" +
+                "id=" + id +
+                ", penalty=" + penalty +
+                ", isFree=" + isFree +
+                ", examinationReport='" + examinationReport + '\'' +
+                ", loyaltyScore=" + loyaltyScore +
+                ", date=" + date +
+                ", time=" + time +
+                ", durationMinutes=" + durationMinutes +
+                ", price=" + price +
+                ", patient=" + patient +
+                ", dermatologist=" + dermatologist +
+                ", pharmacy=" + pharmacy +
+                '}';
+    }
+
     @Column
     private int durationMinutes;
 
