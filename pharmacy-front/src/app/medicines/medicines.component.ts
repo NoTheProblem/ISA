@@ -26,7 +26,7 @@ export class MedicinesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.medicineService.getAll().subscribe((medicineList: Array<MedicineModel>) => {
+      this.medicineService.getAll().subscribe((medicineList: Array<MedicineModel>) => {
 
       this.medicines = medicineList;
     });

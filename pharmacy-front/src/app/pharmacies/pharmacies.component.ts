@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PharmacyService} from '../services/pharmacy.service';
 import {PharmacyModel} from '../model/pharmacy.model';
+import {ExaminationModel} from '../model/examination.model';
 
 @Component({
   selector: 'app-pharmacies',
@@ -8,6 +9,9 @@ import {PharmacyModel} from '../model/pharmacy.model';
   styleUrls: ['./pharmacies.component.css']
 })
 export class PharmaciesComponent implements OnInit {
+
+  private pharmacy: Array<PharmacyModel>;
+
 
   constructor(
     private pharmacyService: PharmacyService
@@ -35,7 +39,7 @@ export class PharmaciesComponent implements OnInit {
     this.reverse = !this.reverse;
   }
 
-  Search(){
+  search(){
     if (this.name === ''){
       this.ngOnInit();
     }
@@ -54,7 +58,7 @@ export class PharmaciesComponent implements OnInit {
     }
   }
 
-  FilterEvaluationGrade(){
+  filterEvaluationGrade(){
     if (this.lowerGrade === 0){
       this.ngOnInit();
     }
@@ -67,6 +71,9 @@ export class PharmaciesComponent implements OnInit {
       });
     }
   }
+
+
+
 
 
 

@@ -6,6 +6,7 @@ import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
 import ftn.isa.pharmacy.service.DermatologistService;
 import ftn.isa.pharmacy.service.MedicineService;
+import org.assertj.core.internal.Iterables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

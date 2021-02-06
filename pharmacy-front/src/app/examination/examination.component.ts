@@ -14,36 +14,37 @@ import {DermatologistModel} from '../model/dermatologist.model';
 export class ExaminationComponent implements OnInit {
 
   public examinations: Array<ExaminationModel>;
-  public dermatologists: Array<DermatologistModel>;
 
   public name: string;
   public key: any;
   public reverse: boolean;
+  public examine: any;
 
-  constructor( private examinationService: ExaminationService, private dermatologistService: DermatologistService
+  constructor( private examinationService: ExaminationService
   ) {
   }
-
-
 
   ngOnInit(): void {
       this.examinationService.getAllFree().subscribe((examinationList: Array<ExaminationModel>) => {
         this.examinations = examinationList;
     });
-      this.dermatologistService.getAll().subscribe((dermatologistList: Array<DermatologistModel>) => {
-      this.dermatologists = dermatologistList;
-    });
-
-      for (const examine of this.examinations) {
-
-    }
-
   }
 
   sort(key): void {
     this.key = key;
     this.reverse = !this.reverse;
   }
+
+  change(medicine): any {
+      let date = medicine;
+      date = Number(date);
+      const d = new Date(date);
+      const ds = d.toLocaleDateString();
+      console.log(ds);
+      return ds;
+  }
+
+
 
 
 

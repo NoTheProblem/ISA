@@ -5,7 +5,7 @@ export class ExaminationModel {
     public IsFree: boolean,
     public examinationReport: string = '',
     public loyaltyScore: number = 0,
-    public date: string = '',
+    public date: Date = new Date(),
     public time: string = '',
     public durationMinutes: number = 0,
     public price: number = 0,
