@@ -8,6 +8,7 @@ import ftn.isa.pharmacy.service.MedicineService;
 import ftn.isa.pharmacy.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,15 @@ public class MedicineController {
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<Collection<MedicineDto>> getAll() {
-        Collection<MedicineDto> medicineDtoList = medicineMapper.entity2Bean(medicineService.getAll());
+        System.out.println("Pera");
+        Collection<MedicineDto> medicineDtoList = medicineMapper.entity2Bean(medicineService.getAllAvailable());
+        return ResponseEntity.ok(medicineDtoList);
+    }
+
+    @GetMapping(value = "/getAllAvilable")
+    public ResponseEntity<Collection<MedicineDto>> getAllAvailable() {
+        System.out.println("Pera");
+        Collection<MedicineDto> medicineDtoList = medicineMapper.entity2Bean(medicineService.getAllAvailable());
         return ResponseEntity.ok(medicineDtoList);
     }
 

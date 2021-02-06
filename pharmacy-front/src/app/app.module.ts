@@ -21,6 +21,8 @@ import {DlDateTimeDateModule, DlDateTimePickerModule} from 'angular-bootstrap-da
 import {AuthInterceptor} from './_helpers/auth.interceptor';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,7 @@ import {ToastrModule} from 'ngx-toastr';
     UserProfileComponent,
     ExaminationComponent,
     CounselingComponent,
-    UserProfileComponent
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +51,9 @@ import {ToastrModule} from 'ngx-toastr';
     DlDateTimeDateModule,  // <--- Determines the data type of the model
     DlDateTimePickerModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatDatepickerModule,
+    MatInputModule
   ],
   providers: [
     {

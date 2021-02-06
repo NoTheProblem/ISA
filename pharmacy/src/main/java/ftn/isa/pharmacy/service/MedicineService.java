@@ -7,6 +7,9 @@ import java.util.List;
 
 public interface MedicineService {
 
+    List<Medicine> getAllAvailable();
+
     List<Medicine> getAll();
+
 
 }

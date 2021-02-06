@@ -5,8 +5,19 @@
       <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
     </div>
   </div>
-
 </div>
+
+<dl-date-time-picker
+  startView="day"
+  maxView="year"
+  minView="day"
+  [(ngModel)]="selectedDate"
+  *ngIf="flag"
+>
+</dl-date-time-picker>
+
+
+
 
 
 <table class="table table-striped">
@@ -19,7 +30,8 @@
     <th scope="row" (click)="sort('shape')">Oblik</th>
     <th scope="row" (click)="sort('composition')">Sastav</th>
     <th scope="row" (click)="sort('manufacturer')">Proizvođač</th>
-    <th scope="col">#</th>
+    <th scope="col" *ngIf="isLoggedIn"></th>
+    <th scope="col" *ngIf="isLoggedIn"></th>
   </tr>
   </thead>
   <tbody>
@@ -32,9 +44,18 @@
     <td>{{ medicine.shape}}</td>
     <td>{{ medicine.composition}}</td>
     <td>{{ medicine.manufacturer}}</td>
-    <td>
+    <td *ngIf="isLoggedIn">
       <button class="btn btn-primary" (click)="addAllergy(medicine)">Dodaj alergiju</button>
     </td>
+    <td *ngIf="isLoggedIn">
+      <button *ngIf="!flag" class="btn btn-primary" (click)="addReservation(medicine)">Dodaj rezervaciju</button>
+    </td>
+
   </tr>
   </tbody>
 </table>
+
+<label>{{selectedDate}}</label>
+
+<button *ngIf="flag" class="btn btn-primary" (click)="activateButton(selectedDate)">Potvrdi rezervaciju</button>
+

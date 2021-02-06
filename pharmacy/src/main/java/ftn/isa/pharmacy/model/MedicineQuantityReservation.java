@@ -2,6 +2,7 @@ package ftn.isa.pharmacy.model;
 
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 public class MedicineQuantityReservation {
@@ -11,6 +12,18 @@ public class MedicineQuantityReservation {
 
     @Column
     private int quantity;
+
+
+
+    @Override
+    public String toString() {
+        return "MedicineQuantityReservation{" +
+                "id=" + id +
+                ", quantity=" + quantity +
+                ", medicine=" + medicine +
+                ", reservation=" + reservation +
+                '}';
+    }
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Medicine medicine;
@@ -23,6 +36,13 @@ public class MedicineQuantityReservation {
 
     public MedicineQuantityReservation(Long id, int quantity, Medicine medicine, Reservation reservation) {
         this.id = id;
+        this.quantity = quantity;
+        this.medicine = medicine;
+        this.reservation = reservation;
+    }
+
+
+    public MedicineQuantityReservation(int quantity, Reservation reservation, Medicine medicine) {
         this.quantity = quantity;
         this.medicine = medicine;
         this.reservation = reservation;

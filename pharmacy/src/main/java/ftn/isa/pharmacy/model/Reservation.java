@@ -26,6 +26,29 @@ public class Reservation {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Patient patient;
 
+    public Reservation(Long id, Boolean pickedUp, Date endDate, float price, Pharmacy pharmacy, Patient patient) {
+        this.id = id;
+        this.pickedUp = pickedUp;
+        this.endDate = endDate;
+        this.price = price;
+        this.pharmacy = pharmacy;
+        this.patient = patient;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", pickedUp=" + pickedUp +
+                ", endDate=" + endDate +
+                ", price=" + price +
+                ", pharmacy=" + pharmacy +
+                ", patient=" + patient +
+                ", medicineis=" + medicineis +
+                '}';
+    }
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityReservation> medicineis = new HashSet<MedicineQuantityReservation>();
 
@@ -94,7 +117,7 @@ public class Reservation {
         return medicineis;
     }
 
-    public void setMedicineis(Set<MedicineQuantityReservation> medicineis) {
+    public void setMedicines(Set<MedicineQuantityReservation> medicineis) {
         this.medicineis = medicineis;
     }
 }

@@ -14,6 +14,7 @@ const routes: Routes = [
   {path: 'medicines', component: MedicinesComponent},
   {path: 'freeExamination', component: ExaminationComponent},
   {path: 'freeCounseling', component: CounselingComponent},
+  {path: 'reservationMedicine', component: MedicinesComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

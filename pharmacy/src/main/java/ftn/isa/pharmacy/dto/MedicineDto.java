@@ -30,6 +30,16 @@ public class MedicineDto {
     private String manufacturer;
 
 
+    public Long getPharmacyId() {
+        return pharmacyId;
+    }
+
+    public void setPharmacyId(Long pharmacyId) {
+        this.pharmacyId = pharmacyId;
+    }
+
+    private Long pharmacyId;
+
 
 
     private Boolean prescriptionRequirement;

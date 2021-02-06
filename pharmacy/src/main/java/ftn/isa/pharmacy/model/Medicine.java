@@ -74,6 +74,35 @@ public class Medicine {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityOrder> orderMedicines = new HashSet<MedicineQuantityOrder>();
 
+    @Override
+    public String toString() {
+        return "Medicine{" +
+                "id=" + id +
+                ", code='" + code + '\'' +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", shape='" + shape + '\'' +
+                ", composition='" + composition + '\'' +
+                ", manufacturer='" + manufacturer + '\'' +
+                ", prescriptionRequirement=" + prescriptionRequirement +
+                ", additionalNotes='" + additionalNotes + '\'' +
+                ", evaluationGrade=" + evaluationGrade +
+                ", loyaltyScore=" + loyaltyScore +
+                ", contraindications='" + contraindications + '\'' +
+                ", rdiot='" + rdiot + '\'' +
+                ", replacedMedicines=" + replacedMedicines +
+                ", basedMedicines=" + basedMedicines +
+                ", alergicMedicine=" + alergicMedicine +
+                ", priceMediceLists=" + priceMediceLists +
+                ", pharmacies=" + pharmacies +
+                ", reservationMedicines=" + reservationMedicines +
+                ", orderMedicines=" + orderMedicines +
+                ", medicationQuantities=" + medicationQuantities +
+                ", suppliersMedicines=" + suppliersMedicines +
+                ", persLists=" + persLists +
+                '}';
+    }
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityPharmacy> medicationQuantities = new HashSet<MedicineQuantityPharmacy>();
 

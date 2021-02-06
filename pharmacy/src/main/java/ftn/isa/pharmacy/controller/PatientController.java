@@ -1,6 +1,7 @@
 package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.MedicineDto;
+import ftn.isa.pharmacy.dto.ReservationDto;
 import ftn.isa.pharmacy.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,11 @@ public class PatientController {
     @PostMapping("/addAllergy")
     public void addAllergy(@RequestBody MedicineDto medicineDto) {
         patientService.addAllergy(medicineDto);
+    }
+
+    @PostMapping("/addReservation")
+    public void addReservation(@RequestBody ReservationDto reservationDto) {
+        this.patientService.addReservation(reservationDto);
     }
 
 }
