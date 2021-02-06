@@ -7,7 +7,6 @@ import {MedicinesComponent} from './medicines/medicines.component';
 import {ExaminationComponent} from './examination/examination.component';
 import {CounselingComponent} from './counseling/counseling.component';
 
-
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},

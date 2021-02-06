@@ -39,30 +39,28 @@ export class PharmaciesComponent implements OnInit {
     this.reverse = !this.reverse;
   }
 
-  search(){
-    if (this.name === ''){
+  search() {
+    if (this.name === '') {
       this.ngOnInit();
-    }
-    else{
-        this.pharmacies = this.pharmacies.filter(res => {
-          return (
-            res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
-            res.city.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
-            res.pharmacyDescription.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
-            res.country.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
-            res.address.toLocaleLowerCase().match(this.name.toLocaleLowerCase())
-          );
+    } else {
+      this.pharmacies = this.pharmacies.filter(res => {
+        return (
+          res.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.city.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.pharmacyDescription.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.country.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          res.address.toLocaleLowerCase().match(this.name.toLocaleLowerCase())
+        );
 
         });
 
     }
   }
 
-  filterEvaluationGrade(){
-    if (this.lowerGrade === 0){
+  filterEvaluationGrade() {
+    if (this.lowerGrade === 0) {
       this.ngOnInit();
-    }
-    else{
+    } else {
       this.pharmacies = this.pharmacies.filter(res => {
         return (
           res.evaluationGrade >= Number(this.lowerGrade)

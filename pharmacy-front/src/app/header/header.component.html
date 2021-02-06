@@ -35,6 +35,9 @@
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
 
       <li class="nav-link">
+        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+      </li>
+      <li class="nav-link">
         <a href class="nav-link" (click)="logout()">LogOut</a>
       </li>
     </ul>

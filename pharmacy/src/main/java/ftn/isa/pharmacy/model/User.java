@@ -1,22 +1,22 @@
 package ftn.isa.pharmacy.model;
 
-import javax.persistence.*;
-
-import java.util.*;
-import java.sql.Timestamp;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
-import static javax.persistence.InheritanceType.SINGLE_TABLE;
 import static javax.persistence.DiscriminatorType.STRING;
+import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
-@Entity(name="registeredusers")
-@Inheritance(strategy=SINGLE_TABLE)
-@DiscriminatorColumn(name="tip", discriminatorType=STRING)
-public class  User implements UserDetails {
+@Entity(name = "registeredusers")
+@Inheritance(strategy = SINGLE_TABLE)
+@DiscriminatorColumn(name = "tip", discriminatorType = STRING)
+public class User implements UserDetails {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,7 +24,7 @@ public class  User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="tip", insertable = false, updatable = false)
+    @Column(name = "tip", insertable = false, updatable = false)
     protected String tip;
 
     @Column(nullable = false)
