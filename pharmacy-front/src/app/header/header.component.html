@@ -14,8 +14,6 @@
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_USER'" >
-
-
       <li><a class="nav-link" routerLink="pharmacies">Istorija poseta</a></li>
       <li><a class="nav-link" routerLink="freeExamination">Termini dermatolog</a></li>
       <li><a class="nav-link" routerLink="freeCounseling">Termini farmaceut</a></li>
@@ -24,6 +22,17 @@
       <li><a class="nav-link" routerLink="medicines">Profil korisnika</a></li>
     </ul>
 
+    <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_ADMIN'" >
+      <li><a class="nav-link" routerLink="pharmacy">Apoteka</a></li>
+      <li><a class="nav-link" routerLink="appDef">Termini</a></li>
+      <li><a class="nav-link" routerLink="promotions">Akcije/Promocije</a></li>
+      <li><a class="nav-link" routerLink="order-forms">Narudzbenice</a></li>
+      <li><a class="nav-link" routerLink="price-list">Cenovnik</a></li>
+      <li><a class="nav-link" routerLink="pharmacy-medicine">Lekovi</a></li>
+      <li><a class="nav-link" routerLink="pharmacy-employees">Zaposleni</a></li>
+      <li><a class="nav-link" routerLink="pharmacy-report">Izvestaj</a></li>
+      <li><a class="nav-link" routerLink="absences">Godisnji</a></li>
+    </ul>
 
     <ul class="navbar-nav navbar-collapse justify-content-end" *ngIf="!isLoggedIn">
       <li><a class="nav-link" routerLink="login">Prijava</a></li>

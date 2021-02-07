@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {PharmacyModel} from '../model/pharmacy.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {PromotionModel} from '../model/promotion.model';
 
 @Injectable()
 export class PharmacyService {
@@ -13,4 +14,9 @@ export class PharmacyService {
     return this.httpClient.get<Array<PharmacyModel>>('http://localhost:8080/pharmacy/getAll');
   }
 
+  public getPharmacyByAdmin(): Observable<PharmacyModel> {
+    return this.httpClient.get<PharmacyModel>('http://localhost:8080/pharmacy/admin');
+  }
+
 }
+

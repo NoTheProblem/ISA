@@ -18,7 +18,7 @@ public class AbsenceRequest {
     private String typeOfAbsence;
 
     @Column
-    private String requstText;
+    private String requestText;
 
     @Column
     private String answerText;
@@ -30,6 +30,28 @@ public class AbsenceRequest {
     private Date endDate;
 
     @Column
+    private String typeOfEmployee;
+
+    public String getTypeOfEmployee() {
+        return typeOfEmployee;
+    }
+
+    public void setTypeOfEmployee(String typeOfEmployee) {
+        this.typeOfEmployee = typeOfEmployee;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    @Column
+    private String employeeName;
+
+    @Column
     private Long employeeId;
 
     @Column
@@ -38,11 +60,11 @@ public class AbsenceRequest {
     public AbsenceRequest() {
     }
 
-    public AbsenceRequest(Long id, String status, String typeOfAbsence, String requstText, String answerText, Date startDate, Date endDate, Long employeeId, Long adminId) {
+    public AbsenceRequest(Long id, String status, String typeOfAbsence, String requestText, String answerText, Date startDate, Date endDate, Long employeeId, Long adminId) {
         this.id = id;
         this.status = status;
         this.typeOfAbsence = typeOfAbsence;
-        this.requstText = requstText;
+        this.requestText = requestText;
         this.answerText = answerText;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -74,12 +96,12 @@ public class AbsenceRequest {
         this.typeOfAbsence = typeOfAbsence;
     }
 
-    public String getRequstText() {
-        return requstText;
+    public String getRequestText() {
+        return requestText;
     }
 
-    public void setRequstText(String requstText) {
-        this.requstText = requstText;
+    public void setRequestText(String requstText) {
+        this.requestText = requstText;
     }
 
     public String getAnswerText() {
