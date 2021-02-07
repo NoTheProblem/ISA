@@ -1,0 +1,112 @@
+<div class="m-3">
+    <button class="btn btn-primary"  *ngIf="isShown" (click)="toggle()" >Dodaj novu akciju/promociju</button>
+    <button class="btn btn-primary" *ngIf="!isShown"  (click)="toggle()" >Prikazi sve akcije/promocije</button>
+</div>
+
+
+<div *ngIf="!isShown" class="row container-fluid"  id="divshow1">
+  <div class="m-3">
+    <h3>Definisanje nove Akcije/Promocije</h3>
+  </div>
+  <div>
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+
+      <div class="form-group">
+        <label for="name">Naziv Akcije/Promocije</label>
+        <input
+          type="text"
+          class="form-control"
+          name="name"
+          [(ngModel)]="form.name"
+          required
+          #name="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && name.invalid">
+          <div *ngIf="name.errors.required">Naziv je obavezan</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="opis">Opis Akcije/Promocije</label>
+        <input
+          type="text"
+          class="form-control"
+          name="opis"
+          [(ngModel)]="form.opis"
+          required
+          #opis="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && opis.invalid">
+          <div *ngIf="opis.errors.required">Opis je obavezan</div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="tip">Tip</label>
+        <input type="radio" value="Akcija" name="tip" ngModel> Akcija
+        <input type="radio" value="Promocija" name="ti[" ngModel> Promocija
+      </div>
+
+
+      <div class="form-group">
+        <label for="address">Datum pocetka vazenja</label>
+        <input
+          type="text"
+          class="form-control"
+          name="address"
+          [(ngModel)]="form.address"
+          required
+          #address="ngModel"
+        />
+        <label for="address">Datum kraja vazenja</label>
+        <input
+          type="text"
+          class="form-control"
+          name="address"
+          [(ngModel)]="form.address"
+          required
+          #address="ngModel"
+        />
+        <div class="alert-danger" *ngIf="f.submitted && address.invalid">
+          <div *ngIf="address.errors.required">Adresa je obavezana</div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-block">Napravi akciju/promociju</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Pravljenje akcije/promocije nije uspelo<br />{{ errorMessage }}
+      </div>
+    </form>
+  </div>
+</div>
+
+<div *ngIf="isShown" class="row container-fluid"  id="divshow">
+  <div class="m-3">
+    <h3>Akcije/Promocije</h3>
+  </div>
+  <table class="table table-striped" >
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Naziv</th>
+      <th scope="row">Tip</th>
+      <th scope="row">Datum pocetka vazenja</th>
+      <th scope="row">Datum kraja vazenja</th>
+    </tr>
+    </thead>
+  </table>
+</div>
+

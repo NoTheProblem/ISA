@@ -15,14 +15,15 @@ INSERT INTO medicine (code, name, type, shape, composition, manufacturer, prescr
 INSERT INTO medicine (code, name, type, shape, composition, manufacturer, prescription_requirement, additional_notes, evaluation_grade, loyalty_score, contraindications, rdiot) values ('N02BE03', 'Paracetamol', 'Analgetik', 'Tablete' ,'Sastav', 'Srbija', TRUE, 'Radi bilo koji posao', 0.0 , 0, 'Nema', '2');
 INSERT INTO medicine (code, name, type, shape, composition, manufacturer, prescription_requirement, additional_notes, evaluation_grade, loyalty_score, contraindications, rdiot) values ('N02BE04', 'Paracetamol', 'Analgetik', 'Tablete' ,'Sastav', 'Srbija', TRUE, 'Radi bilo koji posao', 0.0 , 0, 'Nema', '2');
 
-INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Jankovic', 'Srbija', 'Novi Sad', 'Bulevar Despota Stefana 7', 'Apoteka', 2.0, 1000.0);
-INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Ja', 'Srbij', 'Nov Sad', 'Bulevar ', 'Apoteka', 0.0, 10.0);
-INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Ja', 'Srbij', 'Nov Sad', 'Bulevar ', 'Apoteka', 1.0, 10.0);
-INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Ja', 'Srbij', 'Nov Sad', 'Bulevar ', 'Apoteka', 5.0, 10.0);
+INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Apoteka Jankovic', 'Srbija', 'Novi Sad', 'Bulevar oslobodjenja 135', 'Apoteka', 2.0, 1000.0);
+INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Apoteka Benu Merkator', 'Srbija', 'Nov Sad', 'TC Merkator, Bulear Oslobodjenja 102 ', 'Apoteka', 0.0, 2000.0);
+INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Benu Apoteka', 'Srbija', 'Nov Sad', 'Narodnog fronta 10', 'Apoteka', 1.0, 3000.0);
+INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evaluation_grade, counseling_price) values ('Apoteka 409', 'Srbija', 'Nov Sad', 'Bulevar Mihajla Pupina 9', 'Apoteka', 5.0, 1000.0);
 
 
 
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, evaluation_grade) values ('ROLE_DERMATOLOGIST','Aleksa','Milenovic','Derma','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','aleska1@gmail.com','Srbija','Novi Sad','Negde u NS',true, '2021-01-02 18:57:58.508-07', 1);
+insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id) values ('ROLE_ADMIN','Branislav','Lazarevic','slav','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','branislavlazarevic@gmail.com','Srbija','Sabac','Marsala Tita 140',true, '2021-01-02 18:57:58.508-07',1);
 
 
 

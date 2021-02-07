@@ -13,4 +13,8 @@ export class PharmacyService {
     return this.httpClient.get<Array<PharmacyModel>>('http://localhost:8080/pharmacy/getAll');
   }
 
+  public getPharmacyByAdmin(): Observable<PharmacyModel> {
+    return this.httpClient.get<PharmacyModel>('http://localhost:8080/pharmacy/admin');
+  }
+
 }
