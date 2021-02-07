@@ -18,72 +18,80 @@
     >
 
       <div class="form-group">
-        <label for="name">Naziv Akcije/Promocije</label>
+        <label for="title">Naziv Akcije/Promocije</label>
         <input
           type="text"
           class="form-control"
-          name="name"
-          [(ngModel)]="form.name"
+          name="title"
+          [(ngModel)]="form.title"
           required
-          #name="ngModel"
+          #title="ngModel"
         />
-        <div class="alert-danger" *ngIf="f.submitted && name.invalid">
-          <div *ngIf="name.errors.required">Naziv je obavezan</div>
+        <div class="alert-danger" *ngIf="f.submitted && title.invalid">
+          <div *ngIf="title.errors.required">Naziv je obavezan</div>
         </div>
       </div>
 
 
       <div class="form-group">
-        <label for="opis">Opis Akcije/Promocije</label>
+        <label for="text">Opis Akcije/Promocije</label>
         <input
           type="text"
           class="form-control"
-          name="opis"
-          [(ngModel)]="form.opis"
+          name="text"
+          [(ngModel)]="form.text"
           required
-          #opis="ngModel"
+          #text="ngModel"
         />
-        <div class="alert-danger" *ngIf="f.submitted && opis.invalid">
-          <div *ngIf="opis.errors.required">Opis je obavezan</div>
+        <div class="alert-danger" *ngIf="f.submitted && text.invalid">
+          <div *ngIf="text.errors.required">Opis je obavezan</div>
         </div>
       </div>
 
 
       <div class="form-group">
-        <label for="tip">Tip</label>
-        <input type="radio" value="Akcija" name="tip" ngModel> Akcija
-        <input type="radio" value="Promocija" name="ti[" ngModel> Promocija
+        <label for="type">Tip</label>
+        <input type="radio" value="Akcija" name="type" [(ngModel)]="form.type"> Akcija
+        <input type="radio" value="Promocija" name="type" [(ngModel)]="form.type"> Promocija
       </div>
 
 
       <div class="form-group">
-        <label for="address">Datum pocetka vazenja</label>
+        <label for="startDate">Datum pocetka vazenja</label>
         <input
-          type="text"
+          type="date"
           class="form-control"
-          name="address"
-          [(ngModel)]="form.address"
+          name="startDate"
+          [(ngModel)]="form.startDate"
           required
-          #address="ngModel"
+          #startDate="ngModel"
         />
-        <label for="address">Datum kraja vazenja</label>
+
+        <div class="alert-danger" *ngIf="f.submitted && startDate.invalid">
+          <div *ngIf="startDate.errors.required">Pocetni datum je obavezan</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="endDate">Datum kraja vazenja</label>
         <input
-          type="text"
+          type="date"
           class="form-control"
-          name="address"
-          [(ngModel)]="form.address"
+          name="endDate"
+          [(ngModel)]="form.endDate"
           required
-          #address="ngModel"
+          #endDate="ngModel"
         />
-        <div class="alert-danger" *ngIf="f.submitted && address.invalid">
-          <div *ngIf="address.errors.required">Adresa je obavezana</div>
+
+        <div class="alert-danger" *ngIf="f.submitted && endDate.invalid">
+          <div *ngIf="endDate.errors.required">Krajnji datum je obavezan</div>
         </div>
       </div>
 
 
 
       <div class="form-group">
-        <button class="btn btn-primary btn-block">Napravi akciju/promociju</button>
+        <button class="btn btn-primary btn-block" >Napravi akciju/promociju</button>
       </div>
 
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
@@ -92,6 +100,9 @@
     </form>
   </div>
 </div>
+
+
+
 
 <div *ngIf="isShown" class="row container-fluid"  id="divshow">
   <div class="m-3">
@@ -102,11 +113,23 @@
     <tr>
       <th scope="row">#</th>
       <th scope="row">Naziv</th>
+      <th scope="row">Opis</th>
       <th scope="row">Tip</th>
       <th scope="row">Datum pocetka vazenja</th>
       <th scope="row">Datum kraja vazenja</th>
     </tr>
     </thead>
+
+    <tbody>
+    <tr *ngFor="let promotion of promotions" >
+      <th scope="row">{{ promotion.id }}</th>
+      <td>{{ promotion.title }}</td>
+      <td>{{ promotion.text}}</td>
+      <td>{{ promotion.type}}</td>
+      <td>{{ promotion.startDate | date}}</td>
+      <td>{{ promotion.endDate | date}}</td>
+    </tr>
+    </tbody>
   </table>
 </div>
 

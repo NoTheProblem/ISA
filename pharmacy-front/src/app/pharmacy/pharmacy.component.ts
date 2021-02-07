@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+
 import {PharmacyModel} from '../model/pharmacy.model';
 import {PharmacyService} from '../services/pharmacy.service';
 
@@ -17,6 +18,8 @@ export class PharmacyComponent implements OnInit {
     private pharmacyService: PharmacyService
   ) {
   }
+
+
   ngOnInit(): void {
     this.pharmacyService.getPharmacyByAdmin().subscribe((pharmacy: PharmacyModel) => {
       console.log(pharmacy);

@@ -25,7 +25,8 @@ INSERT INTO pharmacy (name, country, city, address, pharmacy_description, evalua
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, evaluation_grade) values ('ROLE_DERMATOLOGIST','Aleksa','Milenovic','Derma','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','aleska1@gmail.com','Srbija','Novi Sad','Negde u NS',true, '2021-01-02 18:57:58.508-07', 1);
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id) values ('ROLE_ADMIN','Branislav','Lazarevic','slav','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','branislavlazarevic@gmail.com','Srbija','Sabac','Marsala Tita 140',true, '2021-01-02 18:57:58.508-07',1);
 
-
+insert into promotion(title, text, start_date, end_date, type, pharmacy_id)
+values('Bekutan akcija', 'Svi bekutan prozivodi su sada kod nas vamo tmao','2021-01-11', '2021-03-30','promocija',1)
 
 
 

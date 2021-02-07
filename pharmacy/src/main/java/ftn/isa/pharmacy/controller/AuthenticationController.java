@@ -67,9 +67,7 @@ public class AuthenticationController {
 
         // Kreiraj token za tog korisnika
         User user = (User) authentication.getPrincipal();
-        System.out.println(user);
         String jwt = tokenUtils.generateToken(user.getUsername(), user.getTip());
-        System.out.println(jwt);
         int expiresIn = tokenUtils.getExpiredIn();
 
         // Vrati token kao odgovor na uspesnu autentifikaciju

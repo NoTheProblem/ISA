@@ -21,7 +21,7 @@ import {DlDateTimeDateModule, DlDateTimePickerModule} from 'angular-bootstrap-da
 import {AuthInterceptor} from './_helpers/auth.interceptor';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
-import { PharmacyComponent } from './pharmacy/pharmacy.component';
+import {PharmacyComponent} from './pharmacy/pharmacy.component';
 import { PromotionsComponent } from './promotions/promotions.component';
 import { OrderFromsComponent } from './order-froms/order-froms.component';
 import { PriceListComponent } from './price-list/price-list.component';
