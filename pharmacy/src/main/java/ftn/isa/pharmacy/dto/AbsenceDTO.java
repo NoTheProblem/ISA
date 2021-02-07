@@ -1,36 +1,30 @@
-package ftn.isa.pharmacy.model;
+package ftn.isa.pharmacy.dto;
 
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-public class AbsenceRequest {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AbsenceDTO {
     private Long id;
 
-    @Column
     private String status;
 
-    @Column
     private String typeOfAbsence;
 
-    @Column
     private String requestText;
 
-    @Column
     private String answerText;
 
-    @Column
     private Date startDate;
 
-    @Column
     private Date endDate;
 
-    @Column
+    private Long employeeId;
+
+    private Long adminId;
+
     private String typeOfEmployee;
+
+    private String employeeName;
 
     public String getTypeOfEmployee() {
         return typeOfEmployee;
@@ -46,30 +40,6 @@ public class AbsenceRequest {
 
     public void setEmployeeName(String employeeName) {
         this.employeeName = employeeName;
-    }
-
-    @Column
-    private String employeeName;
-
-    @Column
-    private Long employeeId;
-
-    @Column
-    private Long adminId;
-
-    public AbsenceRequest() {
-    }
-
-    public AbsenceRequest(Long id, String status, String typeOfAbsence, String requestText, String answerText, Date startDate, Date endDate, Long employeeId, Long adminId) {
-        this.id = id;
-        this.status = status;
-        this.typeOfAbsence = typeOfAbsence;
-        this.requestText = requestText;
-        this.answerText = answerText;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.employeeId = employeeId;
-        this.adminId = adminId;
     }
 
     public Long getId() {
@@ -100,8 +70,8 @@ public class AbsenceRequest {
         return requestText;
     }
 
-    public void setRequestText(String requstText) {
-        this.requestText = requstText;
+    public void setRequestText(String requestText) {
+        this.requestText = requestText;
     }
 
     public String getAnswerText() {
@@ -143,4 +113,6 @@ public class AbsenceRequest {
     public void setAdminId(Long adminId) {
         this.adminId = adminId;
     }
+
 }
+

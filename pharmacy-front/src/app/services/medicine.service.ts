@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {MedicineModel} from '../model/medicine.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PromotionModel} from '../model/promotion.model';
 
 @Injectable()
 export class MedicineService {

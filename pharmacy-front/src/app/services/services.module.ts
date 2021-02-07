@@ -7,6 +7,7 @@ import {ExaminationService} from './examination.service';
 import {CounselingComponent} from '../counseling/counseling.component';
 import {PatientService} from './patient.service';
 import {PromotionService} from './promotion.service';
+import {AbsenceService} from './absence.service';
 
 @NgModule({
   declarations: [],
@@ -18,7 +19,8 @@ import {PromotionService} from './promotion.service';
     CounselingComponent,
     MedicineService,
     PatientService,
-    PromotionService
+    PromotionService,
+    AbsenceService
   ],
   imports: [
     CommonModule
