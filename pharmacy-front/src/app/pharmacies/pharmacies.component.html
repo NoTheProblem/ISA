@@ -31,7 +31,11 @@
   <tbody>
   <tr *ngFor="let pharmacy of pharmacies | orderBy: key: reverse " >
     <th scope="row" >{{ pharmacy.id }}</th>
-    <td>{{ pharmacy.name }}</td>
+    <td>
+      <a [routerLink]="['/pharmacy', pharmacy.id]">
+      {{ pharmacy.name }}
+      </a>
+    </td>
     <td>{{ pharmacy.country }}</td>
     <td>{{ pharmacy.city}}</td>
     <td>{{ pharmacy.address}}</td>

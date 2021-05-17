@@ -29,7 +29,6 @@ export class PharmaciesComponent implements OnInit {
 
   ngOnInit(): void {
     this.pharmacyService.getAll().subscribe((pharmacyList: Array<PharmacyModel>) => {
-      console.log(pharmacyList);
       this.pharmacies = pharmacyList;
     });
   }

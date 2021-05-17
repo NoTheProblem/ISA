@@ -1,1 +1,146 @@
-<p>order-froms works!</p>
+<div class="m-3">
+  <button class="btn btn-primary"  *ngIf="isShown" (click)="toggle()" >Dodaj novu poruzdbenicu</button>
+  <button class="btn btn-primary" *ngIf="!isShown"  (click)="toggle()" >Prikazi sve porudzbenice</button>
+</div>
+
+
+<div *ngIf="!isShown" class="row container-fluid"  id="divshow1">
+  <div class="m-3">
+    <h3>Definisanje nove Porudzbenice</h3>
+  </div>
+  <br>
+  <br>
+  <div>
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+
+
+      <div class="form-group">
+        <label for="startDate">Datum roka za ponude</label>
+        <input
+          type="date"
+          class="form-control"
+          name="startDate"
+          [(ngModel)]="form.startDate"
+          required
+          #startDate="ngModel"
+        />
+
+        <div class="alert-danger" *ngIf="f.submitted && startDate.invalid">
+          <div *ngIf="startDate.errors.required">Datum roka za ponude je obavezan</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <h4> Pretraga lekova </h4>
+        <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="Unesite ime/sifru leka">
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="row" (click)="sort('code')">Šifra</th>
+            <th scope="row" (click)="sort('name')">Ime</th>
+            <th scope="col">#</th>
+          </tr>
+          </thead>
+          <tbody>
+
+          <tr *ngFor="let medicine of medicines | orderBy: key: reverse" >
+            <td>{{ medicine.code }}</td>
+            <td>{{ medicine.name}}</td>
+            <td>
+              <button class="btn btn-primary" (click)="addToOrderForm(medicine)">Dodaj u narudzbenicu</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="row container-fluid">
+        <div class="m-3">
+          <h3>Lekovi za narucivanje</h3>
+        </div>
+        <table class="table table-striped" >
+          <thead>
+          <tr>
+            <th scope="row">#</th>
+            <th scope="row">Naziv leka</th>
+            <th scope="row">Sifra leka</th>
+            <th scope="row">Kolicina</th>
+            <th scope="row">Izbaci</th>
+          </tr>
+          </thead>
+
+          <tbody>
+          <tr *ngFor="let med of medHelp" >
+            <th scope="row">{{ med.medicineID }}</th>
+            <td>{{ med.medicineName }}</td>
+            <td>{{ med.medicineCode}}</td>
+            <td>{{ med.quantity}}</td>
+            <td>
+              <button class="btn btn-primary" (click)="Izbrisi(med)">Izbaci</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="form-group">
+        <button class="btn btn-primary btn-block" (click)="createOrder()" >Posalji porudzbenicu</button>
+      </div>
+
+      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+        Slanje porudzbenice nije uspelo<br />{{ errorMessage }}
+      </div>
+
+
+
+
+
+
+    </form>
+  </div>
+
+
+
+</div>
+
+
+
+
+<div *ngIf="isShown" class="row container-fluid"  id="divshow">
+  <div class="m-3">
+    <h3>Akcije/Promocije</h3>
+  </div>
+  <table class="table table-striped" >
+    <thead>
+    <tr>
+      <th scope="row">#</th>
+      <th scope="row">Naziv</th>
+      <th scope="row">Opis</th>
+      <th scope="row">Tip</th>
+      <th scope="row">Datum pocetka vazenja</th>
+      <th scope="row">Datum kraja vazenja</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let promotion of promotions" >
+      <th scope="row">{{ promotion.id }}</th>
+      <td>{{ promotion.title }}</td>
+      <td>{{ promotion.text}}</td>
+      <td>{{ promotion.type}}</td>
+      <td>{{ promotion.startDate | date}}</td>
+      <td>{{ promotion.endDate | date}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

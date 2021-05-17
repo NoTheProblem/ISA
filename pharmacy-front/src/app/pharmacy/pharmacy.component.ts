@@ -2,6 +2,9 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 
 import {PharmacyModel} from '../model/pharmacy.model';
 import {PharmacyService} from '../services/pharmacy.service';
+import {ActivatedRoute } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-pharmacy',
@@ -10,23 +13,20 @@ import {PharmacyService} from '../services/pharmacy.service';
 })
 export class PharmacyComponent implements OnInit {
 
-  private pharmacy: PharmacyModel;
+  public pharmacy: PharmacyModel;
   isLoggedIn = false;
   role: string;
 
   constructor(
+    private route: ActivatedRoute,
     private pharmacyService: PharmacyService
   ) {
   }
 
 
   ngOnInit(): void {
-    this.pharmacyService.getPharmacyByAdmin().subscribe((pharmacy: PharmacyModel) => {
-      console.log(pharmacy);
-      this.pharmacy = pharmacy;
-    });
+      this.pharmacyService.getPharmacyByAdmin().subscribe((pharmacy: PharmacyModel) => {
+        this.pharmacy = pharmacy;
+      });
   }
-
-
-
 }

@@ -1,0 +1,23 @@
+<div style="text-align: center;"><h2>Detalji apoteke</h2> </div>
+
+<div>
+  Naziv apoteke: <b>{{pharmacy?.name}}</b>
+  <br>
+  Adresa apoteke: <b> {{pharmacy?.address}} </b>
+  klikni ovde za prikaz na mapi
+
+  <br>
+  Prosecna ocena apoteke: <b> {{pharmacy?.evaluationGrade}} </b>
+
+
+  <div *ngIf="!isLoggedIn">
+    <button class="btn btn-primary">Rezervisi lek</button>
+    <button class="btn btn-primary">Dostupnost leka (E-Recept)</button>
+    <br>
+    <button class="btn btn-primary">Zakazi savetovanje kod farmaceuta</button>
+    <button class="btn btn-primary">Zakazi pregled kod dermatologa</button>
+    <br>
+    <button class="btn btn-primary" (click)="subscribeToPromotions()">Pretplati se na akcije/promocije</button>
+  </div>
+
+</div>

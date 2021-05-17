@@ -2,7 +2,6 @@ package ftn.isa.pharmacy.controller;
 
 import java.util.Collection;
 
-import ftn.isa.pharmacy.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +29,7 @@ public class PharmacyController {
         return ResponseEntity.ok(pharmacyDtoList);
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/unauth/{id}")
     public ResponseEntity<PharmacyDto> getPharmacyByID(@PathVariable Long id) {
         PharmacyDto pharmacyDto = pharmacyMapper.entity2Bean(pharmacyService.getById(id));
         return ResponseEntity.ok(pharmacyDto);
@@ -42,7 +41,8 @@ public class PharmacyController {
         return ResponseEntity.ok(pharmacyDto);
     }
 
-
-
-
+    @GetMapping(value = "/subscribe/{id}")
+    public Boolean subscribe(@PathVariable Long id) {
+        return pharmacyService.subscribe(id);
+    }
 }
