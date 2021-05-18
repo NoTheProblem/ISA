@@ -28,7 +28,7 @@ export class PharmacyService {
   }
 
   public subscribeToPromotions(pharmacyID): void {
-    this.httpClient.get(`http://localhost:8080/pharmacy/subscription/${pharmacyID}`).subscribe(
+    this.httpClient.get(`http://localhost:8080/pharmacy/subscribe/${pharmacyID}`).subscribe(
       (response: any) => {
         this.toast.success(`Uspesno ste se pretplatili!`);
       },

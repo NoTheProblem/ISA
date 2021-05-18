@@ -21,14 +21,16 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final PharmacyAdminRepository pharmacyAdminRepository;
     private final PatientRepository patientRepository;
     private final PromotionRepository promotionRepository;
+    private final MailServiceImpl mailService;
 
     // https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/#gatsby-focus-wrapper
     @Autowired
-    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository) {
+    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.pharmacyRepository = pharmacyRepository;
         this.patientRepository = patientRepository;
         this.promotionRepository = promotionRepository;
+        this.mailService = mailService;
     }
 
     @Override
@@ -66,10 +68,12 @@ public class PharmacyServiceImpl implements PharmacyService {
         Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
         if(patientOptional.isPresent()) {
             Patient patient = patientOptional.get();
-            Set<Promotion> promotionSet = patient.getSubscribedPromotions();
-            Promotion promotion = promotionRepository.getOne(id);
-            promotionSet.add(promotion);
-            patient.setSubscribedPromotions(promotionSet);
+            Set<Pharmacy> promotionSet = patient.getSubscribedPharmacies();
+            Pharmacy pharmacy = pharmacyRepository.getOne(id);
+            promotionSet.add(pharmacy);
+            patient.setSubscribedPharmacies(promotionSet);
+            patientRepository.saveAndFlush(patient);
+            mailService.newSubscriptionForPromotion(pharmacy,patient);
             return true;
         }
         return false;
@@ -79,7 +83,6 @@ public class PharmacyServiceImpl implements PharmacyService {
     public Set<Dermatologist> getDermaByPhaID(Long id) {
         Pharmacy pharmacy = pharmacyRepository.getOne(id);
         Set<Dermatologist> dermatologists = pharmacy.getDermatologists();
-        System.out.println(dermatologists);
         return dermatologists;
     }
 
@@ -87,7 +90,6 @@ public class PharmacyServiceImpl implements PharmacyService {
     public Set<Pharmacist> getPharmaByPhaID(Long id) {
         Pharmacy pharmacy = pharmacyRepository.getOne(id);
         Set<Pharmacist> pharmacists =  pharmacy.getPharmacists();
-        System.out.println(pharmacists);
         return  pharmacists;
     }
 }

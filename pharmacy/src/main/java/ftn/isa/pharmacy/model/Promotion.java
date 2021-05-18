@@ -31,14 +31,11 @@ public class Promotion {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Pharmacy pharmacy;
 
-    @ManyToMany(mappedBy = "subscribedPromotions")
-    private Set<Patient> subscribedPatients = new HashSet<Patient>();
-
 
     public Promotion() {
     }
 
-    public Promotion(Long id, String title, String text, Date startDate, Date endDate, String type, Pharmacy pharmacy, Set<Patient> subscribedPatients) {
+    public Promotion(Long id, String title, String text, Date startDate, Date endDate, String type, Pharmacy pharmacy) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -46,7 +43,6 @@ public class Promotion {
         this.endDate = endDate;
         this.type = type;
         this.pharmacy = pharmacy;
-        this.subscribedPatients = subscribedPatients;
     }
 
     public Long getId() {
@@ -105,12 +101,5 @@ public class Promotion {
         this.pharmacy = pharmacy;
     }
 
-    public Set<Patient> getSubscribedPatients() {
-        return subscribedPatients;
-    }
-
-    public void setSubscribedPatients(Set<Patient> subscribedPatients) {
-        this.subscribedPatients = subscribedPatients;
-    }
 }
 

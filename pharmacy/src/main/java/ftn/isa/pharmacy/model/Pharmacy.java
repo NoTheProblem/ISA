@@ -64,6 +64,17 @@ public class Pharmacy {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Reservation> reservations = new HashSet<Reservation>();
 
+    public Set<Patient> getSubscribedPatients() {
+        return subscribedPatients;
+    }
+
+    public void setSubscribedPatients(Set<Patient> subscribedPatients) {
+        this.subscribedPatients = subscribedPatients;
+    }
+
+    @ManyToMany(mappedBy = "subscribedPharmacies")
+    private Set<Patient> subscribedPatients = new HashSet<>();
+
     @ManyToMany
     @JoinTable(name = "pharmaci_missmedicine", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medicine_id", referencedColumnName = "id"))
     private Set<Medicine> missingMedicine = new HashSet<Medicine>();
@@ -71,7 +82,7 @@ public class Pharmacy {
     public Pharmacy() {
     }
 
-    public Pharmacy(Long id, String name, String country, String city, String address, String pharmacyDescription, float evaluationGrade, float counselingPrice, Set<MedicineQuantityPharmacy> medicationQuantities, Set<Pharmacist> pharmacists, Set<Dermatologist> dermatologists, Set<PriceMediceList> priceMediceLists, Set<PriceExaminationList> priceExaminationLists, Set<WorkingHours> workingHours, Set<Promotion> promotions, Set<PharmacyAdmin> pharmacyAdmins, Set<Examination> listOfFreeExamination, Set<Reservation> reservations, Set<Medicine> missingMedicine) {
+    public Pharmacy(Long id, String name, String country, String city, String address, String pharmacyDescription, float evaluationGrade, float counselingPrice, Set<MedicineQuantityPharmacy> medicationQuantities, Set<Pharmacist> pharmacists, Set<Dermatologist> dermatologists, Set<PriceMediceList> priceMediceLists, Set<PriceExaminationList> priceExaminationLists, Set<WorkingHours> workingHours, Set<Promotion> promotions, Set<PharmacyAdmin> pharmacyAdmins, Set<Examination> listOfFreeExamination, Set<Reservation> reservations, Set<Patient> subscribedPatients, Set<Medicine> missingMedicine) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -90,6 +101,7 @@ public class Pharmacy {
         this.pharmacyAdmins = pharmacyAdmins;
         this.listOfFreeExamination = listOfFreeExamination;
         this.reservations = reservations;
+        this.subscribedPatients = subscribedPatients;
         this.missingMedicine = missingMedicine;
     }
 

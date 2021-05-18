@@ -38,14 +38,14 @@ public class Patient extends User{
     private Set<Medicine> allergicMedicines = new HashSet<Medicine>();
 
     @ManyToMany
-    @JoinTable(name = "patient_promotion", joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "promotion_id", referencedColumnName = "id"))
-    private Set<Promotion> subscribedPromotions = new HashSet<Promotion>();
+    @JoinTable(name = "patient_pharmacy_promotions", joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"))
+    private Set<Pharmacy> subscribedPharmacies = new HashSet<Pharmacy>();
 
 
     public Patient() {
     }
 
-    public Patient(int loyaltyScore, int penaltyScore, LoyaltyProgram loyaltyProgram, Set<EPrescription> ePrescriptions, Set<Complaint> complaints, Set<Counseling> counselings, Set<Examination> examinations, Set<Reservation> reservations, Set<Medicine> allergicMedicines, Set<Promotion> subscribedPromotions) {
+    public Patient(int loyaltyScore, int penaltyScore, LoyaltyProgram loyaltyProgram, Set<EPrescription> ePrescriptions, Set<Complaint> complaints, Set<Counseling> counselings, Set<Examination> examinations, Set<Reservation> reservations, Set<Medicine> allergicMedicines, Set<Pharmacy> subscribedPharmacies) {
         this.loyaltyScore = loyaltyScore;
         this.penaltyScore = penaltyScore;
         this.loyaltyProgram = loyaltyProgram;
@@ -55,7 +55,7 @@ public class Patient extends User{
         this.examinations = examinations;
         this.reservations = reservations;
         this.allergicMedicines = allergicMedicines;
-        this.subscribedPromotions = subscribedPromotions;
+        this.subscribedPharmacies = subscribedPharmacies;
     }
 
     public int getLoyaltyScore() {
@@ -130,11 +130,11 @@ public class Patient extends User{
         this.allergicMedicines = allergicMedicines;
     }
 
-    public Set<Promotion> getSubscribedPromotions() {
-        return subscribedPromotions;
+    public Set<Pharmacy> getSubscribedPharmacies() {
+        return subscribedPharmacies;
     }
 
-    public void setSubscribedPromotions(Set<Promotion> subscribedPromotions) {
-        this.subscribedPromotions = subscribedPromotions;
+    public void setSubscribedPharmacies(Set<Pharmacy> subscribedPharmacies) {
+        this.subscribedPharmacies = subscribedPharmacies;
     }
 }
