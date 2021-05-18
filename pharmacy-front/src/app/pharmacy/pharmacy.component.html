@@ -6,6 +6,46 @@
   Adresa apoteke: <b> {{pharmacy?.address}} </b>
   klikni ovde za prikaz na mapi
   <br>
+  Opis apoteke: <b> {{pharmacy?.pharmacyDescription}}</b>
+  <br>
+  <button class="btn btn-primary">Uredi podatke o apoteci</button>
+  <br>
+  <button class="btn btn-primary" (click)="phaList()">Izmeni spisak farmaceuta</button>
+
+  <button class="btn btn-primary" (click)="dermaList()">Izmeni spisak dermatologa</button>
+</div>
+
+
+<div *ngIf="buttonPress">
+  <div style="text-align: center;">   <h2> {{this?.naziv}} </h2> </div>
+  <div class="wrap">
+    <div class="search">
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="row" (click)="sort('id')">#</th>
+      <th scope="row" (click)="sort('name')">Ime</th>
+      <th scope="row" (click)="sort('surname')">Prezime</th>
+      <th scope="row" (click)="sort('grade')">Ocena</th>
+      <th scope="col">#</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr *ngFor="let emp of employees | orderBy: key: reverse" >
+      <th scope="row">{{ emp.id }}</th>
+      <td>{{ emp.firstName }}</td>
+      <td>{{ emp.lastName}}</td>
+      <td>{{ emp.evaluationGrade}}</td>
+      <td>
+        <button class="btn btn-primary">Uredi</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 
 
 </div>

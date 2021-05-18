@@ -3,7 +3,6 @@ import {PharmacyModel} from '../model/pharmacy.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PromotionModel} from '../model/promotion.model';
-import * as path from 'path';
 import {ToastrService} from 'ngx-toastr';
 
 @Injectable()

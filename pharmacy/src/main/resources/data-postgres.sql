@@ -26,12 +26,13 @@ insert into registeredusers (tip,first_name,last_name,username,password,email,co
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id) values ('ROLE_ADMIN','Branislav','Lazarevic','slav','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','branislavlazarevic@gmail.com','Srbija','Sabac','Marsala Tita 140',true, '2021-01-02 18:57:58.508-07',1);
 
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id,evaluation_grade) values ('ROLE_PHARMACIST','Kristijan','Savic','ris','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','risfizika@gmail.com','Srbija','Jagodina','despotovac',true, '2021-01-02 18:57:58.508-07',1,0);
+insert into pharmacy_dermatologist(pharmacy_id, dermatologist_id) values(1,2);
+insert into pharmacy_pharmacists(pharmacy_id, pharmacists_id) values(1,4);
 
 
-insert into promotion(title, text, start_date, end_date, type, pharmacy_id) values('Bekutan akcija', 'Svi bekutan prozivodi su sada kod nas vamo tmao','2021-01-11', '2021-03-30','promocija',1)
 
-insert into AbsenceRequest(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name) values
 
-('zahtev za godisnji', '2021-01-11', '2021-03-30','nov', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris')
+insert into promotion(title, text, start_date, end_date, type, pharmacy_id) values('Bekutan akcija', 'Svi bekutan prozivodi su sada kod nas vamo tmao','2021-01-11', '2021-03-30','promocija',1);
 
+insert into AbsenceRequest(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name) values ('zahtev za godisnji', '2021-01-11', '2021-03-30','nov', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris');
 

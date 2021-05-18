@@ -5,7 +5,6 @@ import {MedicineModel} from '../model/medicine.model';
 import {MedicineService} from '../services/medicine.service';
 import {MedicineQuantityModel} from '../model/medicineQuantity.model';
 import {MedicineQuantityHelpModel} from '../model/medicineQuantityHelpModel';
-import {element} from 'protractor';
 
 
 @Component({
@@ -23,7 +22,6 @@ export class OrderFromsComponent implements OnInit {
   public ids: Array<number>;
   public quan: Array<number>;
 
-
   isShown = true ;
   isSuccessful = false;
   form: any = {};
@@ -34,8 +32,8 @@ export class OrderFromsComponent implements OnInit {
 
   constructor(
     private medicineService: MedicineService,
-    private orderFormService: OrderFormService
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.initMedicines();
@@ -91,7 +89,6 @@ export class OrderFromsComponent implements OnInit {
     this.medQuantity = new MedicineQuantityModel(1, this.ids, this.quan);
     this.order = new OrderFormModel(1, 1, 'created', 1, null, null, this.form.startDate);
     console.log(this.order);
-    // this.orderFormService.makeNewOrder(this.order);
   }
 
   onSubmit(): void {}

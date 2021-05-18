@@ -2,6 +2,10 @@ package ftn.isa.pharmacy.controller;
 
 import java.util.Collection;
 
+import ftn.isa.pharmacy.dto.DermatologistDto;
+import ftn.isa.pharmacy.dto.PharmacistDTO;
+import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
+import ftn.isa.pharmacy.mapper.impl.PharmacistMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +20,15 @@ public class PharmacyController {
 
     private final PharmacyService pharmacyService;
     private final PharmacyMapperImpl pharmacyMapper;
+    private final DermatologistMapperImpl dermatologistMapper;
+    private final PharmacistMapperImpl pharmacistMapper;
 
     @Autowired
-    public PharmacyController(PharmacyService pharmacyService, PharmacyMapperImpl pharmacyMapper) {
+    public PharmacyController(PharmacyService pharmacyService, PharmacyMapperImpl pharmacyMapper, DermatologistMapperImpl dermatologistMapper, PharmacistMapperImpl pharmacistMapper) {
         this.pharmacyService = pharmacyService;
         this.pharmacyMapper = pharmacyMapper;
+        this.dermatologistMapper = dermatologistMapper;
+        this.pharmacistMapper = pharmacistMapper;
     }
 
     @GetMapping(value = "/getAll")
@@ -45,4 +53,21 @@ public class PharmacyController {
     public Boolean subscribe(@PathVariable Long id) {
         return pharmacyService.subscribe(id);
     }
+
+    @GetMapping(value = "/getDerma/{id}")
+    public ResponseEntity<Collection<DermatologistDto>> getDerma(@PathVariable Long id) {
+        Collection<DermatologistDto> dermatologistDtoList = dermatologistMapper.entity2Bean(pharmacyService.getDermaByPhaID(id));
+        System.out.println("kontroler");
+        System.out.println(dermatologistDtoList);
+        return ResponseEntity.ok(dermatologistDtoList);
+    }
+
+    @GetMapping(value = "/getPharma/{id}")
+    public ResponseEntity<Collection<PharmacistDTO>> getPharma(@PathVariable Long id) {
+        Collection<PharmacistDTO> pharmacistDTOS = pharmacistMapper.entity2Bean(pharmacyService.getPharmaByPhaID(id));
+        System.out.println("kontroler");
+        System.out.println(pharmacistDTOS);
+        return ResponseEntity.ok(pharmacistDTOS);
+    }
+
 }

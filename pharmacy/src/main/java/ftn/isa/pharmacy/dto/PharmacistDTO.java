@@ -1,24 +1,21 @@
 package ftn.isa.pharmacy.dto;
 
-import java.sql.Time;
-import java.util.Date;
-
 public class PharmacistDTO {
 
     private Long id;
     private float evaluationGrade;
-    private String name;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String type;
 
     public PharmacistDTO() {
     }
 
-    public PharmacistDTO(Long id, float evaluationGrade, String name, String lastname, String type) {
+    public PharmacistDTO(Long id, float evaluationGrade, String firstName, String lastName, String type) {
         this.id = id;
         this.evaluationGrade = evaluationGrade;
-        this.name = name;
-        this.lastname = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.type = type;
     }
 
@@ -38,20 +35,20 @@ public class PharmacistDTO {
         this.evaluationGrade = evaluationGrade;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getType() {

@@ -1,13 +1,15 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {PharmacyService} from './pharmacy.service';
-import {MedicineService} from './medicine.service';
+import {AbsenceService} from './absence.service';
 import {DermatologistService} from './dermatologist.service';
+import {EmployeeService} from './employee.service';
 import {ExaminationService} from './examination.service';
-import {CounselingComponent} from '../counseling/counseling.component';
+import {MedicineService} from './medicine.service';
+import {OrderFormService} from './order-form.service';
 import {PatientService} from './patient.service';
 import {PromotionService} from './promotion.service';
-import {AbsenceService} from './absence.service';
+import {PharmacyService} from './pharmacy.service';
+import {CounselingComponent} from '../counseling/counseling.component';
 
 @NgModule({
   declarations: [],
@@ -20,7 +22,9 @@ import {AbsenceService} from './absence.service';
     MedicineService,
     PatientService,
     PromotionService,
-    AbsenceService
+    AbsenceService,
+    EmployeeService,
+    OrderFormService
   ],
   imports: [
     CommonModule

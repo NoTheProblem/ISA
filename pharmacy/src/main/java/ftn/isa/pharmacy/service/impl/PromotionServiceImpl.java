@@ -39,14 +39,15 @@ public class PromotionServiceImpl implements PromotionService {
     public List<Promotion> getAllActive() {
         List<Promotion> promotions = promotionRepository.findAll();
         Date date = new Date();
-        for(Promotion p : promotions){
-            if (p.getEndDate().before(date))
-            promotions.remove(p);
-        }
         if(promotions.isEmpty()){
             return null;
             //TODO exception
         }
+        for(Promotion p : promotions){
+            if (p.getEndDate().before(date))
+            promotions.remove(p);
+        }
+
         return  promotions;
      }
 

@@ -74,4 +74,20 @@ public class PharmacyServiceImpl implements PharmacyService {
         }
         return false;
     }
+
+    @Override
+    public Set<Dermatologist> getDermaByPhaID(Long id) {
+        Pharmacy pharmacy = pharmacyRepository.getOne(id);
+        Set<Dermatologist> dermatologists = pharmacy.getDermatologists();
+        System.out.println(dermatologists);
+        return dermatologists;
+    }
+
+    @Override
+    public Set<Pharmacist> getPharmaByPhaID(Long id) {
+        Pharmacy pharmacy = pharmacyRepository.getOne(id);
+        Set<Pharmacist> pharmacists =  pharmacy.getPharmacists();
+        System.out.println(pharmacists);
+        return  pharmacists;
+    }
 }
