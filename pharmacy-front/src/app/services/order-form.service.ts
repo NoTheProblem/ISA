@@ -11,8 +11,4 @@ export class OrderFormService {
               private toast: ToastrService) {
   }
 
-  // tslint:disable-next-line:typedef
-  makeNewOrder(order: OrderFormModel) {
-
-  }
 }
