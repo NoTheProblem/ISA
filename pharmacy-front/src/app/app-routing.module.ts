@@ -15,6 +15,7 @@ import {AppointmentDefComponent} from './appointment-def/appointment-def.compone
 import {PharmacyMedicineComponent} from './pharmacy-medicine/pharmacy-medicine.component';
 import {PharmacyEmployeesComponent} from './pharmacy-employees/pharmacy-employees.component';
 import {PharmacyReportComponent} from './pharmacy-report/pharmacy-report.component';
+import {PharmacyDetailsComponent} from './pharmacy-details/pharmacy-details.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path: 'pharmacy-medicine', component: PharmacyMedicineComponent},
   {path: 'pharmacy-employees', component: PharmacyEmployeesComponent},
   {path: 'pharmacy-report', component: PharmacyReportComponent},
+  {path: 'pharmacy/:id', component: PharmacyDetailsComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

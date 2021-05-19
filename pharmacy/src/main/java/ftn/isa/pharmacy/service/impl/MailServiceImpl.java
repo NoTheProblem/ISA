@@ -2,9 +2,7 @@ package ftn.isa.pharmacy.service.impl;
 
 
 import ftn.isa.pharmacy.config.MailConfig;
-import ftn.isa.pharmacy.model.AbsenceRequest;
-import ftn.isa.pharmacy.model.Dermatologist;
-import ftn.isa.pharmacy.model.Pharmacist;
+import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.DermatologistRepository;
 import ftn.isa.pharmacy.repository.PatientRepository;
 import ftn.isa.pharmacy.repository.PharmacistRepository;
@@ -87,7 +85,7 @@ public class MailServiceImpl implements MailService {
         mailMessage.setText("Postovani " + info.get(1) + ",\n"+ "\n"+
                 "Vas zahtev za " + absenceRequest.getTypeOfAbsence().toLowerCase() +
                 " je prihvacen." +  "\n"+ "\n"+
-                "Srdacan pozdrav," + "\n"+
+                "Pozdrav," + "\n"+
                 "AP tim");
         mailSender.send(mailMessage);
     }
@@ -103,7 +101,34 @@ public class MailServiceImpl implements MailService {
                 "Vas zahtev za " + absenceRequest.getTypeOfAbsence().toLowerCase() +
                 " je odbijen." +  "\n"+ "\n"+
                 "Razlog odbijanja: " + absenceRequest.getAnswerText() + "\n"+ "\n"+
-                "Srdacan pozdrav," + "\n"+
+                "Pozdrav," + "\n"+
+                "AP tim");
+        mailSender.send(mailMessage);
+    }
+
+    public void newPromotionNotification(Promotion promotion,Patient patient){
+        JavaMailSenderImpl mailSender = getJMS();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("apoteka@gmail.com");
+        mailMessage.setTo(patient.getEmail());
+        mailMessage.setSubject("Nova " + promotion.getType() + " u " + promotion.getPharmacy().getName());
+        mailMessage.setText("Postovani u " + promotion.getPharmacy().getName() +
+                " ima nova " + promotion.getType() + " - " + promotion.getTitle() + ". Vise informacija na nasem sajtu!\n"+ "\n"+
+                "Pozdrav," + "\n"+
+                "AP tim");
+        mailSender.send(mailMessage);
+    }
+
+    public void newSubscriptionForPromotion(Pharmacy pharmacy, Patient patient){
+        JavaMailSenderImpl mailSender = getJMS();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("apoteka@gmail.com");
+        mailMessage.setTo(patient.getEmail());
+        mailMessage.setSubject("Akcije i promocije - " + pharmacy.getName() + "!");
+        mailMessage.setText("Postovani,\n"+ "\n"+
+                "Uspesno ste se pretplatili za dobijanje akcija i promocija - " +
+                pharmacy.getName() +  ".\n"+ "\n"+
+                "Pozdrav," + "\n"+
                 "AP tim");
         mailSender.send(mailMessage);
     }

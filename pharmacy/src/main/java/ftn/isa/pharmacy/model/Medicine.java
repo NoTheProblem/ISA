@@ -56,8 +56,6 @@ public class Medicine {
     private Set<Medicine> basedMedicines = new HashSet<Medicine>();
 
 
-
-
     @ManyToMany(mappedBy = "allergicMedicines")
     private Set<Patient> alergicMedicine = new HashSet<Patient>();
 
@@ -70,9 +68,6 @@ public class Medicine {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityReservation> reservationMedicines = new HashSet<MedicineQuantityReservation>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<MedicineQuantityOrder> orderMedicines = new HashSet<MedicineQuantityOrder>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityPharmacy> medicationQuantities = new HashSet<MedicineQuantityPharmacy>();
@@ -107,7 +102,6 @@ public class Medicine {
         this.priceMediceLists = priceMediceLists;
         this.pharmacies = pharmacies;
         this.reservationMedicines = reservationMedicines;
-        this.orderMedicines = orderMedicines;
         this.medicationQuantities = medicationQuantities;
         this.suppliersMedicines = suppliersMedicines;
         this.persLists = persLists;
@@ -263,14 +257,6 @@ public class Medicine {
 
     public void setReservationMedicines(Set<MedicineQuantityReservation> reservationMedicines) {
         this.reservationMedicines = reservationMedicines;
-    }
-
-    public Set<MedicineQuantityOrder> getOrderMedicines() {
-        return orderMedicines;
-    }
-
-    public void setOrderMedicines(Set<MedicineQuantityOrder> orderMedicines) {
-        this.orderMedicines = orderMedicines;
     }
 
     public Set<MedicineQuantityPharmacy> getMedicationQuantities() {

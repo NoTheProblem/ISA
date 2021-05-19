@@ -49,7 +49,6 @@ export class AbsencesComponent implements OnInit {
 
   private solveAbsence(absence: AbsenceModel): void{
     this.absence = absence;
-    console.log(this.absence);
     this.isShown = ! this.isShown;
   }
 

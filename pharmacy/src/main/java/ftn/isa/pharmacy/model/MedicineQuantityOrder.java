@@ -12,8 +12,8 @@ public class MedicineQuantityOrder {
     @Column
     private int quantity;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Medicine medicine;
+    @Column
+    private Long medicineID;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private PurchaseOrder purchaseOrder;
@@ -21,10 +21,10 @@ public class MedicineQuantityOrder {
     public MedicineQuantityOrder() {
     }
 
-    public MedicineQuantityOrder(Long id, int quantity, Medicine medicine, PurchaseOrder purchaseOrder) {
+    public MedicineQuantityOrder(Long id, int quantity, Long medicineID, PurchaseOrder purchaseOrder) {
         this.id = id;
         this.quantity = quantity;
-        this.medicine = medicine;
+        this.medicineID = medicineID;
         this.purchaseOrder = purchaseOrder;
     }
 
@@ -44,12 +44,12 @@ public class MedicineQuantityOrder {
         this.quantity = quantity;
     }
 
-    public Medicine getMedicine() {
-        return medicine;
+    public Long getMedicine() {
+        return medicineID;
     }
 
-    public void setMedicine(Medicine medicine) {
-        this.medicine = medicine;
+    public void setMedicine(Long medicineID) {
+        this.medicineID = medicineID;
     }
 
     public PurchaseOrder getPurchaseOrder() {

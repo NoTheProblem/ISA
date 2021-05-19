@@ -1,6 +1,6 @@
 package ftn.isa.pharmacy.dto;
 
-public class DermatologistDto {
+public class PharmacistDTO {
 
     private Long id;
     private float evaluationGrade;
@@ -8,14 +8,14 @@ public class DermatologistDto {
     private String lastName;
     private String type;
 
-    public DermatologistDto() {
+    public PharmacistDTO() {
     }
 
-    public DermatologistDto(Long id, float evaluationGrade, String name, String lastname, String type) {
+    public PharmacistDTO(Long id, float evaluationGrade, String firstName, String lastName, String type) {
         this.id = id;
         this.evaluationGrade = evaluationGrade;
-        this.firstName = name;
-        this.lastName = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.type = type;
     }
 
@@ -58,5 +58,4 @@ public class DermatologistDto {
     public void setType(String type) {
         this.type = type;
     }
-
 }

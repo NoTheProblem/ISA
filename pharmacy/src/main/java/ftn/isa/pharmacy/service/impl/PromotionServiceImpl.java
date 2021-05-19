@@ -21,13 +21,15 @@ public class PromotionServiceImpl implements PromotionService {
     private final PromotionRepository promotionRepository;
     private final PharmacyAdminRepository pharmacyAdminRepository;
     private final PromotionMapper promotionMapper;
+    private final MailServiceImpl mailService;
 
 
     @Autowired
-    public PromotionServiceImpl(PromotionRepository promotionRepository, PharmacyAdminRepository pharmacyAdminRepository, PromotionMapper promotionMapper) {
+    public PromotionServiceImpl(PromotionRepository promotionRepository, PharmacyAdminRepository pharmacyAdminRepository, PromotionMapper promotionMapper, MailServiceImpl mailService) {
         this.promotionRepository = promotionRepository;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.promotionMapper = promotionMapper;
+        this.mailService = mailService;
     }
 
     @Override
@@ -39,14 +41,15 @@ public class PromotionServiceImpl implements PromotionService {
     public List<Promotion> getAllActive() {
         List<Promotion> promotions = promotionRepository.findAll();
         Date date = new Date();
-        for(Promotion p : promotions){
-            if (p.getEndDate().before(date))
-            promotions.remove(p);
-        }
         if(promotions.isEmpty()){
             return null;
             //TODO exception
         }
+        for(Promotion p : promotions){
+            if (p.getEndDate().before(date))
+            promotions.remove(p);
+        }
+
         return  promotions;
      }
 
@@ -55,8 +58,15 @@ public class PromotionServiceImpl implements PromotionService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
         if(pharmacyAdminOptional.isPresent()) {
+            PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
             Promotion promotion = promotionMapper.bean2Entity(promotionDTO);
+            promotion.setPharmacy(pharmacyAdmin.getPharmacy());
             promotionRepository.save(promotion);
+            Pharmacy pharmacy = promotion.getPharmacy();
+            for (Patient patinet:pharmacy.getSubscribedPatients())
+            {
+                mailService.newPromotionNotification(promotion,patinet);
+            }
         }
         //TODO exception
     }

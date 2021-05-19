@@ -50,4 +50,19 @@ export class TokenStorageService {
     return this.decoded.type;
   }
 
+  public getUserID(): number{
+    this.user = this.getToken();
+    this.decoded = jwt_decode(this.user);
+    console.log(this.decoded.id);
+    return this.decoded.id;
+  }
+
+  public isLoggedIn(): boolean{
+    this.user = this.getToken();
+    if (this.user.empty){
+      return false;
+    }
+    return  true;
+  }
+
 }
