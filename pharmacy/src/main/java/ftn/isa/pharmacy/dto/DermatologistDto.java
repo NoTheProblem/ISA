@@ -2,7 +2,6 @@ package ftn.isa.pharmacy.dto;
 
 public class DermatologistDto {
 
-
     private Long id;
     private float evaluationGrade;
     private String firstName;

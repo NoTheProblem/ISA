@@ -6,7 +6,6 @@ import {MedicineService} from '../services/medicine.service';
 import {MedicineQuantityModel} from '../model/medicineQuantity.model';
 import {MedicineQuantityHelpModel} from '../model/medicineQuantityHelpModel';
 
-
 @Component({
   selector: 'app-order-froms',
   templateUrl: './order-froms.component.html',
@@ -21,6 +20,7 @@ export class OrderFromsComponent implements OnInit {
   public medH: MedicineQuantityHelpModel;
   public ids: Array<number>;
   public quan: Array<number>;
+  public mapa: Map<number, number>;
 
   isShown = true ;
   isSuccessful = false;
@@ -32,11 +32,13 @@ export class OrderFromsComponent implements OnInit {
 
   constructor(
     private medicineService: MedicineService,
+    private orderFormService: OrderFormService
   ) {
   }
 
   ngOnInit(): void {
     this.initMedicines();
+    this.mapa = new Map<number, number>();
   }
 
   public toggle(): void {
@@ -78,19 +80,26 @@ export class OrderFromsComponent implements OnInit {
 
 
   public createOrder(): void {
-    console.log(this.form.startDate);
     this.ids = new Array<number>();
     this.quan = new Array<number>();
-    for(const medHelpItem of this.medHelp){
+    for (const medHelpItem of this.medHelp){
       this.ids.push(medHelpItem.medicineID);
       this.quan.push(medHelpItem.quantity);
     }
-
     this.medQuantity = new MedicineQuantityModel(1, this.ids, this.quan);
     this.order = new OrderFormModel(1, 1, 'created', 1, null, null, this.form.startDate);
-    console.log(this.order);
+    this.orderFormService.addOrderForm(this.order);
+    window.location.reload();
   }
 
   onSubmit(): void {}
+
+  Dodaj(med: MedicineQuantityHelpModel): void {
+      med.quantity = med.quantity + 1;
+  }
+
+  Smanji(med: MedicineQuantityHelpModel): void {
+    med.quantity = med.quantity - 1;
+  }
 }
 

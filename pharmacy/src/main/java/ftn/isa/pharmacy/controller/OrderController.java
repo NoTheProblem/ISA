@@ -5,9 +5,7 @@ import ftn.isa.pharmacy.dto.PurchaseOrderDTO;
 import ftn.isa.pharmacy.mapper.impl.PurchaseOrderMapperImpl;
 import ftn.isa.pharmacy.service.OrderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -27,6 +25,13 @@ public class OrderController {
     public ResponseEntity<Collection<PurchaseOrderDTO>> getAll() {
         Collection<PurchaseOrderDTO> purchaseOrderDTOS = orderMapper.entity2Bean(orderService.getAll());
         return ResponseEntity.ok(purchaseOrderDTOS);
+    }
+
+    @PostMapping("/addPurchaseOrder")
+    public void addPurchaseOrder(@RequestBody PurchaseOrderDTO purchaseOrderDTO) {
+        orderService.addPurchaseOrder(purchaseOrderDTO);
+        System.out.println(purchaseOrderDTO);
+
     }
 
 }

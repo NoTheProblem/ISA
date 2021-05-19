@@ -43,14 +43,14 @@
         <table class="table table-striped">
           <thead>
           <tr>
-            <th scope="row" (click)="sort('code')">Šifra</th>
-            <th scope="row" (click)="sort('name')">Ime</th>
+            <th scope="row">Šifra</th>
+            <th scope="row">Ime</th>
             <th scope="col">#</th>
           </tr>
           </thead>
           <tbody>
 
-          <tr *ngFor="let medicine of medicines | orderBy: key: reverse" >
+          <tr *ngFor="let medicine of medicines" >
             <td>{{ medicine.code }}</td>
             <td>{{ medicine.name}}</td>
             <td>
@@ -73,6 +73,7 @@
             <th scope="row">Naziv leka</th>
             <th scope="row">Sifra leka</th>
             <th scope="row">Kolicina</th>
+            <th> Dodaj</th>
             <th scope="row">Izbaci</th>
           </tr>
           </thead>
@@ -82,7 +83,11 @@
             <th scope="row">{{ med.medicineID }}</th>
             <td>{{ med.medicineName }}</td>
             <td>{{ med.medicineCode}}</td>
-            <td>{{ med.quantity}}</td>
+            <td>{{ med.quantity }}</td>
+            <td>
+              <button class="btn btn-primary" (click)="Dodaj(med)">Dodaj</button>
+              <button class="btn btn-primary" (click)="Smanji(med)">Smanji</button>
+            </td>
             <td>
               <button class="btn btn-primary" (click)="Izbrisi(med)">Izbaci</button>
             </td>
@@ -99,12 +104,6 @@
       <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
         Slanje porudzbenice nije uspelo<br />{{ errorMessage }}
       </div>
-
-
-
-
-
-
     </form>
   </div>
 
@@ -117,28 +116,22 @@
 
 <div *ngIf="isShown" class="row container-fluid"  id="divshow">
   <div class="m-3">
-    <h3>Akcije/Promocije</h3>
+    <h3>Porudzbenice</h3>
   </div>
   <table class="table table-striped" >
     <thead>
     <tr>
       <th scope="row">#</th>
-      <th scope="row">Naziv</th>
-      <th scope="row">Opis</th>
-      <th scope="row">Tip</th>
-      <th scope="row">Datum pocetka vazenja</th>
-      <th scope="row">Datum kraja vazenja</th>
+      <th scope="row">Status</th>
+      <th scope="row">Rok</th>
     </tr>
     </thead>
 
     <tbody>
-    <tr *ngFor="let promotion of promotions" >
-      <th scope="row">{{ promotion.id }}</th>
-      <td>{{ promotion.title }}</td>
-      <td>{{ promotion.text}}</td>
-      <td>{{ promotion.type}}</td>
-      <td>{{ promotion.startDate | date}}</td>
-      <td>{{ promotion.endDate | date}}</td>
+    <tr *ngFor="let ord of orders" >
+      <th scope="row">{{ ord.id }}</th>
+      <td>{{ ord.status }}</td>
+      <td>{{ ord.endDate}}</td>
     </tr>
     </tbody>
   </table>
