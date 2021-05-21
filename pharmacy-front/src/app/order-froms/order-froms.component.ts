@@ -22,6 +22,8 @@ export class OrderFromsComponent implements OnInit {
   public quan: Array<number>;
   public mapa: Map<number, number>;
 
+  helpID: number;
+  isQuanShown = false;
   isShown = true ;
   isSuccessful = false;
   form: any = {};
@@ -29,6 +31,7 @@ export class OrderFromsComponent implements OnInit {
   errorMessage = '';
   name = '';
   dummy = '';
+  newquan: number;
 
   constructor(
     private medicineService: MedicineService,
@@ -58,6 +61,10 @@ export class OrderFromsComponent implements OnInit {
   }
 
   private initMedicines(): void {
+    this.orderFormService.getAllActive()
+      .subscribe((orders: Array<OrderFormModel>) => {
+        this.orders = orders;
+      });
     this.medicineService.getAll()
       .subscribe((medicineList: Array<MedicineModel>) => {
         this.medicines = medicineList;
@@ -87,7 +94,7 @@ export class OrderFromsComponent implements OnInit {
       this.quan.push(medHelpItem.quantity);
     }
     this.medQuantity = new MedicineQuantityModel(1, this.ids, this.quan);
-    this.order = new OrderFormModel(1, 1, 'created', 1, null, null, this.form.startDate);
+    this.order = new OrderFormModel(null,  null, null, null, null, this.form.startDate, null, this.medQuantity);
     this.orderFormService.addOrderForm(this.order);
     window.location.reload();
   }
@@ -99,7 +106,21 @@ export class OrderFromsComponent implements OnInit {
   }
 
   Smanji(med: MedicineQuantityHelpModel): void {
+    if ( med.quantity - 1 < 1){
+      return;
+    }
     med.quantity = med.quantity - 1;
+  }
+
+  ShowQuanEnter(med: MedicineQuantityHelpModel): void {
+    this.isQuanShown = true;
+    this.medH = med;
+    this.newquan = med.quantity;
+  }
+
+  changeQuan(): void {
+    this.medH.quantity = this.newquan;
+    this.isQuanShown = false;
   }
 }
 

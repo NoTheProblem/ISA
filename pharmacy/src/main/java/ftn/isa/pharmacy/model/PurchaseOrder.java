@@ -13,10 +13,16 @@ public class PurchaseOrder {
     private Long id;
 
     @Column
+    private Date createDate;
+
+    @Column
     private Date endDate;
 
     @Column
     private String status;
+
+    @Column
+    private float price;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Bid> bids = new HashSet<Bid>();
@@ -24,19 +30,33 @@ public class PurchaseOrder {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private PharmacyAdmin pharmacyAdmin;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Supplier chosenSupplier;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityOrder> orderMedicines = new HashSet<MedicineQuantityOrder>();
 
     public PurchaseOrder() {
     }
 
-    public PurchaseOrder(Long id, Date endDate, String status, Set<Bid> bids, PharmacyAdmin pharmacyAdmin, Set<MedicineQuantityOrder> orderMedicines) {
+    public PurchaseOrder(Long id, Date createDate, Date endDate, String status, float price, Set<Bid> bids, PharmacyAdmin pharmacyAdmin, Supplier chosenSupplier, Set<MedicineQuantityOrder> orderMedicines) {
         this.id = id;
+        this.createDate = createDate;
         this.endDate = endDate;
         this.status = status;
+        this.price = price;
         this.bids = bids;
         this.pharmacyAdmin = pharmacyAdmin;
+        this.chosenSupplier = chosenSupplier;
         this.orderMedicines = orderMedicines;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
     public Long getId() {
@@ -85,5 +105,21 @@ public class PurchaseOrder {
 
     public void setOrderMedicines(Set<MedicineQuantityOrder> orderMedicines) {
         this.orderMedicines = orderMedicines;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public Supplier getChosenSupplier() {
+        return chosenSupplier;
+    }
+
+    public void setChosenSupplier(Supplier chosenSupplier) {
+        this.chosenSupplier = chosenSupplier;
     }
 }

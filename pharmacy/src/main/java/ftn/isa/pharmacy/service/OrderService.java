@@ -12,4 +12,6 @@ public interface OrderService {
     List<PurchaseOrder> getAll();
 
     void addPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO);
+
+    Collection<PurchaseOrderDTO> getAllActive();
 }

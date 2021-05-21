@@ -1,26 +1,34 @@
 package ftn.isa.pharmacy.dto;
+
 import java.util.Date;
 
 public class PurchaseOrderDTO {
     Long id;
     Date endDate;
+    Date createDate;
     String status;
-    Long adminID;
-    Long medicineQuantityID;
+    Long pharmacyAdmin;
+    Long chosenSupplier;
+    Long orderMedicines;
     Long supplierID;
     float price;
+    MedicineQuantityDto medQuan;
+    //bids
 
     public PurchaseOrderDTO() {
     }
 
-    public PurchaseOrderDTO(Long id, Date endDate, String status, Long adminID, Long medicineQuantityID, Long supplierID, float price) {
+    public PurchaseOrderDTO(Long id, Date endDate, Date createDate, String status, Long pharmacyAdmin, Long chosenSupplier, Long orderMedicines, Long supplierID, float price, MedicineQuantityDto medQuan) {
         this.id = id;
         this.endDate = endDate;
+        this.createDate = createDate;
         this.status = status;
-        this.adminID = adminID;
-        this.medicineQuantityID = medicineQuantityID;
+        this.pharmacyAdmin = pharmacyAdmin;
+        this.chosenSupplier = chosenSupplier;
+        this.orderMedicines = orderMedicines;
         this.supplierID = supplierID;
         this.price = price;
+        this.medQuan = medQuan;
     }
 
     public Long getId() {
@@ -39,6 +47,14 @@ public class PurchaseOrderDTO {
         this.endDate = endDate;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -47,20 +63,28 @@ public class PurchaseOrderDTO {
         this.status = status;
     }
 
-    public Long getAdminID() {
-        return adminID;
+    public Long getPharmacyAdmin() {
+        return pharmacyAdmin;
     }
 
-    public void setAdminID(Long adminID) {
-        this.adminID = adminID;
+    public void setPharmacyAdmin(Long pharmacyAdmin) {
+        this.pharmacyAdmin = pharmacyAdmin;
     }
 
-    public Long getMedicineQuantityID() {
-        return medicineQuantityID;
+    public Long getChosenSupplier() {
+        return chosenSupplier;
     }
 
-    public void setMedicineQuantityID(Long medicineQuantityID) {
-        this.medicineQuantityID = medicineQuantityID;
+    public void setChosenSupplier(Long chosenSupplier) {
+        this.chosenSupplier = chosenSupplier;
+    }
+
+    public Long getOrderMedicines() {
+        return orderMedicines;
+    }
+
+    public void setOrderMedicines(Long orderMedicines) {
+        this.orderMedicines = orderMedicines;
     }
 
     public Long getSupplierID() {
@@ -78,4 +102,14 @@ public class PurchaseOrderDTO {
     public void setPrice(float price) {
         this.price = price;
     }
+
+    public MedicineQuantityDto getMedQuan() {
+        return medQuan;
+    }
+
+    public void setMedQuan(MedicineQuantityDto medQuan) {
+        this.medQuan = medQuan;
+    }
 }
+
+

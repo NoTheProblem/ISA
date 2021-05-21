@@ -62,6 +62,12 @@
       </div>
 
 
+      <div *ngIf="isQuanShown">
+        {{medH?.medicineName}} :
+        <input type="number" name ="newquan" [(ngModel)]="newquan" placeholder="Unesi kolicinu za odabrani lek">
+        <button class="btn btn-primary" (click)="changeQuan()">Promeni kolicinu</button>
+      </div>
+
       <div class="row container-fluid">
         <div class="m-3">
           <h3>Lekovi za narucivanje</h3>
@@ -73,8 +79,9 @@
             <th scope="row">Naziv leka</th>
             <th scope="row">Sifra leka</th>
             <th scope="row">Kolicina</th>
-            <th> Dodaj</th>
-            <th scope="row">Izbaci</th>
+            <th></th>
+            <th></th>
+            <th></th>
           </tr>
           </thead>
 
@@ -87,6 +94,9 @@
             <td>
               <button class="btn btn-primary" (click)="Dodaj(med)">Dodaj</button>
               <button class="btn btn-primary" (click)="Smanji(med)">Smanji</button>
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="ShowQuanEnter(med)">Unesi kolicinu</button>
             </td>
             <td>
               <button class="btn btn-primary" (click)="Izbrisi(med)">Izbaci</button>
@@ -122,16 +132,30 @@
     <thead>
     <tr>
       <th scope="row">#</th>
+      <th scope="row">Naziv/Kod</th>
       <th scope="row">Status</th>
       <th scope="row">Rok</th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
     </thead>
 
     <tbody>
-    <tr *ngFor="let ord of orders" >
+    <tr *ngFor="let ord of orders">
       <th scope="row">{{ ord.id }}</th>
+      <td> Naziv/Kod</td>
       <td>{{ ord.status }}</td>
-      <td>{{ ord.endDate}}</td>
+      <td>{{ ord.endDate  | date:'longDate'}} </td>
+      <td *ngIf="ord.status=='choose'">
+        <button class="btn btn-primary">Odgovori</button>
+      </td>
+      <td *ngIf="ord.status=='created'">
+        <button class="btn btn-primary">Uredi</button>
+      </td>
+      <td *ngIf="ord.status=='created'">
+        <button class="btn btn-primary">Izbrisi</button>
+      </td>
     </tr>
     </tbody>
   </table>

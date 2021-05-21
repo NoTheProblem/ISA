@@ -32,5 +32,9 @@ export class PharmacyDetailsComponent implements OnInit {
   subscribeToPromotions(): void{
     this.pharmacyService.subscribeToPromotions(this.pharmacy.id);
   }
+
+  checkEPerscription(): void {
+    return;
+  }
 }
 

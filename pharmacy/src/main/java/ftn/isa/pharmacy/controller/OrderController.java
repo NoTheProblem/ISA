@@ -34,4 +34,10 @@ public class OrderController {
 
     }
 
+    @GetMapping(value = "/getAllActive")
+    public ResponseEntity<Collection<PurchaseOrderDTO>> getAllActive() {
+        Collection<PurchaseOrderDTO> purchaseOrderDTOS = orderService.getAllActive();
+        return ResponseEntity.ok(purchaseOrderDTOS);
+    }
+
 }
