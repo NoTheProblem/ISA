@@ -1,1 +1,25 @@
-<p>appointment-def works!</p>
+Svaki dermatolog ima radno vreme za svaku apoteku posebno. Administrator
+apoteke definiše preglede kod dermatologa u terminu kada je dermatolog u
+apoteci. Za svaki pregled potrebno je definisati datum i vreme početka pregleda,
+trajanje pregleda i cenu. U radnom kalendaru dermatologa nalaze se pregledi
+koji su unapred definisani.
+
+
+
+
+<form
+  name="form"
+  #f="ngForm"
+  novalidate
+>
+  <input
+    type="time"
+    class="form-control"
+    name="customtime"
+    required
+  />
+
+  <div class="form-group">
+    <button class="btn btn-primary btn-block" (click)="call()" >Napravi akciju/promociju</button>
+  </div>
+</form>

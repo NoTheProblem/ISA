@@ -12,4 +12,7 @@ export class AppointmentDefComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  call(): void {
+    return;
+  }
 }
