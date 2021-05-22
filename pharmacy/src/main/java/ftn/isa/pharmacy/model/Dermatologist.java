@@ -62,4 +62,5 @@ public class Dermatologist extends User{
     public void setPharmacys(Set<Pharmacy> pharmacys) {
         this.pharmacys = pharmacys;
     }
+
 }

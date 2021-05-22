@@ -1,6 +1,7 @@
 package ftn.isa.pharmacy.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import ftn.isa.pharmacy.dto.DermatologistDto;
 import ftn.isa.pharmacy.dto.PharmacistDTO;
@@ -57,17 +58,19 @@ public class PharmacyController {
     @GetMapping(value = "/getDerma/{id}")
     public ResponseEntity<Collection<DermatologistDto>> getDerma(@PathVariable Long id) {
         Collection<DermatologistDto> dermatologistDtoList = dermatologistMapper.entity2Bean(pharmacyService.getDermaByPhaID(id));
-        System.out.println("kontroler");
-        System.out.println(dermatologistDtoList);
         return ResponseEntity.ok(dermatologistDtoList);
     }
 
     @GetMapping(value = "/getPharma/{id}")
     public ResponseEntity<Collection<PharmacistDTO>> getPharma(@PathVariable Long id) {
         Collection<PharmacistDTO> pharmacistDTOS = pharmacistMapper.entity2Bean(pharmacyService.getPharmaByPhaID(id));
-        System.out.println("kontroler");
-        System.out.println(pharmacistDTOS);
         return ResponseEntity.ok(pharmacistDTOS);
+    }
+
+    @GetMapping(value = "/getDerma/phaadmin")
+    public ResponseEntity<Collection<DermatologistDto>> getDermaForPhaAdmin() {
+        Collection<DermatologistDto> dermatologistDtoList = pharmacyService.getDermaForPhaAdmin();
+        return ResponseEntity.ok(dermatologistDtoList);
     }
 
 }

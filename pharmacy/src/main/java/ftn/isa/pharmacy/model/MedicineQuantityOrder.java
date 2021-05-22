@@ -10,7 +10,7 @@ public class MedicineQuantityOrder {
     private Long id;
 
     @Column
-    private int quantity;
+    private Long quantity;
 
     @Column
     private Long medicineID;
@@ -21,7 +21,7 @@ public class MedicineQuantityOrder {
     public MedicineQuantityOrder() {
     }
 
-    public MedicineQuantityOrder(Long id, int quantity, Long medicineID, PurchaseOrder purchaseOrder) {
+    public MedicineQuantityOrder(Long id, Long quantity, Long medicineID, PurchaseOrder purchaseOrder) {
         this.id = id;
         this.quantity = quantity;
         this.medicineID = medicineID;
@@ -36,11 +36,11 @@ public class MedicineQuantityOrder {
         this.id = id;
     }
 
-    public int getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
 

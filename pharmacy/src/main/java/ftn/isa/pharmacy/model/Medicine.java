@@ -55,7 +55,6 @@ public class Medicine {
     @JoinTable(name = "basedMedicines", joinColumns = @JoinColumn(name = "basedMedicine", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "replacedMedicine", referencedColumnName = "id"))
     private Set<Medicine> basedMedicines = new HashSet<Medicine>();
 
-
     @ManyToMany(mappedBy = "allergicMedicines")
     private Set<Patient> alergicMedicine = new HashSet<Patient>();
 
@@ -64,7 +63,6 @@ public class Medicine {
 
     @ManyToMany(mappedBy = "missingMedicine")
     private Set<Pharmacy> pharmacies = new HashSet<Pharmacy>();
-
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityReservation> reservationMedicines = new HashSet<MedicineQuantityReservation>();
@@ -77,7 +75,6 @@ public class Medicine {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PersList> persLists = new HashSet<PersList>();
-
 
     public Medicine() {
     }

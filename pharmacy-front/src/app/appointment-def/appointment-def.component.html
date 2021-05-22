@@ -1,1 +1,36 @@
-<p>appointment-def works!</p>
+
+<div *ngIf="show">
+  <div style="text-align: center;">  <h2>Lista dermatologa - Definisanje termina</h2> </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="row">#</th>
+          <th scope="row">Ime</th>
+          <th scope="row">Prezime</th>
+          <th scope="row">Ocena</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let der of dermatoligists " >
+          <th scope="row">{{ der.id }}</th>
+          <td>{{ der.firstName }}</td>
+          <td>{{ der.lastName}}</td>
+          <td>{{ der.evaluationGrade}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openDerma(der)">Definisi termine</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div *ngIf="!show">
+  Ime i prezime: {{derma.firstName}} {{derma.lastName}}
+  <br>
+  Ocena:{{derma.evaluationGrade}}
+  <br>
+  Pocetak radnog vremena :{{workingHours.startTime}}
+  <br>
+  Kraj radnog vremena: {{workingHours.endTime }}
+</div>

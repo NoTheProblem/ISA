@@ -1,5 +1,6 @@
 package ftn.isa.pharmacy.service;
 
+import ftn.isa.pharmacy.dto.DermatologistDto;
 import ftn.isa.pharmacy.model.Dermatologist;
 import ftn.isa.pharmacy.model.Pharmacist;
 import ftn.isa.pharmacy.model.Pharmacy;
@@ -16,4 +17,5 @@ public interface PharmacyService {
     Boolean subscribe(Long id);
     Set<Dermatologist> getDermaByPhaID(Long id);
     Set<Pharmacist> getPharmaByPhaID(Long id);
+    Collection<DermatologistDto> getDermaForPhaAdmin();
 }

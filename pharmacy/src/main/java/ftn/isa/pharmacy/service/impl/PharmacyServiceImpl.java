@@ -1,18 +1,18 @@
 package ftn.isa.pharmacy.service.impl;
 
+import ftn.isa.pharmacy.dto.DermatologistDto;
+import ftn.isa.pharmacy.dto.WorkingHoursDTO;
+import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
+import ftn.isa.pharmacy.mapper.impl.WorkingHoursMapperImpl;
 import ftn.isa.pharmacy.model.*;
-import ftn.isa.pharmacy.repository.PatientRepository;
-import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
-import ftn.isa.pharmacy.repository.PharmacyRepository;
-import ftn.isa.pharmacy.repository.PromotionRepository;
+import ftn.isa.pharmacy.repository.*;
 import ftn.isa.pharmacy.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import java.util.Set;
-import java.util.List;
-import java.util.Optional;
+
+import java.util.*;
 
 @Service
 public class PharmacyServiceImpl implements PharmacyService {
@@ -22,15 +22,22 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final PatientRepository patientRepository;
     private final PromotionRepository promotionRepository;
     private final MailServiceImpl mailService;
+    private final DermatologistMapperImpl dermatologistMapper;
+    private final WorkingHoursMapperImpl workingHoursMapper;
+    private final WorkingHoursRepository workingHoursRepository;
+
 
     // https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/#gatsby-focus-wrapper
     @Autowired
-    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService) {
+    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.pharmacyRepository = pharmacyRepository;
         this.patientRepository = patientRepository;
         this.promotionRepository = promotionRepository;
         this.mailService = mailService;
+        this.dermatologistMapper = dermatologistMapper;
+        this.workingHoursMapper = workingHoursMapper;
+        this.workingHoursRepository = workingHoursRepository;
     }
 
     @Override
@@ -91,5 +98,33 @@ public class PharmacyServiceImpl implements PharmacyService {
         Pharmacy pharmacy = pharmacyRepository.getOne(id);
         Set<Pharmacist> pharmacists =  pharmacy.getPharmacists();
         return  pharmacists;
+    }
+
+    @Override
+    public Collection<DermatologistDto> getDermaForPhaAdmin() {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
+        Set<Dermatologist> dermatologists = pharmacy.getDermatologists();
+        Set<DermatologistDto> dermatologistDtos = new HashSet<>();
+        for(Dermatologist d : dermatologists){
+            DermatologistDto dermatologistDto = dermatologistMapper.entity2Bean(d);
+            List<WorkingHoursDTO> workingHoursDTOS = new Stack<>();
+            WorkingHours wk = workingHoursRepository.getWorkingHoursByPharmacyAndDermatologist(pharmacy,d);
+            workingHoursDTOS.add(workingHoursMapper.entity2Bean(wk));
+            dermatologistDto.setWorkingHours(workingHoursDTOS);
+            dermatologistDtos.add(dermatologistDto);
+        }
+        return dermatologistDtos;
+    }
+
+
+    private PharmacyAdmin getPharmacyAdmin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
+        if(pharmacyAdminOptional.isPresent()) {
+            PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
+            return pharmacyAdmin;
+        }
+        return null;
     }
 }
