@@ -41,7 +41,6 @@ public class Patient extends User{
     @JoinTable(name = "patient_pharmacy_promotions", joinColumns = @JoinColumn(name = "patient_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"))
     private Set<Pharmacy> subscribedPharmacies = new HashSet<Pharmacy>();
 
-
     public Patient() {
     }
 

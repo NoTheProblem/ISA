@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {PharmacyModel} from '../model/pharmacy.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {PromotionModel} from '../model/promotion.model';
 import {ToastrService} from 'ngx-toastr';
 
 @Injectable()

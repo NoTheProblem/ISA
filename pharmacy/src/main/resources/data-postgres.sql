@@ -30,12 +30,12 @@ insert into pharmacy_dermatologist(pharmacy_id, dermatologist_id) values (1,2);
 
 insert into pharmacy_pharmacists(pharmacy_id, pharmacists_id) values(1,4);
 
-insert into working_hours values (2,'08:00:00.000','15:00:00.000',2,1);
+insert into working_hours values (2,'15:00:00.000','08:00:00.000',2,1);
 
 insert into promotion values(1,'2021-07-30', '2021-01-11','Svi bekutan prozivodi su sada kod nas vamo tmao','Bekutan akcija','promocija',1);
 
 
-insert into purchase_order values (1,'2021-05-05','2021-06-06',null,'created',null,3);
+insert into purchase_order values (1,'2021-05-05','2021-06-06',0,'created',null,3);
 
 insert into medicine_quantity_order values(1,1,5,1);
 insert into medicine_quantity_order values(2,2,7,1);

@@ -1,5 +1,7 @@
 package ftn.isa.pharmacy.dto;
 
+import java.util.List;
+
 public class DermatologistDto {
 
     private Long id;
@@ -7,16 +9,18 @@ public class DermatologistDto {
     private String firstName;
     private String lastName;
     private String type;
+    private List<WorkingHoursDTO> workingHours;
 
     public DermatologistDto() {
     }
 
-    public DermatologistDto(Long id, float evaluationGrade, String name, String lastname, String type) {
+    public DermatologistDto(Long id, float evaluationGrade, String firstName, String lastName, String type, List<WorkingHoursDTO> workingHours) {
         this.id = id;
         this.evaluationGrade = evaluationGrade;
-        this.firstName = name;
-        this.lastName = lastname;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.type = type;
+        this.workingHours = workingHours;
     }
 
     public Long getId() {
@@ -58,5 +62,15 @@ public class DermatologistDto {
     public void setType(String type) {
         this.type = type;
     }
+
+    public List<WorkingHoursDTO> getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(List<WorkingHoursDTO> workingHours) {
+        this.workingHours = workingHours;
+    }
+
+
 
 }

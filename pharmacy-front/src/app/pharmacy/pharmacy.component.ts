@@ -16,7 +16,7 @@ import {newArray} from '@angular/compiler/src/util';
   styleUrls: ['./pharmacy.component.css']
 })
 export class PharmacyComponent implements OnInit {
-  public employees: Array<EmployeeModel>;
+  private employees: Array<EmployeeModel>;
   public employeesBackUp: Array<EmployeeModel>;
   public pharmacy: PharmacyModel;
   buttonPress = false;

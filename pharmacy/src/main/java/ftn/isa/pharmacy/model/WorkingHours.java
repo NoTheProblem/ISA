@@ -73,4 +73,6 @@ public class WorkingHours {
     public void setDermatologist(Dermatologist dermatologist) {
         this.dermatologist = dermatologist;
     }
+
+
 }
