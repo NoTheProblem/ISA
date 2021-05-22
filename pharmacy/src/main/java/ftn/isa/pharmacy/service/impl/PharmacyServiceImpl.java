@@ -1,8 +1,10 @@
 package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.dto.DermatologistDto;
+import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.WorkingHoursDTO;
 import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
+import ftn.isa.pharmacy.mapper.impl.ExaminationMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.WorkingHoursMapperImpl;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.*;
@@ -25,11 +27,13 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final DermatologistMapperImpl dermatologistMapper;
     private final WorkingHoursMapperImpl workingHoursMapper;
     private final WorkingHoursRepository workingHoursRepository;
+    private final ExaminationRepository examinationRepository;
+    private final ExaminationMapperImpl examinationMapper;
 
 
     // https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/#gatsby-focus-wrapper
     @Autowired
-    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository) {
+    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.pharmacyRepository = pharmacyRepository;
         this.patientRepository = patientRepository;
@@ -38,6 +42,8 @@ public class PharmacyServiceImpl implements PharmacyService {
         this.dermatologistMapper = dermatologistMapper;
         this.workingHoursMapper = workingHoursMapper;
         this.workingHoursRepository = workingHoursRepository;
+        this.examinationRepository = examinationRepository;
+        this.examinationMapper = examinationMapper;
     }
 
     @Override
@@ -112,6 +118,9 @@ public class PharmacyServiceImpl implements PharmacyService {
             WorkingHours wk = workingHoursRepository.getWorkingHoursByPharmacyAndDermatologist(pharmacy,d);
             workingHoursDTOS.add(workingHoursMapper.entity2Bean(wk));
             dermatologistDto.setWorkingHours(workingHoursDTOS);
+            List<ExaminationDto> examinationDtos = new Stack<>();
+            examinationDtos.addAll(examinationMapper.entity2Bean(examinationRepository.findAllByDermatologist(d)));
+            dermatologistDto.setExaminations(examinationDtos);
             dermatologistDtos.add(dermatologistDto);
         }
         return dermatologistDtos;

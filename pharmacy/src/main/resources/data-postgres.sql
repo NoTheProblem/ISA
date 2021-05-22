@@ -40,3 +40,4 @@ insert into purchase_order values (1,'2021-05-05','2021-06-06',0,'created',null,
 insert into medicine_quantity_order values(1,1,5,1);
 insert into medicine_quantity_order values(2,2,7,1);
 insert into medicine_quantity_order values(3,3,5,1);
+
