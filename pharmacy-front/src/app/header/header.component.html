@@ -34,6 +34,10 @@
       <li><a class="nav-link" routerLink="absences">Godisnji</a></li>
     </ul>
 
+    <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_SYSADMIN'" >
+      <li><a class="nav-link" routerLink="register-medicine">Reg lek</a></li>
+    </ul>
+
     <ul class="navbar-nav navbar-collapse justify-content-end" *ngIf="!isLoggedIn">
       <li><a class="nav-link" routerLink="login">Prijava</a></li>
       <li><a class="nav-link" routerLink="register">Registracija</a></li>
