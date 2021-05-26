@@ -1,19 +1,13 @@
 package ftn.isa.pharmacy.controller;
 
-
 import ftn.isa.pharmacy.dto.AbsenceDTO;
-import ftn.isa.pharmacy.dto.DermatologistDto;
-import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.mapper.impl.AbsenceMapperImpl;
-import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
 import ftn.isa.pharmacy.service.AbsenceService;
-import ftn.isa.pharmacy.service.DermatologistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/absence")

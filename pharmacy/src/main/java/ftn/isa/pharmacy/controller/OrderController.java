@@ -3,7 +3,6 @@ package ftn.isa.pharmacy.controller;
 import ftn.isa.pharmacy.dto.BidDTO;
 import ftn.isa.pharmacy.dto.PurchaseOrderDTO;
 import ftn.isa.pharmacy.mapper.impl.PurchaseOrderMapperImpl;
-import ftn.isa.pharmacy.model.PurchaseOrder;
 import ftn.isa.pharmacy.service.OrderService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

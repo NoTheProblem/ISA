@@ -1,10 +1,8 @@
 package ftn.isa.pharmacy.controller;
 
 import java.util.Collection;
-import java.util.List;
 
 import ftn.isa.pharmacy.dto.DermatologistDto;
-import ftn.isa.pharmacy.dto.MedicineRegisterDto;
 import ftn.isa.pharmacy.dto.PharmacistDTO;
 import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.PharmacistMapperImpl;

@@ -1,6 +1,5 @@
 package ftn.isa.pharmacy.controller;
 
-import ftn.isa.pharmacy.dto.AbsenceDTO;
 import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.PriceMediceDTO;
 import ftn.isa.pharmacy.mapper.PriceMediceMapper;
@@ -9,11 +8,7 @@ import ftn.isa.pharmacy.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import ftn.isa.pharmacy.dto.MedicineRegisterDto;
-import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.MedicineRegisterMapperImpl;
-import ftn.isa.pharmacy.service.MedicineService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
@@ -57,7 +52,7 @@ public class MedicineController {
     @PostMapping("/addNewMedPrice")
     public void addNewMedPrice(@RequestBody PriceMediceDTO priceMediceDTO) {
         medicineService.addNewMedPrice(priceMediceDTO);
-
+    }
 
     @GetMapping(value = "/getAllReg")
     public ResponseEntity<Collection<MedicineRegisterDto>> getAllReg() {

@@ -1,6 +1,5 @@
 package ftn.isa.pharmacy.controller;
 
-
 import ftn.isa.pharmacy.dto.PromotionDTO;
 import ftn.isa.pharmacy.mapper.impl.PromotionMapperImpl;
 import ftn.isa.pharmacy.repository.WorkingHoursRepository;

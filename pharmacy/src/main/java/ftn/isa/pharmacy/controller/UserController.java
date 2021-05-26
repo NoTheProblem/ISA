@@ -1,6 +1,5 @@
 package ftn.isa.pharmacy.controller;
 
-
 import ftn.isa.pharmacy.dto.UserDTO;
 import ftn.isa.pharmacy.model.User;
 import ftn.isa.pharmacy.service.UserService;

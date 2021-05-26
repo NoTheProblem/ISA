@@ -9,10 +9,8 @@ import ftn.isa.pharmacy.repository.MedicineRepository;
 import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
 import ftn.isa.pharmacy.repository.PriceMediceListRepository;
 import ftn.isa.pharmacy.dto.MedicineRegisterDto;
-import ftn.isa.pharmacy.dto.PromotionDTO;
 import ftn.isa.pharmacy.mapper.MedicineRegisterMapper;
 import ftn.isa.pharmacy.model.*;
-import ftn.isa.pharmacy.repository.MedicineRepository;
 import ftn.isa.pharmacy.repository.SysAdminRepository;
 import ftn.isa.pharmacy.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Service;
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.User;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
