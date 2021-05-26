@@ -32,8 +32,19 @@ import { PharmacyEmployeesComponent } from './pharmacy-employees/pharmacy-employ
 import { PharmacyReportComponent } from './pharmacy-report/pharmacy-report.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { PharmacyDetailsComponent } from './pharmacy-details/pharmacy-details.component';
+import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
 import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy.component';
+import { MapComponent } from './map/map.component';
+import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
+
+
+const mapConfig: YaConfig = {
+  apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
+  lang: 'en_US',
+};
+
+
 
 @NgModule({
   declarations: [
@@ -60,6 +71,8 @@ import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy
     PharmacyReportComponent,
     PharmacyProfileComponent,
     PharmacyDetailsComponent,
+    OrderdetailsComponent,
+    MapComponent,
     RegisterMedicineComponent,
     RegisterPharmacyComponent
   ],
@@ -75,6 +88,7 @@ import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy
     DlDateTimeDateModule,  // <--- Determines the data type of the model
     DlDateTimePickerModule,
     BrowserAnimationsModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
     ToastrModule.forRoot()
   ],
   providers: [

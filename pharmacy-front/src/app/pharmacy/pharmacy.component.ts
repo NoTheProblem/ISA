@@ -5,8 +5,6 @@ import {PharmacyService} from '../services/pharmacy.service';
 import {ActivatedRoute } from '@angular/router';
 import {EmployeeModel} from '../model/employee.model';
 import {EmployeeService} from '../services/employee.service';
-import {MedicineModel} from '../model/medicine.model';
-import {newArray} from '@angular/compiler/src/util';
 
 
 
@@ -27,6 +25,8 @@ export class PharmacyComponent implements OnInit {
   reverse = false;
   name = '';
   key = '';
+  public showMap = false;
+  public adresa: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +39,7 @@ export class PharmacyComponent implements OnInit {
   ngOnInit(): void {
       this.pharmacyService.getPharmacyByAdmin().subscribe((pharmacy: PharmacyModel) => {
         this.pharmacy = pharmacy;
+        this.adresa = pharmacy.city + ' ' + pharmacy.address +  ' ' + pharmacy.city;
       });
       this.employees = new Array<EmployeeModel>();
   }

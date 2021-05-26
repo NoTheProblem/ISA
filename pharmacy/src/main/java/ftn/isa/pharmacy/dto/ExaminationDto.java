@@ -11,26 +11,6 @@ public class ExaminationDto {
 
     private Long id;
 
-    @Override
-    public String toString() {
-        return "ExaminationDto{" +
-                "id=" + id +
-                ", penalty=" + penalty +
-                ", isFree=" + isFree +
-                ", examinationReport='" + examinationReport + '\'' +
-                ", loyaltyScore=" + loyaltyScore +
-                ", date=" + date +
-                ", time=" + time +
-                ", durationMinutes=" + durationMinutes +
-                ", price=" + price +
-                ", patientId=" + patientId +
-                ", dermatologistName='" + dermatologistName + '\'' +
-                ", dermatologistLastname='" + dermatologistLastname + '\'' +
-                ", dermatologistId=" + dermatologistId +
-                ", dermatologistEvaluationGrade=" + dermatologistEvaluationGrade +
-                '}';
-    }
-
     private Boolean penalty;
 
     private Boolean isFree;
@@ -41,11 +21,32 @@ public class ExaminationDto {
 
     private Date date;
 
-    private Time time;
+    private String time;
 
     private int durationMinutes;
 
     private float price;
+
+    public ExaminationDto() {
+    }
+
+    public ExaminationDto(Long id, Boolean penalty, Boolean isFree, String examinationReport, int loyaltyScore, Date date, String time, int durationMinutes, float price, Long patientId, String dermatologistName, String dermatologistLastname, Long dermatologistId, Float dermatologistEvaluationGrade) {
+        this.id = id;
+        this.penalty = penalty;
+        this.isFree = isFree;
+        this.examinationReport = examinationReport;
+        this.loyaltyScore = loyaltyScore;
+        this.date = date;
+        this.time = time;
+        this.durationMinutes = durationMinutes;
+        this.price = price;
+        this.patientId = patientId;
+        this.dermatologistName = dermatologistName;
+        this.dermatologistLastname = dermatologistLastname;
+        this.dermatologistId = dermatologistId;
+        this.dermatologistEvaluationGrade = dermatologistEvaluationGrade;
+    }
+
 
     public Long getDermatologistId() {
         return dermatologistId;
@@ -146,11 +147,11 @@ public class ExaminationDto {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -171,10 +172,25 @@ public class ExaminationDto {
     }
 
 
-    public ExaminationDto() {
+    @Override
+    public String toString() {
+        return "ExaminationDto{" +
+                "id=" + id +
+                ", penalty=" + penalty +
+                ", isFree=" + isFree +
+                ", examinationReport='" + examinationReport + '\'' +
+                ", loyaltyScore=" + loyaltyScore +
+                ", date=" + date +
+                ", time=" + time +
+                ", durationMinutes=" + durationMinutes +
+                ", price=" + price +
+                ", patientId=" + patientId +
+                ", dermatologistName='" + dermatologistName + '\'' +
+                ", dermatologistLastname='" + dermatologistLastname + '\'' +
+                ", dermatologistId=" + dermatologistId +
+                ", dermatologistEvaluationGrade=" + dermatologistEvaluationGrade +
+                '}';
     }
-
-
 
 
 

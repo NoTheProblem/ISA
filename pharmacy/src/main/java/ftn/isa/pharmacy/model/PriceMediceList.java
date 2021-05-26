@@ -20,24 +20,20 @@ public class PriceMediceList {
     @Column
     private float price;
 
-    @Column
-    private String currency;
-
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Pharmacy pharmacy;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Medicine medicine;
 
     public PriceMediceList() {
     }
 
-    public PriceMediceList(Long id, Date startDate, Date endDate, float price, String currency, Pharmacy pharmacy, Medicine medicine) {
+    public PriceMediceList(Long id, Date startDate, Date endDate, float price, Pharmacy pharmacy, Medicine medicine) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
         this.price = price;
-        this.currency = currency;
         this.pharmacy = pharmacy;
         this.medicine = medicine;
     }
@@ -72,14 +68,6 @@ public class PriceMediceList {
 
     public void setPrice(float price) {
         this.price = price;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     public Pharmacy getPharmacy() {

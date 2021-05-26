@@ -59,7 +59,7 @@ export class TokenStorageService {
 
   public isLoggedIn(): boolean{
     this.user = this.getToken();
-    if (this.user.empty){
+    if (this.user === null){
       return false;
     }
     return  true;

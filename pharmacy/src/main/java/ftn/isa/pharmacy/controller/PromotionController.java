@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
 import java.util.Collection;
 
 @RestController
@@ -38,7 +37,7 @@ public class PromotionController {
     }
 
     @PostMapping("/addPromotion")
-    public void addAllergy(@RequestBody PromotionDTO promotionDTO) {
+    public void addPromotion(@RequestBody PromotionDTO promotionDTO) {
         promotionService.addPromotion(promotionDTO);
     }
 

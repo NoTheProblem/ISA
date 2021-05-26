@@ -27,7 +27,7 @@ public class PurchaseOrder {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Bid> bids = new HashSet<Bid>();
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     private PharmacyAdmin pharmacyAdmin;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -1,5 +1,6 @@
 import {PharmacyModel} from './pharmacy.model';
 import {DermatologistModel} from './dermatologist.model';
+import {Time} from '@angular/common';
 
 export class ExaminationModel {
   constructor(
@@ -19,8 +20,6 @@ export class ExaminationModel {
     public dermatologistEvaluationGrade: string = '',
     public pharmacy: PharmacyModel,
     public dermatologist: DermatologistModel
-
-
   ) {
   }
 }

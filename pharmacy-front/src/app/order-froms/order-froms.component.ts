@@ -122,5 +122,6 @@ export class OrderFromsComponent implements OnInit {
     this.medH.quantity = this.newquan;
     this.isQuanShown = false;
   }
+
 }
 

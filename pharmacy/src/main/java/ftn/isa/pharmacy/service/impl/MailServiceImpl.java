@@ -23,9 +23,7 @@ public class MailServiceImpl implements MailService {
     private final PatientRepository patientRepository;
     private final PharmacistRepository pharmacistRepository;
     private final DermatologistRepository dermatologistRepository;
-
-
-
+    
     @Autowired
     public MailServiceImpl(MailConfig mailConfig, PatientRepository patientRepository, PharmacistRepository pharmacistRepository, DermatologistRepository dermatologistRepository) {
         this.mailConfig = mailConfig;
@@ -70,9 +68,7 @@ public class MailServiceImpl implements MailService {
                 //TODO exception
                 return null;
             }
-
         }
-
     }
 
     public void absenceAcceptedNotification(AbsenceRequest absenceRequest){
@@ -133,5 +129,16 @@ public class MailServiceImpl implements MailService {
         mailSender.send(mailMessage);
     }
 
-
+    public void purchaseOrderNotification(String suppEmail, String subj, String text){
+        JavaMailSenderImpl mailSender = getJMS();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("apoteka@gmail.com");
+        mailMessage.setTo(suppEmail);
+        mailMessage.setSubject(subj);
+        mailMessage.setText("Postovani,\n"+ "\n"+
+                text + "\n"+
+                "Pozdrav," + "\n"+
+                "AP tim");
+        mailSender.send(mailMessage);
+    }
 }
