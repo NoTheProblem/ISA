@@ -3,11 +3,11 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {OrderFormModel} from '../model/order-form.model';
 import {ToastrService} from 'ngx-toastr';
-import {MedicineModel} from '../model/medicine.model';
-import {MedicineQuantityModel} from '../model/medicineQuantity.model';
+import {BidModel} from '../model/bid.model';
 
 @Injectable()
 export class OrderFormService {
+  private path: string;
 
   constructor(private httpClient: HttpClient,
               private toast: ToastrService) {
@@ -24,9 +24,52 @@ export class OrderFormService {
     );
   }
 
+  public deleteOrder(orderFormModel: OrderFormModel): void {
+    this.httpClient.post('http://localhost:8080/order/deleteOrder', orderFormModel).subscribe(
+      (response: any) => {
+        this.toast.success(`Porudzbenica je obrisana!`);
+      },
+      (error => {
+        this.toast.error(`Doslo je do greske`);
+      })
+    );
+  }
+
   public getAllActive(): Observable<Array<OrderFormModel>> {
     return this.httpClient.get<Array<OrderFormModel>>('http://localhost:8080/order/getAllActive');
   }
 
+  public getOrder(id: number): Observable<OrderFormModel> {
+    this.path = 'http://localhost:8080/order/getOrder/' + String(id);
+    return this.httpClient.get<OrderFormModel>(this.path);
+  }
 
+
+  public getBids(id: number): Observable<Array<BidModel>> {
+    this.path = 'http://localhost:8080/order/getBidsForOrder/' + String(id);
+    return this.httpClient.get<Array<BidModel>>(this.path);
+  }
+
+  public confirmBid(bid: BidModel, orderID: number): void {
+    this.path = 'http://localhost:8080/order/confirmBid/' + String(orderID);
+    this.httpClient.post(this.path, bid).subscribe(
+      (response: any) => {
+        this.toast.success(`Porudzbenica je potvrdjena!`);
+      },
+      (error => {
+        this.toast.error(`Doslo je do greske!`);
+      })
+    );
+  }
+
+  public update(order: OrderFormModel): void {
+    this.httpClient.post('http://localhost:8080/order/updateOrder/', order).subscribe(
+      (response: any) => {
+        this.toast.success(`Porudzbenica je azurirana!`);
+      },
+      (error => {
+        this.toast.error(`Doslo je do greske!`);
+      })
+    );
+  }
 }

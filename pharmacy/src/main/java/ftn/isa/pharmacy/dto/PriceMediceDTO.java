@@ -1,35 +1,20 @@
-package ftn.isa.pharmacy.model;
+package ftn.isa.pharmacy.dto;
 
-
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity(name = "pricelist")
-public class PriceMediceList {
+public class PriceMediceDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column
     private Date startDate;
-
-    @Column
     private Date endDate;
-
-    @Column
     private float price;
+    private PharmacyDto pharmacy;
+    private MedicineDto medicine;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Pharmacy pharmacy;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Medicine medicine;
-
-    public PriceMediceList() {
+    public PriceMediceDTO() {
     }
 
-    public PriceMediceList(Long id, Date startDate, Date endDate, float price, Pharmacy pharmacy, Medicine medicine) {
+    public PriceMediceDTO(Long id, Date startDate, Date endDate, float price, PharmacyDto pharmacy, MedicineDto medicine) {
         this.id = id;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -70,19 +55,21 @@ public class PriceMediceList {
         this.price = price;
     }
 
-    public Pharmacy getPharmacy() {
+    public PharmacyDto getPharmacy() {
         return pharmacy;
     }
 
-    public void setPharmacy(Pharmacy pharmacy) {
+    public void setPharmacy(PharmacyDto pharmacy) {
         this.pharmacy = pharmacy;
     }
 
-    public Medicine getMedicine() {
+    public MedicineDto getMedicine() {
         return medicine;
     }
 
-    public void setMedicine(Medicine medicine) {
+    public void setMedicine(MedicineDto medicine) {
         this.medicine = medicine;
     }
 }
+
+

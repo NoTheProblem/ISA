@@ -16,6 +16,7 @@ import {PharmacyMedicineComponent} from './pharmacy-medicine/pharmacy-medicine.c
 import {PharmacyEmployeesComponent} from './pharmacy-employees/pharmacy-employees.component';
 import {PharmacyReportComponent} from './pharmacy-report/pharmacy-report.component';
 import {PharmacyDetailsComponent} from './pharmacy-details/pharmacy-details.component';
+import {OrderdetailsComponent} from './orderdetails/orderdetails.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: 'pharmacy-employees', component: PharmacyEmployeesComponent},
   {path: 'pharmacy-report', component: PharmacyReportComponent},
   {path: 'pharmacy/:id', component: PharmacyDetailsComponent},
+  {path: 'orderdetails/:id', component: OrderdetailsComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

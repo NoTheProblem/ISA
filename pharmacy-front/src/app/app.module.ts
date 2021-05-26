@@ -32,6 +32,8 @@ import { PharmacyEmployeesComponent } from './pharmacy-employees/pharmacy-employ
 import { PharmacyReportComponent } from './pharmacy-report/pharmacy-report.component';
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { PharmacyDetailsComponent } from './pharmacy-details/pharmacy-details.component';
+import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { PharmacyDetailsComponent } from './pharmacy-details/pharmacy-details.co
     PharmacyEmployeesComponent,
     PharmacyReportComponent,
     PharmacyProfileComponent,
-    PharmacyDetailsComponent
+    PharmacyDetailsComponent,
+    OrderdetailsComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

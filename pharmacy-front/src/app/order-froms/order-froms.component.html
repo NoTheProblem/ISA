@@ -132,11 +132,9 @@
     <thead>
     <tr>
       <th scope="row">#</th>
-      <th scope="row">Naziv/Kod</th>
+      <th scope="row">Kod</th>
       <th scope="row">Status</th>
       <th scope="row">Rok</th>
-      <th></th>
-      <th></th>
       <th></th>
     </tr>
     </thead>
@@ -144,18 +142,13 @@
     <tbody>
     <tr *ngFor="let ord of orders">
       <th scope="row">{{ ord.id }}</th>
-      <td> Naziv/Kod</td>
+      <td> #{{ord.id}}</td>
       <td>{{ ord.status }}</td>
       <td>{{ ord.endDate  | date:'longDate'}} </td>
-      <td *ngIf="ord.status=='choose'">
-        <button class="btn btn-primary">Odgovori</button>
-      </td>
-      <td *ngIf="ord.status=='created'">
-        <button class="btn btn-primary">Uredi</button>
-      </td>
-      <td *ngIf="ord.status=='created'">
-        <button class="btn btn-primary">Izbrisi</button>
-      </td>
+      <td>
+        <a [routerLink]="['/orderdetails', ord.id]">
+          Prikazi detalje
+        </a>      </td>
     </tr>
     </tbody>
   </table>
