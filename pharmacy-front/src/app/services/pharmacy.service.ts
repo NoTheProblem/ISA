@@ -3,6 +3,7 @@ import {PharmacyModel} from '../model/pharmacy.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
+import {MedicineRegisterModel} from '../model/medicineRegister.model';
 
 @Injectable()
 export class PharmacyService {
@@ -24,6 +25,17 @@ export class PharmacyService {
   public getPharmacyByID(pharmacyID: number): Observable<PharmacyModel> {
     this.path = 'http://localhost:8080/pharmacy/unauth/' + String(pharmacyID);
     return this.httpClient.get<PharmacyModel>(this.path);
+  }
+
+  public addPharmacy(pharmacy: PharmacyModel): void {
+    this.httpClient.post('http://localhost:8080/pharmacy/addPharmacy', pharmacy).subscribe(
+      (response: any) => {
+        this.toast.success(`${pharmacy.name} je dodat.`);
+      },
+      (error => {
+        this.toast.error(`${pharmacy.name} nije dodat.`);
+      })
+    );
   }
 
   public subscribeToPromotions(pharmacyID): void {

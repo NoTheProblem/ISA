@@ -1,7 +1,9 @@
 package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.dto.DermatologistDto;
+import ftn.isa.pharmacy.dto.PharmacyDto;
 import ftn.isa.pharmacy.dto.WorkingHoursDTO;
+import ftn.isa.pharmacy.mapper.PharmacyMapper;
 import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.WorkingHoursMapperImpl;
 import ftn.isa.pharmacy.model.*;
@@ -25,11 +27,11 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final DermatologistMapperImpl dermatologistMapper;
     private final WorkingHoursMapperImpl workingHoursMapper;
     private final WorkingHoursRepository workingHoursRepository;
-
+    private final PharmacyMapper pharmacyMapper;
 
     // https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/#gatsby-focus-wrapper
     @Autowired
-    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository) {
+    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, PharmacyMapper pharmacyMapper) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.pharmacyRepository = pharmacyRepository;
         this.patientRepository = patientRepository;
@@ -38,6 +40,7 @@ public class PharmacyServiceImpl implements PharmacyService {
         this.dermatologistMapper = dermatologistMapper;
         this.workingHoursMapper = workingHoursMapper;
         this.workingHoursRepository = workingHoursRepository;
+        this.pharmacyMapper = pharmacyMapper;
     }
 
     @Override
@@ -127,4 +130,11 @@ public class PharmacyServiceImpl implements PharmacyService {
         }
         return null;
     }
+
+    @Override
+    public void addPharmacy(PharmacyDto pharmacyDto){
+        Pharmacy pharmacy = pharmacyMapper.bean2Entity(pharmacyDto);
+        pharmacyRepository.save(pharmacy);
+    }
+
 }

@@ -4,11 +4,13 @@ import java.util.Collection;
 import java.util.List;
 
 import ftn.isa.pharmacy.dto.DermatologistDto;
+import ftn.isa.pharmacy.dto.MedicineRegisterDto;
 import ftn.isa.pharmacy.dto.PharmacistDTO;
 import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.PharmacistMapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import ftn.isa.pharmacy.dto.PharmacyDto;
@@ -73,4 +75,9 @@ public class PharmacyController {
         return ResponseEntity.ok(dermatologistDtoList);
     }
 
+    @PostMapping("/addPharmacy")
+    @PreAuthorize("hasRole('ROLE_SYSADMIN')")
+    public void addPharmacy(@RequestBody PharmacyDto pharmacyDto) {
+        pharmacyService.addPharmacy(pharmacyDto);
+    }
 }

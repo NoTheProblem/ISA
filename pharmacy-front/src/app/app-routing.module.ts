@@ -17,6 +17,7 @@ import {PharmacyEmployeesComponent} from './pharmacy-employees/pharmacy-employee
 import {PharmacyReportComponent} from './pharmacy-report/pharmacy-report.component';
 import {PharmacyDetailsComponent} from './pharmacy-details/pharmacy-details.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
+import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy.component';
 
 
 const routes: Routes = [
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'medicines', component: MedicinesComponent},
   {path: 'freeExamination', component: ExaminationComponent},
   {path: 'freeCounseling', component: CounselingComponent},
+  {path: 'register-pharmacy', component: RegisterPharmacyComponent},
   {path: 'pharmacy', component: PharmacyComponent},
   {path: 'promotions', component: PromotionsComponent},
   {path: 'order-forms', component: OrderFromsComponent},
