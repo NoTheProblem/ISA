@@ -33,13 +33,17 @@ import { PharmacyReportComponent } from './pharmacy-report/pharmacy-report.compo
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { PharmacyDetailsComponent } from './pharmacy-details/pharmacy-details.component';
 import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
+import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
+import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy.component';
 import { MapComponent } from './map/map.component';
 import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
+
 
 const mapConfig: YaConfig = {
   apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
   lang: 'en_US',
 };
+
 
 
 @NgModule({
@@ -68,7 +72,9 @@ const mapConfig: YaConfig = {
     PharmacyProfileComponent,
     PharmacyDetailsComponent,
     OrderdetailsComponent,
-    MapComponent
+    MapComponent,
+    RegisterMedicineComponent,
+    RegisterPharmacyComponent
   ],
   imports: [
     BrowserModule,

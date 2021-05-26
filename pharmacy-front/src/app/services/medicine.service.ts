@@ -3,6 +3,8 @@ import {MedicineModel} from '../model/medicine.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PriceMedicineModel} from '../model/priceMedicine.model';
+import {PromotionModel} from '../model/promotion.model';
+import {MedicineRegisterModel} from '../model/medicineRegister.model';
 import {ToastrService} from 'ngx-toastr';
 
 @Injectable()
@@ -16,6 +18,7 @@ export class MedicineService {
   public getAll(): Observable<Array<MedicineModel>> {
     return this.httpClient.get<Array<MedicineModel>>('http://localhost:8080/medicine/getAll');
   }
+
 
   public getMedicinesForPhaAdmin(): Observable<Array<MedicineModel>> {
     return this.httpClient.get<Array<MedicineModel>>('http://localhost:8080/medicine/getMedicinesForPhaAdmin');
@@ -33,6 +36,22 @@ export class MedicineService {
       },
       (error => {
         this.toast.error(`Cena nije dodata.`);
+      })
+    );
+  }
+
+  public getAllReg(): Observable<Array<MedicineRegisterModel>> {
+    return this.httpClient.get<Array<MedicineRegisterModel>>('http://localhost:8080/medicine/getAllReg');
+  }
+
+
+  public addMedicine(medicine: MedicineRegisterModel): void {
+    this.httpClient.post('http://localhost:8080/medicine/addMedicine', medicine).subscribe(
+      (response: any) => {
+        this.toast.success(`${medicine.type} je dodat.`);
+      },
+      (error => {
+        this.toast.error(`${medicine.type} nije dodat.`);
       })
     );
   }

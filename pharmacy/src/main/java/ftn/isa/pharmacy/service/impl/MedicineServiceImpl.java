@@ -4,16 +4,23 @@ import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.PriceMediceDTO;
 import ftn.isa.pharmacy.mapper.PriceMediceMapper;
 import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
-import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.MedicineQuantityPharmacyRepository;
 import ftn.isa.pharmacy.repository.MedicineRepository;
 import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
 import ftn.isa.pharmacy.repository.PriceMediceListRepository;
+import ftn.isa.pharmacy.dto.MedicineRegisterDto;
+import ftn.isa.pharmacy.dto.PromotionDTO;
+import ftn.isa.pharmacy.mapper.MedicineRegisterMapper;
+import ftn.isa.pharmacy.model.*;
+import ftn.isa.pharmacy.repository.MedicineRepository;
+import ftn.isa.pharmacy.repository.SysAdminRepository;
 import ftn.isa.pharmacy.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import ftn.isa.pharmacy.model.Medicine;
+import ftn.isa.pharmacy.model.User;
 
 import javax.xml.crypto.Data;
 import java.util.Date;
@@ -30,15 +37,20 @@ public class MedicineServiceImpl implements MedicineService {
     private final PriceMediceListRepository priceMediceListRepository;
     private final MedicineMapperImpl medicineMapper;
     private final PriceMediceMapper priceMediceMapper;
+  
+    private final SysAdminRepository sysAdminRepository;
+    private final MedicineRegisterMapper medicineRegisterMapper;
 
     @Autowired
-    public MedicineServiceImpl(MedicineRepository medicineRepository, PharmacyAdminRepository pharmacyAdminRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, PriceMediceListRepository priceMediceListRepository, MedicineMapperImpl medicineMapper, PriceMediceMapper priceMediceMapper) {
+    public MedicineServiceImpl(MedicineRepository medicineRepository, PharmacyAdminRepository pharmacyAdminRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, PriceMediceListRepository priceMediceListRepository, MedicineMapperImpl medicineMapper, PriceMediceMapper priceMediceMapper, SysAdminRepository sysAdminRepository, MedicineRegisterMapper medicineRegisterMapper) {
         this.medicineRepository = medicineRepository;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
         this.priceMediceListRepository = priceMediceListRepository;
         this.medicineMapper = medicineMapper;
         this.priceMediceMapper = priceMediceMapper;
+        this.sysAdminRepository = sysAdminRepository;
+        this.medicineRegisterMapper = medicineRegisterMapper;
     }
 
     @Override
@@ -131,4 +143,24 @@ public class MedicineServiceImpl implements MedicineService {
         }
         return null;
     }
+    public List<Medicine> getAllReg() {
+        return medicineRepository.findAll();
+    }
+
+    @Override
+    public void addMedicine(MedicineRegisterDto medicineRegisterDto){
+        Medicine medicine = medicineRegisterMapper.bean2Entity(medicineRegisterDto);
+        medicineRepository.save(medicine);
+    }
+
+    private SysAdmin getSysAdmin(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<SysAdmin> sysAdminOptional = sysAdminRepository.findById(((User) authentication.getPrincipal()).getId());
+        if(sysAdminOptional.isPresent()) {
+            SysAdmin sysAdmin = sysAdminOptional.get();
+            return sysAdmin;
+        }
+        return null;
+    }
+
 }

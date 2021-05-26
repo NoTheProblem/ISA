@@ -8,6 +8,7 @@ import {PromotionService} from '../services/promotion.service';
   styleUrls: ['./promotions.component.css']
 })
 export class PromotionsComponent implements OnInit {
+
   public promotions: Array<PromotionModel>;
   isShown = true ;
   isSuccessful = false;
