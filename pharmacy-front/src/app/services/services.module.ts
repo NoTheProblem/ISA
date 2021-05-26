@@ -11,6 +11,7 @@ import {PatientService} from './patient.service';
 import {PromotionService} from './promotion.service';
 import {PharmacyService} from './pharmacy.service';
 import {CounselingComponent} from '../counseling/counseling.component';
+import {MapService} from './map.service';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {CounselingComponent} from '../counseling/counseling.component';
     AbsenceService,
     EmployeeService,
     OrderFormService,
-    AppointmentService
+    AppointmentService,
+    MapService
   ],
   imports: [
     CommonModule

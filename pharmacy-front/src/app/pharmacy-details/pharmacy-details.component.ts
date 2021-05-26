@@ -12,6 +12,8 @@ import {TokenStorageService} from '../_services/token-storage.service';
 export class PharmacyDetailsComponent implements OnInit {
   public pharmacy: PharmacyModel;
   isLoggedIn = false;
+  public showMap = false;
+  public adresa: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -25,6 +27,7 @@ export class PharmacyDetailsComponent implements OnInit {
     const pharmacyID = Number(routeParam.get('id'));
     this.pharmacyService.getPharmacyByID(pharmacyID).subscribe((pharmacy: PharmacyModel) => {
       this.pharmacy = pharmacy;
+      this.adresa = this.pharmacy.city + ' ' + this.pharmacy.address + ' ' + this.pharmacy.city;
     });
     this.isLoggedIn = this.tokenStorageService.isLoggedIn();
   }

@@ -4,8 +4,10 @@
   Naziv apoteke: <b>{{pharmacy?.name}}</b>
   <br>
   Adresa apoteke: <b> {{pharmacy?.address}} </b>
-  klikni ovde za prikaz na mapi
-  <app-map> </app-map>
+  <button class="btn btn-primary" (click)="showMap=!showMap">Pokazi na mapi</button>
+  <div *ngIf="showMap">
+    <app-map [adresa]="adresa" > </app-map>
+  </div>
   <br>
   Opis apoteke: <b> {{pharmacy?.pharmacyDescription}}</b>
   <br>

@@ -34,6 +34,13 @@ import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.co
 import { PharmacyDetailsComponent } from './pharmacy-details/pharmacy-details.component';
 import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
 import { MapComponent } from './map/map.component';
+import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
+
+const mapConfig: YaConfig = {
+  apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
+  lang: 'en_US',
+};
+
 
 @NgModule({
   declarations: [
@@ -75,6 +82,7 @@ import { MapComponent } from './map/map.component';
     DlDateTimeDateModule,  // <--- Determines the data type of the model
     DlDateTimePickerModule,
     BrowserAnimationsModule,
+    AngularYandexMapsModule.forRoot(mapConfig),
     ToastrModule.forRoot()
   ],
   providers: [
