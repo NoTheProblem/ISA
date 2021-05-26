@@ -35,7 +35,8 @@
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_SYSADMIN'" >
-      <li><a class="nav-link" routerLink="register-medicine">Reg lek</a></li>
+      <li><a class="nav-link" routerLink="register-pharmacy">Registracija apoteke</a></li>
+      <li><a class="nav-link" routerLink="register-medicine">Registracija leka</a></li>
     </ul>
 
     <ul class="navbar-nav navbar-collapse justify-content-end" *ngIf="!isLoggedIn">

@@ -3,20 +3,27 @@ package ftn.isa.pharmacy.dto;
 public class PharmacyDto {
 
     private Long id;
-
     private String name;
-
     private String country;
-
     private String city;
-
     private String address;
-
     private String pharmacyDescription;
-
     private float evaluationGrade;
-
     private float counselingPrice;
+
+    public PharmacyDto(){}
+
+    public PharmacyDto(Long id, String name, String country, String city, String address, String pharmacyDescription, float evaluationGrade, float counselingPrice) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.city = city;
+        this.address = address;
+        this.pharmacyDescription = pharmacyDescription;
+        this.evaluationGrade = evaluationGrade;
+        this.counselingPrice = counselingPrice;
+    }
+
 
     public Long getId() {
         return id;

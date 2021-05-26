@@ -33,6 +33,7 @@ import { PharmacyReportComponent } from './pharmacy-report/pharmacy-report.compo
 import { PharmacyProfileComponent } from './pharmacy-profile/pharmacy-profile.component';
 import { PharmacyDetailsComponent } from './pharmacy-details/pharmacy-details.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
+import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { RegisterMedicineComponent } from './register-medicine/register-medicine
     PharmacyReportComponent,
     PharmacyProfileComponent,
     PharmacyDetailsComponent,
-    RegisterMedicineComponent
+    RegisterMedicineComponent,
+    RegisterPharmacyComponent
   ],
   imports: [
     BrowserModule,
