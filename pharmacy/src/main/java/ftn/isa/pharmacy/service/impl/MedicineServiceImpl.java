@@ -2,6 +2,7 @@ package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.PriceMediceDTO;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.PriceMediceMapper;
 import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
 import ftn.isa.pharmacy.repository.MedicineQuantityPharmacyRepository;
@@ -98,9 +99,8 @@ public class MedicineServiceImpl implements MedicineService {
         System.out.println(priceMediceList.getStartDate());
         System.out.println(date);
         if(priceMediceList.getStartDate().before(date)){
-            System.out.println("Prosao1");
-            //TODO izbaci gresku? i vreme
-            return;
+            throw new ResourceConflictException(1l,"Ne moze se unazad stavljati vreme");
+
         }
         priceMediceList.setMedicine(medicine);
         date.setTime(priceMediceList.getStartDate().getTime());

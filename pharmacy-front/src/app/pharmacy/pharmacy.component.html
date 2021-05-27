@@ -3,20 +3,85 @@
 <div>
   Naziv apoteke: <b>{{pharmacy?.name}}</b>
   <br>
-  Adresa apoteke: <b> {{pharmacy?.address}} </b>
+  Adresa apoteke: <b> {{pharmacy?.address}}, {{pharmacy?.city}} </b>
   <button class="btn btn-primary" (click)="showMap=!showMap">Pokazi na mapi</button>
   <div *ngIf="showMap">
     <app-map [adresa]="adresa" > </app-map>
   </div>
   <br>
   Opis apoteke: <b> {{pharmacy?.pharmacyDescription}}</b>
-  <br>
-  <button class="btn btn-primary">Uredi podatke o apoteci</button>
-  <br>
+  <br><Br>
+  <button class="btn btn-primary" (click)="update=true">Uredi podatke o apoteci</button>
+  <br><Br>
   <button class="btn btn-primary" (click)="phaList()">Izmeni spisak farmaceuta</button>
 
   <button class="btn btn-primary" (click)="dermaList()">Izmeni spisak dermatologa</button>
 </div>
+
+<div *ngIf="update">
+  <br>
+  Uputstvo: Ostavite prazna polja koja ne zelite da menjate!
+  <br><br>
+  <form
+    *ngIf="!isSuccessful"
+    name="form"
+    (ngSubmit)="f.form.valid && azuriraj(form)"
+    #f="ngForm"
+    novalidate
+  >
+    <div class="form-group">
+      <label>Novi naziv apoteke</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        [(ngModel)]="form.name"
+        [value]="pharmacy?.name"
+        #name="ngModel"
+      />
+      <div class="alert-danger" *ngIf="f.submitted && name.invalid">
+        <div *ngIf="name.errors.required">Opis je obavezan</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Novi opis apoteke</label>
+      <input
+        type="text"
+        class="form-control"
+        name="pharmacyDescription"
+        [(ngModel)]="form.pharmacyDescription"
+        required
+        #pharmacyDescription="ngModel"
+      />
+      <div class="alert-danger" *ngIf="f.submitted && pharmacyDescription.invalid">
+        <div *ngIf="pharmacyDescription.errors.required">Opis je obavezan</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Nova adresa apoteke</label>
+      <input
+        type="text"
+        class="form-control"
+        name="address"
+        value="nova"
+        [(ngModel)]="form.address"
+        required
+        #address="ngModel"
+      />
+      <div class="alert-danger" *ngIf="f.submitted && address.invalid">
+        <div *ngIf="address.errors.required">Opis je obavezan</div>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="showErr">
+    <p style="color:#8b0000">Greska! Niste uneli nista.</p>
+  </div>
+  <button class="btn btn-primary" (click)="azuriraj(form)">Azuriraj podatke apoteke</button>
+</div>
+
+
 
 
 <div *ngIf="buttonPress">
@@ -49,6 +114,5 @@
     </tr>
     </tbody>
   </table>
-
-
 </div>
+

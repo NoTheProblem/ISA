@@ -48,5 +48,15 @@ export class PharmacyService {
       })
     );
   }
+  public updatePharmacyInfo(pharmacy: PharmacyModel): void {
+    this.httpClient.post('http://localhost:8080/pharmacy/updatePharmacyInfo', pharmacy).subscribe(
+      (response: any) => {
+        this.toast.success(`Azuriranje je uspelo.`);
+      },
+      (error => {
+        this.toast.error(`Azuriranje nije uspelo`);
+      })
+    );
+  }
 }
 

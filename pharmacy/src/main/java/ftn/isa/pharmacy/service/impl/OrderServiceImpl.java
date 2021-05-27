@@ -2,6 +2,7 @@ package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.dto.BidDTO;
 import ftn.isa.pharmacy.dto.PurchaseOrderDTO;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.impl.*;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.*;
@@ -94,11 +95,12 @@ public class OrderServiceImpl implements OrderService {
     public void confirmBid(BidDTO bidDTO, Long id) {
         PurchaseOrder purchaseOrder = purchaseOrderRepository.getOne(id);
         if(purchaseOrder.getStatus().equals("obradjen")){
-            return;
+            throw new ResourceConflictException(1l,"Vec obradjena porudzbenica");
+
         }
         if(purchaseOrder.getPharmacyAdmin().getId()!= getPharmacyAdmin().getId()){
-            return;
-            // TODO exception
+            throw new ResourceConflictException(1l,"Niste vi napravili porudzbenicu");
+
         }
         // TODO check date again
         Bid bid = bidMapper.bean2Entity(bidDTO);
@@ -140,8 +142,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder(PurchaseOrderDTO purchaseOrderDTO) {
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         if(bidRepository.findAllByPurchaseOrder(purchaseOrder).size() != 0){
-            return;
-            //TODO exception
+            throw new ResourceConflictException(1l,"Postoje ponude!");
         }
         purchaseOrderRepository.deleteById(purchaseOrder.getId());
     }
@@ -150,8 +151,7 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrder(PurchaseOrderDTO purchaseOrderDTO) {
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         if(bidRepository.findAllByPurchaseOrder(purchaseOrder).size() != 0){
-            return;
-            //TODO exception
+            throw new ResourceConflictException(1l,"Postoje ponude");
         }
         purchaseOrderRepository.save(purchaseOrder);
 

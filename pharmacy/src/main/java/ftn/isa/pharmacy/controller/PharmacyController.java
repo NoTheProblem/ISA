@@ -78,4 +78,11 @@ public class PharmacyController {
     public void addPharmacy(@RequestBody PharmacyDto pharmacyDto) {
         pharmacyService.addPharmacy(pharmacyDto);
     }
+
+    @PostMapping("/updatePharmacyInfo")
+    public void updatePharmacyInfo(@RequestBody PharmacyDto pharmacyDto) {
+        pharmacyService.updatePharmacyInfo(pharmacyDto);
+    }
+
 }
+
