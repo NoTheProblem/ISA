@@ -95,39 +95,25 @@ public class MedicineServiceImpl implements MedicineService {
         Medicine medicine = medicineMapper.bean2Entity(priceMediceDTO.getMedicine());
         PriceMediceList priceMediceList = priceMediceMapper.bean2Entity(priceMediceDTO);
         Date date = new Date();
-        System.out.println("Test1");
-        System.out.println(priceMediceList.getStartDate());
-        System.out.println(date);
         if(priceMediceList.getStartDate().before(date)){
             throw new ResourceConflictException(1l,"Ne moze se unazad stavljati vreme");
-
         }
         priceMediceList.setMedicine(medicine);
         date.setTime(priceMediceList.getStartDate().getTime());
-        Date dateEnd = new Date();
-        dateEnd.setTime(priceMediceList.getEndDate().getTime());
         Pharmacy pharmacy = getPharmacyAdmin().getPharmacy();
-        //Ne radi
         List<PriceMediceList> priceMediceLists = priceMediceListRepository.
-                findAllByPharmacyAndMedicineAndStartDateAfterOrEndDateAfter(pharmacy,medicine,priceMediceList.getStartDate(),priceMediceList.getEndDate());
-        //TODO test..
+                findAllByPharmacyAndMedicineOrderByStartDateDesc(pharmacy,medicine);
+        int i = 0;
         for (PriceMediceList priceMed: priceMediceLists) {
-            System.out.println("Test2");
-            System.out.println(date);
-            System.out.println(dateEnd);
-            System.out.println(priceMed.getStartDate());
-            System.out.println(priceMed.getEndDate());
-            if (date.after(priceMed.getStartDate()) && date.before(priceMed.getEndDate())){
-                System.out.println();
-                return ;
+            if (date.before(priceMed.getStartDate())){
+                throw new ResourceConflictException(1l,"Postoji vec cena za taj period");
             }
-            if(dateEnd.after(priceMed.getStartDate()) && dateEnd.before(priceMed.getEndDate())){
-                System.out.println();
-                return ;
+            if(i==0){
+                priceMed.setEndDate(date);
+                priceMediceListRepository.save(priceMed);
             }
+            i = i + 1;
         }
-
-
         priceMediceList.setPharmacy(pharmacy);
         priceMediceListRepository.save(priceMediceList);
     }

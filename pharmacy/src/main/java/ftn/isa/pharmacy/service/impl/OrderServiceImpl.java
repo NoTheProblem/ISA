@@ -27,8 +27,9 @@ public class OrderServiceImpl implements OrderService {
     private final SupplierRepository supplierRepository;
     private final MedicineQuantityOrderRepository medicineQuantityOrderRepository;
     private final MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository;
+    private final MedicineRepository medicineRepository;
 
-    public OrderServiceImpl(PurchaseOrderRepository purchaseOrderRepository, PurchaseOrderMapperImpl purchaseOrderMapper, PharmacyAdminRepository pharmacyAdminRepository, MedicineMapperImpl medicineMapper, QuantityMapperImpl quantityMapper, BidRepository bidRepository, BidMapperImpl bidMapper, SupplierMapperImpl supplierMapper, MailServiceImpl mailService, SupplierRepository supplierRepository, MedicineQuantityOrderRepository medicineQuantityOrderRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository) {
+    public OrderServiceImpl(PurchaseOrderRepository purchaseOrderRepository, PurchaseOrderMapperImpl purchaseOrderMapper, PharmacyAdminRepository pharmacyAdminRepository, MedicineMapperImpl medicineMapper, QuantityMapperImpl quantityMapper, BidRepository bidRepository, BidMapperImpl bidMapper, SupplierMapperImpl supplierMapper, MailServiceImpl mailService, SupplierRepository supplierRepository, MedicineQuantityOrderRepository medicineQuantityOrderRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository) {
         this.purchaseOrderRepository = purchaseOrderRepository;
         this.purchaseOrderMapper = purchaseOrderMapper;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
@@ -40,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
         this.supplierRepository = supplierRepository;
         this.medicineQuantityOrderRepository = medicineQuantityOrderRepository;
         this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
+        this.medicineRepository = medicineRepository;
     }
 
     @Override
@@ -49,18 +51,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void addPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
-        if(pharmacyAdminOptional.isPresent()) {
-            PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
-            Set<MedicineQuantityOrder> orderMedicines = quantityMapper.quantityOrderDTOtoQuantityOrder(purchaseOrderDTO.getMedQuan(),purchaseOrder);
-            purchaseOrder.setPharmacyAdmin(pharmacyAdminOptional.get());
-            purchaseOrder.setStatus("created");
-            purchaseOrder.setCreateDate(new Date());
-            purchaseOrder.setOrderMedicines(orderMedicines);
-            purchaseOrderRepository.save(purchaseOrder);
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        Pharmacy pharmacy = pharmacyAdmin.getPharmacy();;
+        PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
+        Set<MedicineQuantityOrder> orderMedicines = quantityMapper.quantityOrderDTOtoQuantityOrder(purchaseOrderDTO.getMedQuan(),purchaseOrder);
+        purchaseOrder.setPharmacyAdmin(pharmacyAdmin);
+        purchaseOrder.setStatus("created");
+        purchaseOrder.setCreateDate(new Date());
+        purchaseOrder.setOrderMedicines(orderMedicines);
+        purchaseOrderRepository.save(purchaseOrder);
+        for (MedicineQuantityOrder medicineQuan: orderMedicines) {
+            Medicine medicine =  medicineRepository.getOne(medicineQuan.getMedicine());
+            if(!medicineQuantityPharmacyRepository.existsByPharmacyAndMedicine(pharmacy,medicine)){
+                MedicineQuantityPharmacy medicineQuantityPharmacy = new MedicineQuantityPharmacy();
+                medicineQuantityPharmacy.setMedicine(medicine);
+                medicineQuantityPharmacy.setQuantity(0);
+                medicineQuantityPharmacy.setPharmacy(pharmacy);
+                medicineQuantityPharmacyRepository.save(medicineQuantityPharmacy);
+            }
         }
-
     }
 
     @Override
