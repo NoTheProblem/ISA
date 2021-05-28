@@ -3,6 +3,7 @@
   <div class="m-3">
     <div class="wrap">
       <div class="search">
+        Pretrazite lek koji vam treba:
         <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
       </div>
     </div>
@@ -40,15 +41,21 @@
   <label> Ime leka:  {{medPrice?.medicine?.name}}</label>
 
   <div *ngIf="medPrice?.price!==-1">
-    Ovaj lek vec ima cenu koja vazi od: {{medPrice?.startDate | date:'longDate'}} do {{medPrice?.endDate | date:'longDate'}}
+    Ovaj lek vec ima cenu koja vazi od: {{medPrice?.startDate | date:'longDate'}}
     <br>
     i cena mu je {{medPrice?.price}}
   </div>
 
 
-  <form>
+  <form
+    *ngIf="!isSuccessful"
+    name="form"
+    (ngSubmit)="f.form.valid && updateMedicinePrice()"
+    #f="ngForm"
+    novalidate
+  >
     <br>
-    Cena leka:
+    Nova cena leka:
     <input type="number" name ="price" [(ngModel)]="form.price" >
     <br>
     <br>
@@ -61,15 +68,11 @@
       required
     />
     <br>
-    Datum kraja vazenja cena:
-    <input
-      type="date"
-      class="form-control"
-      name="endDate"
-      [(ngModel)]="form.endDate"
-      required
-    />
+    <p>Nova cena leka ostaje dok ne zadate novu cenu leku</p>
     <br>
+    <div class="alert alert-warning" *ngIf="isSubmitFailed">
+      Dodavanje cene nije uspelo, popunite polja validno<br/>
+    </div>
   </form>
   <button class="btn btn-primary"  (click)="updateMedicinePrice(form)">Dodaj cenu</button>
 

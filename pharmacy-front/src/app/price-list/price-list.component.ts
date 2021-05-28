@@ -14,14 +14,16 @@ export class PriceListComponent implements OnInit {
   public medPrice: PriceMedicineModel;
   public newMedPrice: PriceMedicineModel;
   public medicine: MedicineModel;
-  public newPriceWO: number;
   public newPrice: number;
   public startDate: Date;
+  public isSubmitFailed = false;
   public endDate: Date;
+  public isSuccessful = false;
   private examinationDateInput: Date;
   name = '';
   public show = false;
   form: any = {};
+
 
   constructor(private medicineService: MedicineService
   ) { }
@@ -62,7 +64,12 @@ export class PriceListComponent implements OnInit {
   }
 
   updateMedicinePrice(form: any): void {
-    this.newMedPrice = new PriceMedicineModel(null, form.startDate, form.endDate, form.price, null, this.medicine);
+    this.isSubmitFailed = false;
+    if (!form.price || !form.startDate || form.price <= 0){
+      this.isSubmitFailed = true;
+      return;
+    }
+    this.newMedPrice = new PriceMedicineModel(null, form.startDate, null, form.price, null, this.medicine);
     this.medicineService.addNewMedPrice(this.newMedPrice);
     window.location.reload();
   }

@@ -12,5 +12,7 @@ public interface PriceMediceListRepository extends JpaRepository<PriceMediceList
 
     List<PriceMediceList> findAllByPharmacyAndMedicineOrderByEndDateDesc(Pharmacy pharmacy, Medicine medicine);
 
-    List<PriceMediceList> findAllByPharmacyAndMedicineAndStartDateAfterOrEndDateAfter(Pharmacy pharmacy, Medicine medicine, Date startDatem, Date endDate);
+    List<PriceMediceList> findAllByPharmacyAndMedicineOrderByStartDateDesc(Pharmacy pharmacy, Medicine medicine);
+
+    List<PriceMediceList> findAllByPharmacyAndMedicineAndStartDateAfter(Pharmacy pharmacy, Medicine medicine, Date startDatem);
 }

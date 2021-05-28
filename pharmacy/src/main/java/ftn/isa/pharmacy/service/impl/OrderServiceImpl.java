@@ -2,6 +2,7 @@ package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.dto.BidDTO;
 import ftn.isa.pharmacy.dto.PurchaseOrderDTO;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.impl.*;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.*;
@@ -26,8 +27,9 @@ public class OrderServiceImpl implements OrderService {
     private final SupplierRepository supplierRepository;
     private final MedicineQuantityOrderRepository medicineQuantityOrderRepository;
     private final MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository;
+    private final MedicineRepository medicineRepository;
 
-    public OrderServiceImpl(PurchaseOrderRepository purchaseOrderRepository, PurchaseOrderMapperImpl purchaseOrderMapper, PharmacyAdminRepository pharmacyAdminRepository, MedicineMapperImpl medicineMapper, QuantityMapperImpl quantityMapper, BidRepository bidRepository, BidMapperImpl bidMapper, SupplierMapperImpl supplierMapper, MailServiceImpl mailService, SupplierRepository supplierRepository, MedicineQuantityOrderRepository medicineQuantityOrderRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository) {
+    public OrderServiceImpl(PurchaseOrderRepository purchaseOrderRepository, PurchaseOrderMapperImpl purchaseOrderMapper, PharmacyAdminRepository pharmacyAdminRepository, MedicineMapperImpl medicineMapper, QuantityMapperImpl quantityMapper, BidRepository bidRepository, BidMapperImpl bidMapper, SupplierMapperImpl supplierMapper, MailServiceImpl mailService, SupplierRepository supplierRepository, MedicineQuantityOrderRepository medicineQuantityOrderRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository) {
         this.purchaseOrderRepository = purchaseOrderRepository;
         this.purchaseOrderMapper = purchaseOrderMapper;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
@@ -39,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
         this.supplierRepository = supplierRepository;
         this.medicineQuantityOrderRepository = medicineQuantityOrderRepository;
         this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
+        this.medicineRepository = medicineRepository;
     }
 
     @Override
@@ -48,18 +51,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void addPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
-        if(pharmacyAdminOptional.isPresent()) {
-            PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
-            Set<MedicineQuantityOrder> orderMedicines = quantityMapper.quantityOrderDTOtoQuantityOrder(purchaseOrderDTO.getMedQuan(),purchaseOrder);
-            purchaseOrder.setPharmacyAdmin(pharmacyAdminOptional.get());
-            purchaseOrder.setStatus("created");
-            purchaseOrder.setCreateDate(new Date());
-            purchaseOrder.setOrderMedicines(orderMedicines);
-            purchaseOrderRepository.save(purchaseOrder);
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        Pharmacy pharmacy = pharmacyAdmin.getPharmacy();;
+        PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
+        Set<MedicineQuantityOrder> orderMedicines = quantityMapper.quantityOrderDTOtoQuantityOrder(purchaseOrderDTO.getMedQuan(),purchaseOrder);
+        purchaseOrder.setPharmacyAdmin(pharmacyAdmin);
+        purchaseOrder.setStatus("created");
+        purchaseOrder.setCreateDate(new Date());
+        purchaseOrder.setOrderMedicines(orderMedicines);
+        purchaseOrderRepository.save(purchaseOrder);
+        for (MedicineQuantityOrder medicineQuan: orderMedicines) {
+            Medicine medicine =  medicineRepository.getOne(medicineQuan.getMedicine());
+            if(!medicineQuantityPharmacyRepository.existsByPharmacyAndMedicine(pharmacy,medicine)){
+                MedicineQuantityPharmacy medicineQuantityPharmacy = new MedicineQuantityPharmacy();
+                medicineQuantityPharmacy.setMedicine(medicine);
+                medicineQuantityPharmacy.setQuantity(0);
+                medicineQuantityPharmacy.setPharmacy(pharmacy);
+                medicineQuantityPharmacyRepository.save(medicineQuantityPharmacy);
+            }
         }
-
     }
 
     @Override
@@ -94,11 +104,12 @@ public class OrderServiceImpl implements OrderService {
     public void confirmBid(BidDTO bidDTO, Long id) {
         PurchaseOrder purchaseOrder = purchaseOrderRepository.getOne(id);
         if(purchaseOrder.getStatus().equals("obradjen")){
-            return;
+            throw new ResourceConflictException(1l,"Vec obradjena porudzbenica");
+
         }
         if(purchaseOrder.getPharmacyAdmin().getId()!= getPharmacyAdmin().getId()){
-            return;
-            // TODO exception
+            throw new ResourceConflictException(1l,"Niste vi napravili porudzbenicu");
+
         }
         // TODO check date again
         Bid bid = bidMapper.bean2Entity(bidDTO);
@@ -140,8 +151,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteOrder(PurchaseOrderDTO purchaseOrderDTO) {
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         if(bidRepository.findAllByPurchaseOrder(purchaseOrder).size() != 0){
-            return;
-            //TODO exception
+            throw new ResourceConflictException(1l,"Postoje ponude!");
         }
         purchaseOrderRepository.deleteById(purchaseOrder.getId());
     }
@@ -150,8 +160,7 @@ public class OrderServiceImpl implements OrderService {
     public void updateOrder(PurchaseOrderDTO purchaseOrderDTO) {
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         if(bidRepository.findAllByPurchaseOrder(purchaseOrder).size() != 0){
-            return;
-            //TODO exception
+            throw new ResourceConflictException(1l,"Postoje ponude");
         }
         purchaseOrderRepository.save(purchaseOrder);
 

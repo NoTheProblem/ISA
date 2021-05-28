@@ -13,7 +13,6 @@ import ftn.isa.pharmacy.service.AuthorityService;
 @Service
 public class AuthorityServiceImpl implements AuthorityService {
 
-	// TODO koristi konstruktor za sve dependency, ovako za sve klase
 	private final AuthorityRepository authorityRepository;
 
 	@Autowired

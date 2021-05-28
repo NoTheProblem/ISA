@@ -4,6 +4,7 @@ import ftn.isa.pharmacy.dto.DermatologistDto;
 import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.PharmacyDto;
 import ftn.isa.pharmacy.dto.WorkingHoursDTO;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.PharmacyMapper;
 import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.ExaminationMapperImpl;
@@ -63,8 +64,8 @@ public class PharmacyServiceImpl implements PharmacyService {
             Pharmacy pharmacy = pharmacyOptional.get();
             return pharmacy;
         }
-        //TODO : throw exception
-        return  null;
+        throw new ResourceConflictException(1l,"Ne postoji apoteka");
+
     }
 
     @Override
@@ -76,8 +77,8 @@ public class PharmacyServiceImpl implements PharmacyService {
             Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
             return pharmacy;
         }
-        //TODO : throw exception
-        return null;
+        throw new ResourceConflictException(1l,"Ne postoje promocije/akcije");
+
     }
 
     @Override
@@ -94,7 +95,8 @@ public class PharmacyServiceImpl implements PharmacyService {
             mailService.newSubscriptionForPromotion(pharmacy,patient);
             return true;
         }
-        return false;
+        throw new ResourceConflictException(1l,"Ne postoji pacijent");
+
     }
 
     @Override
@@ -139,11 +141,18 @@ public class PharmacyServiceImpl implements PharmacyService {
             PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
             return pharmacyAdmin;
         }
-        return null;
+        throw new ResourceConflictException(1l,"Ne postoji administrator apoteke!");
     }
 
     @Override
     public void addPharmacy(PharmacyDto pharmacyDto){
+        Pharmacy pharmacy = pharmacyMapper.bean2Entity(pharmacyDto);
+        pharmacyRepository.save(pharmacy);
+    }
+
+    @Override
+    public void updatePharmacyInfo(PharmacyDto pharmacyDto) {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         Pharmacy pharmacy = pharmacyMapper.bean2Entity(pharmacyDto);
         pharmacyRepository.save(pharmacy);
     }

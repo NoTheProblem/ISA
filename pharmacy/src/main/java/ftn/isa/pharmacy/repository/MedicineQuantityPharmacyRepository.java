@@ -1,5 +1,6 @@
 package ftn.isa.pharmacy.repository;
 
+import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.MedicineQuantityPharmacy;
 import ftn.isa.pharmacy.model.Pharmacy;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,6 +16,8 @@ public interface MedicineQuantityPharmacyRepository extends JpaRepository<Medici
     List<MedicineQuantityPharmacy> findAll();
 
     List<MedicineQuantityPharmacy> findAllByPharmacy(Pharmacy pharmacy);
+
+    Boolean existsByPharmacyAndMedicine(Pharmacy pharmacy, Medicine medicine);
 
     @Transactional
     @Modifying

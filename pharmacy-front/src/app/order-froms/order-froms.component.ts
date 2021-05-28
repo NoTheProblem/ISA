@@ -14,20 +14,20 @@ import {MedicineQuantityHelpModel} from '../model/medicineQuantityHelpModel';
 export class OrderFromsComponent implements OnInit {
   public orders: Array<OrderFormModel>;
   public medicines: Array<MedicineModel>;
+  public ordersBackup: Array<OrderFormModel>;
   public order: OrderFormModel;
   public medQuantity: MedicineQuantityModel;
   public medHelp: Array<MedicineQuantityHelpModel> = new Array<MedicineQuantityHelpModel>();
   public medH: MedicineQuantityHelpModel;
   public ids: Array<number>;
   public quan: Array<number>;
-  public mapa: Map<number, number>;
 
   helpID: number;
   isQuanShown = false;
   isShown = true ;
   isSuccessful = false;
   form: any = {};
-  isSignUpFailed = false;
+  isSubmitFailed = false;
   errorMessage = '';
   name = '';
   dummy = '';
@@ -41,7 +41,6 @@ export class OrderFromsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initMedicines();
-    this.mapa = new Map<number, number>();
   }
 
   public toggle(): void {
@@ -64,6 +63,7 @@ export class OrderFromsComponent implements OnInit {
     this.orderFormService.getAllActive()
       .subscribe((orders: Array<OrderFormModel>) => {
         this.orders = orders;
+        this.ordersBackup = orders;
       });
     this.medicineService.getAll()
       .subscribe((medicineList: Array<MedicineModel>) => {
@@ -73,20 +73,23 @@ export class OrderFromsComponent implements OnInit {
 
 
   public addToOrderForm(medicine: MedicineModel): void {
-    // @ts-ignore
-    this.medicines.pop(medicine);
+    this.medicines = this.medicines.filter(item => item !== medicine);
     this.medH = new MedicineQuantityHelpModel(medicine.id, 1, medicine.code, medicine.name);
     this.medHelp.push(this.medH);
   }
 
   public Izbrisi(med: MedicineQuantityHelpModel): void {
-    // @ts-ignore
-    this.medHelp.pop(med);
+    this.medHelp = this.medHelp.filter(item => item !== med);
     this.medicines.push(new MedicineModel(med.medicineID, med.medicineName, med.medicineCode, '', '', '', '', '', '', '', ''));
   }
 
 
   public createOrder(): void {
+    this.isSubmitFailed = false;
+    if (!this.form.startDate || this.medHelp.length === 0){
+      this.isSubmitFailed = true;
+      return;
+    }
     this.ids = new Array<number>();
     this.quan = new Array<number>();
     for (const medHelpItem of this.medHelp){
@@ -123,5 +126,19 @@ export class OrderFromsComponent implements OnInit {
     this.isQuanShown = false;
   }
 
+  showAll(): void {
+    this.orders = this.ordersBackup;
+  }
+
+  showCreated(): void {
+    this.orders = this.ordersBackup;
+    this.orders = this.orders.filter(item => item.status === 'created');
+
+  }
+
+  showProcessed(): void {
+    this.orders = this.ordersBackup;
+    this.orders = this.orders.filter(item => item.status === 'obradjen');
+  }
 }
 

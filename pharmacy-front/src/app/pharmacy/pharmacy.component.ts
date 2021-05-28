@@ -25,8 +25,13 @@ export class PharmacyComponent implements OnInit {
   reverse = false;
   name = '';
   key = '';
+  isSuccessful = false;
+  form: any = {};
   public showMap = false;
   public adresa: string;
+  public formConf = false;
+  public update = false;
+  public showErr = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -82,4 +87,26 @@ export class PharmacyComponent implements OnInit {
     }
   }
 
+  azuriraj(form: any): void {
+    this.showErr = false;
+    this.formConf = false;
+    if (form.name){
+      this.pharmacy.name = form.name;
+      this.formConf = true;
+    }
+    if (form.pharmacyDescription){
+      this.pharmacy.pharmacyDescription = form.pharmacyDescription;
+      this.formConf = true;
+    }
+    if (form.address){
+      this.pharmacy.address = form.address;
+      this.formConf = true;
+    }
+    if (this.formConf){
+      this.pharmacyService.updatePharmacyInfo(this.pharmacy);
+    }
+    else {
+      this.showErr = true;
+    }
+  }
 }

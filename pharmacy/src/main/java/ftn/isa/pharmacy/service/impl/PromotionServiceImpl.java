@@ -1,6 +1,7 @@
 package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.dto.PromotionDTO;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.PromotionMapper;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
@@ -42,8 +43,7 @@ public class PromotionServiceImpl implements PromotionService {
         List<Promotion> promotions = promotionRepository.findAll();
         Date date = new Date();
         if(promotions.isEmpty()){
-            return null;
-            //TODO exception
+            throw new ResourceConflictException(1l,"Ne postoje promocije/akcije");
         }
         for(Promotion p : promotions){
             if (p.getEndDate().before(date))
@@ -68,7 +68,8 @@ public class PromotionServiceImpl implements PromotionService {
                 mailService.newPromotionNotification(promotion,patinet);
             }
         }
-        //TODO exception
+        throw new ResourceConflictException(promotionDTO.getId(),"Ne postoji Administrator apoteke");
+
     }
 
 }

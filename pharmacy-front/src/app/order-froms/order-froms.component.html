@@ -14,14 +14,14 @@
     <form
       *ngIf="!isSuccessful"
       name="form"
-      (ngSubmit)="f.form.valid && onSubmit()"
+      (ngSubmit)="f.form.valid && createOrder()"
       #f="ngForm"
       novalidate
     >
 
 
       <div class="form-group">
-        <label for="startDate">Datum roka za ponude</label>
+        <label>Datum roka za ponude</label>
         <input
           type="date"
           class="form-control"
@@ -111,7 +111,7 @@
         <button class="btn btn-primary btn-block" (click)="createOrder()" >Posalji porudzbenicu</button>
       </div>
 
-      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
+      <div class="alert alert-warning" *ngIf="f.submitted && isSubmitFailed">
         Slanje porudzbenice nije uspelo<br />{{ errorMessage }}
       </div>
     </form>
@@ -124,11 +124,16 @@
 
 
 
-<div *ngIf="isShown" class="row container-fluid"  id="divshow">
-  <div class="m-3">
+<div *ngIf="isShown"  id="divshow">
+  <div class="header">
     <h3>Porudzbenice</h3>
   </div>
-  <table class="table table-striped" >
+
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="showAll()" >Prikazi sve</button>
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="showCreated()" >Prikazi kreirane</button>
+    <button class="btn btn-primary"  style="margin-right: 10px;" (click)="showProcessed()" >Prikazi obradjene</button>
+
+    <table class="table table-striped" >
     <thead>
     <tr>
       <th scope="row">#</th>

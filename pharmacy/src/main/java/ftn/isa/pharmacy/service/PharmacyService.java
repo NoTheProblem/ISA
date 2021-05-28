@@ -21,4 +21,6 @@ public interface PharmacyService {
     Collection<DermatologistDto> getDermaForPhaAdmin();
 
     void addPharmacy(PharmacyDto pharmacyDto);
+
+    void updatePharmacyInfo(PharmacyDto pharmacyDto);
 }

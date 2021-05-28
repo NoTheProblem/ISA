@@ -2,6 +2,7 @@ package ftn.isa.pharmacy.service.impl;
 
 
 import ftn.isa.pharmacy.config.MailConfig;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.DermatologistRepository;
 import ftn.isa.pharmacy.repository.PatientRepository;
@@ -52,8 +53,7 @@ public class MailServiceImpl implements MailService {
                 return info;
             }
             else {
-                //TODO exception
-                return null;
+                throw new ResourceConflictException(1l,"Ne postoji farmaceut");
             }
         }else{
             Optional<Dermatologist> dermatologistOptional = dermatologistRepository.findById(id);
@@ -65,8 +65,7 @@ public class MailServiceImpl implements MailService {
                 return info;
             }
             else {
-                //TODO exception
-                return null;
+                throw new ResourceConflictException(1l,"Ne postoje dermatolog");
             }
         }
     }
