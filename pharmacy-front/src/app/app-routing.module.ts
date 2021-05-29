@@ -19,6 +19,7 @@ import {PharmacyDetailsComponent} from './pharmacy-details/pharmacy-details.comp
 import {OrderdetailsComponent} from './orderdetails/orderdetails.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
 import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy.component';
+import {PatientlistComponent} from './patientlist/patientlist.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -29,6 +30,7 @@ const routes: Routes = [
   {path: 'freeCounseling', component: CounselingComponent},
   {path: 'register-pharmacy', component: RegisterPharmacyComponent},
   {path: 'pharmacy', component: PharmacyComponent},
+  {path: 'lista-korisnika', component: PatientlistComponent},
   {path: 'promotions', component: PromotionsComponent},
   {path: 'order-forms', component: OrderFromsComponent},
   {path: 'register-medicine', component: RegisterMedicineComponent},
