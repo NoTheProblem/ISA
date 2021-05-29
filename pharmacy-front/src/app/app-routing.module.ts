@@ -20,6 +20,7 @@ import {OrderdetailsComponent} from './orderdetails/orderdetails.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
 import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy.component';
 import {PatientlistComponent} from './patientlist/patientlist.component';
+import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: 'promotions', component: PromotionsComponent},
   {path: 'order-forms', component: OrderFromsComponent},
   {path: 'register-medicine', component: RegisterMedicineComponent},
+  {path: 'register-employee', component: RegisterEmployeeComponent},
   {path: 'price-list', component: PriceListComponent},
   {path: 'absences', component: AbsencesComponent},
   {path: 'appDef', component: AppointmentDefComponent},
