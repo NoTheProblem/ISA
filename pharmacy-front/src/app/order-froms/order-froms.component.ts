@@ -102,6 +102,7 @@ export class OrderFromsComponent implements OnInit {
     window.location.reload();
   }
 
+
   Dodaj(med: MedicineQuantityHelpModel): void {
       med.quantity = med.quantity + 1;
   }
