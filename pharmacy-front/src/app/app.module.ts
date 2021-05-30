@@ -79,7 +79,7 @@ const mapConfig: YaConfig = {
     RegisterMedicineComponent,
     RegisterPharmacyComponent,
     DermatologistListComponent,
-    PharmacistListComponent
+    PharmacistListComponent,
     PatientlistComponent
   ],
   imports: [
