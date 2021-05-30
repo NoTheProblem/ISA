@@ -81,7 +81,9 @@ export class PharmacyComponent implements OnInit {
       this.employees = this.employees.filter(res => {
         return (
           res.firstName.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
-          res.lastName.toLocaleLowerCase().match(this.name.toLocaleLowerCase())
+          res.lastName.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          (res.firstName + ' ' + res.lastName).toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          (res.lastName + ' ' + res.firstName).toLocaleLowerCase().match(this.name.toLocaleLowerCase())
         );
       });
 

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {PharmacyModel} from '../model/pharmacy.model';
 import {PharmacistModel} from '../model/pharmacist.model';
 import {EmployeeService} from '../services/employee.service';
 
@@ -24,7 +23,6 @@ export class PharmacistListComponent implements OnInit {
   ngOnInit(): void {
     this.employeeService.getAllPharmacists().subscribe((pharmacists: Array<PharmacistModel>) => {
       this.pharmacists = pharmacists;
-      console.log(pharmacists)
     });
   }
 
@@ -42,7 +40,9 @@ export class PharmacistListComponent implements OnInit {
         return (
           res.firstName.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
           res.lastName.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
-          res.pharmacy.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase())
+          res.pharmacy.name.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          (res.firstName + ' ' + res.lastName).toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          (res.lastName + ' ' + res.firstName).toLocaleLowerCase().match(this.name.toLocaleLowerCase())
         );
       });
 
