@@ -39,21 +39,18 @@ export class TokenStorageService {
     this.user = this.getToken();
     let sub: any;
     ({sub} = jwt_decode(this.user));
-    console.log(sub);
     return sub;
   }
 
   public getUserType(): string{
     this.user = this.getToken();
     this.decoded = jwt_decode(this.user);
-    console.log(this.decoded.type);
     return this.decoded.type;
   }
 
   public getUserID(): number{
     this.user = this.getToken();
     this.decoded = jwt_decode(this.user);
-    console.log(this.decoded.id);
     return this.decoded.id;
   }
 
@@ -64,5 +61,4 @@ export class TokenStorageService {
     }
     return  true;
   }
-
 }

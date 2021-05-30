@@ -11,11 +11,12 @@ public class DermatologistDto {
     private String type;
     private List<WorkingHoursDTO> workingHours;
     private List<ExaminationDto> examinations;
+    private List<PharmacyDto> pharmacys;
 
     public DermatologistDto() {
     }
 
-    public DermatologistDto(Long id, float evaluationGrade, String firstName, String lastName, String type, List<WorkingHoursDTO> workingHours, List<ExaminationDto> examinations) {
+    public DermatologistDto(Long id, float evaluationGrade, String firstName, String lastName, String type, List<WorkingHoursDTO> workingHours, List<ExaminationDto> examinations, List<PharmacyDto> pharmacys) {
         this.id = id;
         this.evaluationGrade = evaluationGrade;
         this.firstName = firstName;
@@ -23,6 +24,7 @@ public class DermatologistDto {
         this.type = type;
         this.workingHours = workingHours;
         this.examinations = examinations;
+        this.pharmacys = pharmacys;
     }
 
     public Long getId() {
@@ -79,5 +81,13 @@ public class DermatologistDto {
 
     public void setExaminations(List<ExaminationDto> examinations) {
         this.examinations = examinations;
+    }
+
+    public List<PharmacyDto> getPharmacys() {
+        return pharmacys;
+    }
+
+    public void setPharmacys(List<PharmacyDto> pharmacys) {
+        this.pharmacys = pharmacys;
     }
 }

@@ -27,7 +27,7 @@ public class DermatologistController {
 
     @GetMapping(value = "/getAll")
     public ResponseEntity<Collection<DermatologistDto>> getAll() {
-        Collection<DermatologistDto> dermatologistDtoList = dermatologistMapper.entity2Bean(dermatologistService.getAll());
+        Collection<DermatologistDto> dermatologistDtoList = dermatologistService.getAll();
         return ResponseEntity.ok(dermatologistDtoList);
     }
 
