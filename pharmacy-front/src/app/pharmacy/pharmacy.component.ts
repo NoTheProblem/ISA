@@ -23,6 +23,7 @@ export class PharmacyComponent implements OnInit {
   searchTerm: string;
   term: string;
   reverse = false;
+  lowerGrade = 0;
   name = '';
   key = '';
   isSuccessful = false;
@@ -51,7 +52,7 @@ export class PharmacyComponent implements OnInit {
 
   phaList(): void {
     this.naziv = 'Farmaceuti';
-    this.buttonPress = !this.buttonPress;
+    this.buttonPress = true;
     this.employeeService.getAllPharmacistsByPharmacyID(this.pharmacy.id).subscribe((pharmacistList: Array<EmployeeModel>) => {
       this.employees = pharmacistList;
     });
@@ -60,7 +61,7 @@ export class PharmacyComponent implements OnInit {
 
   dermaList(): void{
     this.naziv = 'Dermatolozi';
-    this.buttonPress = !this.buttonPress;
+    this.buttonPress = true;
     this.employeeService.getAllDermaByPharmacyID(this.pharmacy.id).subscribe((dermaList: Array<EmployeeModel>) => {
       this.employees = dermaList;
     });
@@ -80,7 +81,9 @@ export class PharmacyComponent implements OnInit {
       this.employees = this.employees.filter(res => {
         return (
           res.firstName.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
-          res.lastName.toLocaleLowerCase().match(this.name.toLocaleLowerCase())
+          res.lastName.toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          (res.firstName + ' ' + res.lastName).toLocaleLowerCase().match(this.name.toLocaleLowerCase()) ||
+          (res.lastName + ' ' + res.firstName).toLocaleLowerCase().match(this.name.toLocaleLowerCase())
         );
       });
 
@@ -107,6 +110,18 @@ export class PharmacyComponent implements OnInit {
     }
     else {
       this.showErr = true;
+    }
+  }
+
+  public filterEvaluationGrade(): void {
+    if (this.lowerGrade === 0) {
+      this.ngOnInit();
+    } else {
+      this.employees = this.employees.filter(res => {
+        return (
+          res.evaluationGrade >= Number(this.lowerGrade)
+        );
+      });
     }
   }
 }

@@ -19,6 +19,8 @@ import {PharmacyDetailsComponent} from './pharmacy-details/pharmacy-details.comp
 import {OrderdetailsComponent} from './orderdetails/orderdetails.component';
 import { RegisterMedicineComponent } from './register-medicine/register-medicine.component';
 import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy.component';
+import {DermatologistListComponent} from './dermatologist-list/dermatologist-list.component';
+import {PharmacistListComponent} from './pharmacist-list/pharmacist-list.component';
 import {PatientlistComponent} from './patientlist/patientlist.component';
 import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
 
@@ -39,6 +41,8 @@ const routes: Routes = [
   {path: 'price-list', component: PriceListComponent},
   {path: 'absences', component: AbsencesComponent},
   {path: 'appDef', component: AppointmentDefComponent},
+  {path: 'dermatologistList', component: DermatologistListComponent},
+  {path: 'pharmacistList', component: PharmacistListComponent},
   {path: 'pharmacy-medicine', component: PharmacyMedicineComponent},
   {path: 'pharmacy-employees', component: PharmacyEmployeesComponent},
   {path: 'pharmacy-report', component: PharmacyReportComponent},

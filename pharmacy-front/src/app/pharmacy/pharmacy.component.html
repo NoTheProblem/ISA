@@ -11,7 +11,7 @@
   <br>
   Opis apoteke: <b> {{pharmacy?.pharmacyDescription}}</b>
   <br><Br>
-  <button class="btn btn-primary"  style="margin-right: 10px;" (click)="update=true">Uredi podatke o apoteci</button>
+  <button class="btn btn-primary"  style="margin-right: 10px;" (click)="update=!update">Uredi podatke o apoteci</button>
   <br><Br>
   <button class="btn btn-primary"  style="margin-right: 10px;" (click)="phaList()">Izmeni spisak farmaceuta</button>
 
@@ -88,7 +88,16 @@
   <div style="text-align: center;">   <h2> {{this?.naziv}} </h2> </div>
   <div class="wrap">
     <div class="search">
+      Pretraga:
       <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+  <div class="m-3">
+    <div class="wrap">
+      <div class="search">
+        Pretraga po ocenama:
+        <input type="number" min="0" max='10' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="filterEvaluationGrade()"  class="searchTerm" placeholder="">
+      </div>
     </div>
   </div>
   <table class="table table-striped">

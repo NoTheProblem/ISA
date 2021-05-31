@@ -7,16 +7,18 @@ public class PharmacistDTO {
     private String firstName;
     private String lastName;
     private String type;
+    private PharmacyDto pharmacy;
 
     public PharmacistDTO() {
     }
 
-    public PharmacistDTO(Long id, float evaluationGrade, String firstName, String lastName, String type) {
+    public PharmacistDTO(Long id, float evaluationGrade, String firstName, String lastName, String type, PharmacyDto pharmacy) {
         this.id = id;
         this.evaluationGrade = evaluationGrade;
         this.firstName = firstName;
         this.lastName = lastName;
         this.type = type;
+        this.pharmacy = pharmacy;
     }
 
     public Long getId() {
@@ -57,5 +59,13 @@ public class PharmacistDTO {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public PharmacyDto getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(PharmacyDto pharmacy) {
+        this.pharmacy = pharmacy;
     }
 }

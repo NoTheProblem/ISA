@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PharmacyService} from '../services/pharmacy.service';
 import {PharmacyModel} from '../model/pharmacy.model';
-import {ExaminationModel} from '../model/examination.model';
 
 @Component({
   selector: 'app-pharmacies',
@@ -68,12 +67,4 @@ export class PharmaciesComponent implements OnInit {
       });
     }
   }
-
-
-
-
-
-
-
-
 }

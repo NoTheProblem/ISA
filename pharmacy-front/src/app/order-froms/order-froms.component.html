@@ -14,7 +14,7 @@
     <form
       *ngIf="!isSuccessful"
       name="form"
-      (ngSubmit)="f.form.valid && createOrder()"
+      (ngSubmit)="f.form.valid"
       #f="ngForm"
       novalidate
     >
