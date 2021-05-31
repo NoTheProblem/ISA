@@ -78,10 +78,8 @@ const mapConfig: YaConfig = {
     OrderdetailsComponent,
     MapComponent,
     RegisterMedicineComponent,
-    RegisterPharmacyComponent,
-    
-    RegisterEmployeeComponent
-
+    RegisterPharmacyComponent,    
+    RegisterEmployeeComponent,
     DermatologistListComponent,
     PharmacistListComponent,
     PatientlistComponent
