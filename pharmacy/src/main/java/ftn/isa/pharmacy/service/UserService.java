@@ -17,6 +17,7 @@ public interface UserService {
     User saveSYSadmin(UserDTO userDTO);
     User saveUser(UserDTO userDTO);
     User saveEmployee(UserDTO userDTO);
+    User updateAnyUser(UserDTO userDTO);
     List<User> findAllbyType (String type);
 
 

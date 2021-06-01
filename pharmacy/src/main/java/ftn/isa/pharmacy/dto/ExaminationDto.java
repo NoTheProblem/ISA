@@ -27,10 +27,12 @@ public class ExaminationDto {
 
     private float price;
 
+    private DermatologistDto dermatologistDto;
+
     public ExaminationDto() {
     }
 
-    public ExaminationDto(Long id, Boolean penalty, Boolean isFree, String examinationReport, int loyaltyScore, Date date, String time, int durationMinutes, float price, Long patientId, String dermatologistName, String dermatologistLastname, Long dermatologistId, Float dermatologistEvaluationGrade) {
+    public ExaminationDto(Long id, Boolean penalty, Boolean isFree, String examinationReport, int loyaltyScore, Date date, String time, int durationMinutes, float price, DermatologistDto dermatologistDto, Long patientId, String dermatologistName, String dermatologistLastname, Long dermatologistId, Float dermatologistEvaluationGrade) {
         this.id = id;
         this.penalty = penalty;
         this.isFree = isFree;
@@ -40,13 +42,13 @@ public class ExaminationDto {
         this.time = time;
         this.durationMinutes = durationMinutes;
         this.price = price;
+        this.dermatologistDto = dermatologistDto;
         this.patientId = patientId;
         this.dermatologistName = dermatologistName;
         this.dermatologistLastname = dermatologistLastname;
         this.dermatologistId = dermatologistId;
         this.dermatologistEvaluationGrade = dermatologistEvaluationGrade;
     }
-
 
     public Long getDermatologistId() {
         return dermatologistId;
@@ -171,6 +173,13 @@ public class ExaminationDto {
         this.price = price;
     }
 
+    public DermatologistDto getDermatologistDto() {
+        return dermatologistDto;
+    }
+
+    public void setDermatologistDto(DermatologistDto dermatologistDto) {
+        this.dermatologistDto = dermatologistDto;
+    }
 
     @Override
     public String toString() {

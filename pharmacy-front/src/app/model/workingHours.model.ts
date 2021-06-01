@@ -8,7 +8,8 @@ export class WorkingHoursModel {
     public startTime: Time,
     public endTime: Time,
     public pharmacy: PharmacyModel,
-    public dermatologist: DermatologistModel
+    public dermatologist: DermatologistModel,
+    public workDay: string
   ) {
   }
 }

@@ -39,6 +39,7 @@ import { MapComponent } from './map/map.component';
 import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 
 
 const mapConfig: YaConfig = {
@@ -78,7 +79,8 @@ const mapConfig: YaConfig = {
     RegisterMedicineComponent,
     RegisterPharmacyComponent,
     DermatologistListComponent,
-    PharmacistListComponent
+    PharmacistListComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,

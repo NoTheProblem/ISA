@@ -54,6 +54,16 @@ export class TokenStorageService {
     return this.decoded.id;
   }
 
+  public permissionForPage(role: string): boolean{
+    if (!this.isLoggedIn()) {
+      return false;
+    }
+    if(this.getToken() !== role){
+      return false;
+    }
+    return true;
+  }
+
   public isLoggedIn(): boolean{
     this.user = this.getToken();
     if (this.user === null){

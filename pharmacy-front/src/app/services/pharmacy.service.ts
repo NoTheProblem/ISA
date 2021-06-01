@@ -4,6 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {MedicineRegisterModel} from '../model/medicineRegister.model';
+import {MedicineModel} from '../model/medicine.model';
+import {ExaminationModel} from '../model/examination.model';
 
 @Injectable()
 export class PharmacyService {
@@ -23,7 +25,7 @@ export class PharmacyService {
   }
 
   public getPharmacyByID(pharmacyID: number): Observable<PharmacyModel> {
-    this.path = 'http://localhost:8080/pharmacy/unauth/' + String(pharmacyID);
+    this.path = 'http://localhost:8080/pharmacy/unauth/pharmacy/' + String(pharmacyID);
     return this.httpClient.get<PharmacyModel>(this.path);
   }
 
@@ -57,6 +59,16 @@ export class PharmacyService {
         this.toast.error(`Azuriranje nije uspelo`);
       })
     );
+  }
+
+  public getAvailableMedicines(pharmacyID: number): Observable<Array<MedicineModel>> {
+    this.path = 'http://localhost:8080/pharmacy/unauth/medicines/' + String(pharmacyID);
+    return this.httpClient.get<Array<MedicineModel>>(this.path);
+  }
+
+  public getAvailableExaminations(pharmacyID: number): Observable<Array<ExaminationModel>> {
+    this.path = 'http://localhost:8080/pharmacy/unauth/examinations/' + String(pharmacyID);
+    return this.httpClient.get<Array<ExaminationModel>>(this.path);
   }
 }
 

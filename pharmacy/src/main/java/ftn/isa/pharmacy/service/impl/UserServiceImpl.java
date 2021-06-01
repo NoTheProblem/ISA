@@ -1,6 +1,7 @@
 package ftn.isa.pharmacy.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import ftn.isa.pharmacy.dto.UserDTO;
 import ftn.isa.pharmacy.model.*;
@@ -82,6 +83,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User updateAnyUser(UserDTO userDTO) {
+        Optional<User> u = userRepository.findById(userDTO.getId());
+        if(u.isPresent()){
+            User user = u.get();
+            user.setFirstName(userDTO.getFirstName());
+            user.setLastName(userDTO.getLastName());
+            user.setAddress(userDTO.getAddress());
+            user.setBirthDate(userDTO.getBirthDate());
+            user.setCity(userDTO.getCity());
+            user.setCountry(userDTO.getCountry());
+            user.setEmail(userDTO.getEmail());
+            user.setUsername(userDTO.getUsername());
+            user.setPhoneNumber(userDTO.getPhoneNumber());
+            userRepository.save(user);
+            return user;
+        }
+        return  null;
+
+    }
+
+
+    @Override
     public User saveUser(UserDTO userDTO) {
         Patient u = new Patient();
         u.setUsername(userDTO.getUsername());
@@ -122,7 +145,7 @@ public class UserServiceImpl implements UserService {
         u.setTip((userDTO.getTip()));
         List<Authority> auth = authService.findByName(u.getTip());
         u.setAuthorities(auth);
-        u = this.sysAdminRepository.save(u);
+            u = this.sysAdminRepository.save(u);
         return u;
     }
 

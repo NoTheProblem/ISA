@@ -1,26 +1,24 @@
 package ftn.isa.pharmacy.dto;
 
-import java.sql.Time;
-import java.util.Date;
 
-public class WorkingHoursDTO {
 
+public class WorkingHoursPharmacistDTO {
     private Long id;
-    private Time startTime;
-    private Time endTime;
+    private String startTime;
+    private String endTime;
     private PharmacyDto pharmacy;
-    private DermatologistDto dermatologist;
+    private PharmacistDTO pharmacistDTO;
     private String workDay;
 
-    public WorkingHoursDTO() {
+    public WorkingHoursPharmacistDTO() {
     }
 
-    public WorkingHoursDTO(Long id, Time startTime, Time endTime, PharmacyDto pharmacy, DermatologistDto dermatologist, String workDay) {
+    public WorkingHoursPharmacistDTO(Long id, String startTime, String endTime, PharmacyDto pharmacy, PharmacistDTO pharmacistDTO, String workDay) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
         this.pharmacy = pharmacy;
-        this.dermatologist = dermatologist;
+        this.pharmacistDTO = pharmacistDTO;
         this.workDay = workDay;
     }
 
@@ -32,19 +30,19 @@ public class WorkingHoursDTO {
         this.id = id;
     }
 
-    public Time getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Time getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Time endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 
@@ -56,12 +54,12 @@ public class WorkingHoursDTO {
         this.pharmacy = pharmacy;
     }
 
-    public DermatologistDto getDermatologist() {
-        return dermatologist;
+    public PharmacistDTO getPharmacistDTO() {
+        return pharmacistDTO;
     }
 
-    public void setDermatologist(DermatologistDto dermatologist) {
-        this.dermatologist = dermatologist;
+    public void setPharmacistDTO(PharmacistDTO pharmacistDTO) {
+        this.pharmacistDTO = pharmacistDTO;
     }
 
     public String getWorkDay() {

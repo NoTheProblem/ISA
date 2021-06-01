@@ -2,6 +2,7 @@ package ftn.isa.pharmacy.repository;
 
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.MedicineQuantityPharmacy;
+import ftn.isa.pharmacy.model.Pharmacist;
 import ftn.isa.pharmacy.model.Pharmacy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -24,4 +25,8 @@ public interface MedicineQuantityPharmacyRepository extends JpaRepository<Medici
     @Query(value = "update medicine_quantity_pharmacy set quantity = quantity + ?3 where pharmacy_id = ?1 and medicine_id = ?2",
             nativeQuery = true)
     void updateQuan(Long pharmacyID, Long medicineID, Long addedQuan );
+
+    Boolean deleteByPharmacyAndMedicine(Pharmacy pharmacy, Medicine medicine);
+
+
 }

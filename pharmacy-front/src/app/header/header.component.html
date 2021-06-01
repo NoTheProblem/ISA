@@ -21,7 +21,7 @@
       <li><a class="nav-link" routerLink="freeCounseling">Termini farmaceut</a></li>
       <li><a class="nav-link" routerLink="freeExamination">Zakazivanje termina</a></li>
       <li><a class="nav-link" routerLink="freeExamination">Pisanje žalbi</a></li>
-      <li><a class="nav-link" routerLink="medicines">Profil korisnika</a></li>
+      <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_ADMIN'" >
@@ -47,9 +47,7 @@
     </ul>
 
 
-
     <ul class="navbar-nav ml-auto" *ngIf="isLoggedIn">
-
       <li class="nav-link">
         <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
       </li>
@@ -57,8 +55,6 @@
         <a href class="nav-link" (click)="logout()">LogOut</a>
       </li>
     </ul>
-
-
 
   </nav>
 </header>

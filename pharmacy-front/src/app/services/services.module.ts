@@ -12,6 +12,7 @@ import {PromotionService} from './promotion.service';
 import {PharmacyService} from './pharmacy.service';
 import {CounselingComponent} from '../counseling/counseling.component';
 import {MapService} from './map.service';
+import {UserProfileService} from './userProfile.service';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import {MapService} from './map.service';
     EmployeeService,
     OrderFormService,
     AppointmentService,
-    MapService
+    MapService,
+    UserProfileService
   ],
   imports: [
     CommonModule

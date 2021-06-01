@@ -66,5 +66,16 @@ public class MedicineController {
         medicineService.addMedicine(medicineRegisterDto);
     }
 
+    @GetMapping(value = "/getMissingMedicines")
+    public ResponseEntity<Collection<MedicineDto>> getMissingMedicines() {
+        Collection<MedicineDto> medicineDtoList = medicineMapper.entity2Bean(medicineService.getMissingMedicines());
+        return ResponseEntity.ok(medicineDtoList);
+    }
+
+    @PostMapping("/removeMedicineFromPhamracy")
+    public void removeMedicineFromPhamracy(@RequestBody MedicineDto medicineDto) {
+        medicineService.removeMedicineFromPhamracy(medicineDto);
+    }
+
 }
 

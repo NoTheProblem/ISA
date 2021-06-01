@@ -30,4 +30,12 @@ public class DermatologistController {
         return ResponseEntity.ok(dermatologistDtoList);
     }
 
+    @GetMapping(value = "/getAllDermatologistsCandidates")
+    public ResponseEntity<Collection<DermatologistDto>> getAllDermatologistsCandidates() {
+        Collection<DermatologistDto> dermatologistDtoList = dermatologistService.getAllDermatologistsCandidates();
+        return ResponseEntity.ok(dermatologistDtoList);
+    }
+
+
+
 }

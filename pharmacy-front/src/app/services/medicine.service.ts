@@ -56,4 +56,20 @@ export class MedicineService {
     );
   }
 
+  public removeMedicineFromPhamracy(medicine: MedicineModel): void {
+    this.path = 'http://localhost:8080/medicine/removeMedicineFromPhamracy';
+    this.httpClient.post(this.path, medicine).subscribe(
+      (response: any) => {
+        this.toast.success(`Lek je uklonjen.`);
+      },
+      (error => {
+        this.toast.error(`Lek nije uspesno uklonjen.`);
+      })
+    );
+  }
+
+  public getMissingMedicines(): Observable<Array<MedicineModel>> {
+    return this.httpClient.get<Array<MedicineModel>>('http://localhost:8080/medicine/getMissingMedicines');
+  }
+
 }

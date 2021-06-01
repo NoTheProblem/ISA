@@ -17,19 +17,25 @@ public class WorkingHours {
     @Column
     private Time endTime;
 
+    @Column
+    private String workDay;
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Pharmacy pharmacy;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Dermatologist dermatologist;
 
+
+
     public WorkingHours() {
     }
 
-    public WorkingHours(Long id, Time startTime, Time endTime, Pharmacy pharmacy, Dermatologist dermatologist) {
+    public WorkingHours(Long id, Time startTime, Time endTime, String workDay, Pharmacy pharmacy, Dermatologist dermatologist) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.workDay = workDay;
         this.pharmacy = pharmacy;
         this.dermatologist = dermatologist;
     }
@@ -74,5 +80,11 @@ public class WorkingHours {
         this.dermatologist = dermatologist;
     }
 
+    public String getWorkDay() {
+        return workDay;
+    }
 
+    public void setWorkDay(String workDay) {
+        this.workDay = workDay;
+    }
 }
