@@ -15,6 +15,9 @@ public class Reservation {
     private Boolean pickedUp;
 
     @Column
+    private Date pickUpDate;
+
+    @Column
     private Date endDate;
 
     @Column
@@ -32,9 +35,10 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Long id, Boolean pickedUp, Date endDate, float price, Pharmacy pharmacy, Patient patient, Set<MedicineQuantityReservation> medicineis) {
+    public Reservation(Long id, Boolean pickedUp, Date pickUpDate, Date endDate, float price, Pharmacy pharmacy, Patient patient, Set<MedicineQuantityReservation> medicineis) {
         this.id = id;
         this.pickedUp = pickedUp;
+        this.pickUpDate = pickUpDate;
         this.endDate = endDate;
         this.price = price;
         this.pharmacy = pharmacy;

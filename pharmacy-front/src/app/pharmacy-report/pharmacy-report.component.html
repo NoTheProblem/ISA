@@ -1,3 +1,31 @@
-<p>pharmacy-report works!</p>
+<div style="text-align: center;"> <h2>Izvestaj rada apoteke</h2> </div>
+<br>
+Prosecna ocena apoteke: {{pharmacy?.evaluationGrade}}
+<br><br>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="showPharmaGradesFnc()">Prosecne ocene farmaceuta</button>
+<button class="btn btn-primary"  style="margin-right: 10px;" (click)="showDermaGradesFnc()" >Prosecne ocene dermatologa</button>
+<br>
 
+<div *ngIf="showGrades">
+  <br>
+  <div style="text-align: center;">
+    <h3>Prikaz ocena {{empType}}</h3>
+  </div>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="row" >Ime</th>
+      <th scope="row" >Prezime</th>
+      <th scope="row" >Ocena</th>
+    </tr>
+    </thead>
+    <tbody>
 
+    <tr *ngFor="let emp of employees">
+      <td>{{ emp.firstName }}</td>
+      <td>{{ emp.lastName}}</td>
+      <td>{{ emp.evaluationGrade}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

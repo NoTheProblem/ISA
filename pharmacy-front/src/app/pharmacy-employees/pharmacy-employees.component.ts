@@ -58,6 +58,10 @@ export class PharmacyEmployeesComponent implements OnInit {
 
 
   phaList(): void {
+    if (this.buttonPress === true && this.naziv === 'Farmaceuti'){
+      this.buttonPress = false;
+      return;
+    }
     this.naziv = 'Farmaceuti';
     this.buttonPress = true;
     this.employeeService.getAllPharmacistsByPharmacyID(this.pharmacy.id).subscribe((pharmacistList: Array<EmployeeModel>) => {
@@ -67,6 +71,10 @@ export class PharmacyEmployeesComponent implements OnInit {
   }
 
   dermaList(): void{
+    if (this.buttonPress === true && this.naziv === 'Dermatolozi'){
+      this.buttonPress = false;
+      return;
+    }
     this.naziv = 'Dermatolozi';
     this.buttonPress = true;
     this.employeeService.getAllDermaByPharmacyID(this.pharmacy.id).subscribe((dermaList: Array<EmployeeModel>) => {

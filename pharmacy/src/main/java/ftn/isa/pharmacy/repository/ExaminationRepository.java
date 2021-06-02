@@ -17,4 +17,5 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
     List<Examination> findAllByPharmacyAndIsFree(Pharmacy pharmacy, Boolean isFree);
     List<Examination> findAllByDermatologist(Dermatologist dermatologist);
     List<Examination> findAllByDateBetween(Date startDate, Date endDate);
+    List<Examination> findAllByPharmacyAndDateBefore(Pharmacy pharmacy, Date startDate, Date endDate);
 }

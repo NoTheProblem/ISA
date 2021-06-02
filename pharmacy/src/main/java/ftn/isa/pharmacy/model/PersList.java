@@ -1,6 +1,7 @@
 package ftn.isa.pharmacy.model;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -11,6 +12,9 @@ public class PersList {
 
     @Column
     private int quantity;
+
+    @Column
+    private Date dateOfPurchase;
 
     @Column
     private String wayOfUse;
@@ -24,9 +28,10 @@ public class PersList {
     public PersList() {
     }
 
-    public PersList(Long id, int quantity, String wayOfUse, Medicine medicine, EPrescription ePrescription) {
+    public PersList(Long id, int quantity, Date dateOfPurchase, String wayOfUse, Medicine medicine, EPrescription ePrescription) {
         this.id = id;
         this.quantity = quantity;
+        this.dateOfPurchase = dateOfPurchase;
         this.wayOfUse = wayOfUse;
         this.medicine = medicine;
         this.ePrescription = ePrescription;
