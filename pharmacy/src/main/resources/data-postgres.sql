@@ -32,8 +32,8 @@ insert into pharmacy_dermatologist(pharmacy_id, dermatologist_id) values (1,2);
 
 insert into pharmacy_pharmacists(pharmacy_id, pharmacists_id) values(1,4);
 
-insert into working_hours values (2,'15:00:00.000','08:00:00.000','Mon',2,1);
-insert into working_hours values (3,'15:00:00','08:00:00','Mon', 6,2);
+insert into working_hours values (1,'15:00:00.000','08:00:00.000','Ponedeljak',2,1);
+insert into working_hours values (2,'15:00:00','08:00:00','Ponedeljak', 6,2);
 
 insert into promotion values(1,'2021-07-30', '2021-01-11','Svi bekutan prozivodi su sada kod nas vamo tmao','Bekutan akcija','promocija',1);
 

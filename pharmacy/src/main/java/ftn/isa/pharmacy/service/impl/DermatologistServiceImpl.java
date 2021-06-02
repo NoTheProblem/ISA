@@ -7,10 +7,7 @@ import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.PharmacyMapperImpl;
 import ftn.isa.pharmacy.mapper.impl.WorkingHoursMapperImpl;
-import ftn.isa.pharmacy.model.Dermatologist;
-import ftn.isa.pharmacy.model.Pharmacy;
-import ftn.isa.pharmacy.model.PharmacyAdmin;
-import ftn.isa.pharmacy.model.User;
+import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.DermatologistRepository;
 import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
 import ftn.isa.pharmacy.repository.WorkingHoursRepository;
@@ -78,6 +75,70 @@ public class DermatologistServiceImpl implements DermatologistService  {
         return dermatologistDtos;
     }
 
+    @Override
+    public void addToPharmacy(DermatologistDto dermatologistDto) {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        Dermatologist dermatologist = dermatologistRepository.getOne(dermatologistDto.getId());
+        List<WorkingHoursDTO> workingHoursDTOS = dermatologistDto.getWorkingHours();
+        WorkingHoursDTO workingHoursDTO = workingHoursDTOS.get(0);
+        System.out.println("debag");
+        System.out.println(workingHoursDTOS.size());
+        System.out.println(workingHoursDTOS.get(0));
+        WorkingHours newWorkingHours = workingHoursMapper.bean2Entity(workingHoursDTOS.get(0));
+        System.out.println(newWorkingHours);
+        Set<WorkingHours> existingWorkingHours = workingHoursRepository.findAllByDermatologistOrderById(dermatologist);
+        String workDay = newWorkingHours.getWorkDay();
+        Date startTime = new Date();
+        startTime.setTime(workingHoursDTO.getStartTime().getTime());
+        Date endTime = new Date();
+        endTime.setTime(workingHoursDTO.getEndTime().getTime());
+
+        switch (workDay){
+            case "Svaki dan":
+                for (WorkingHours wk: existingWorkingHours){
+                    CheckOverlapTime(startTime, endTime, wk);
+                }
+                break;
+            case "Vikend":
+                for (WorkingHours wk: existingWorkingHours){
+                    if(wk.getWorkDay().equals("Vikend") || wk.getWorkDay().equals("Subota") || wk.getWorkDay().equals("Nedelja")){
+                        CheckOverlapTime(startTime, endTime, wk);
+                    }
+                }
+            case "Radni dan":
+                for (WorkingHours wk: existingWorkingHours) {
+                    if (!wk.getWorkDay().equals("Vikend") && !wk.getWorkDay().equals("Subota") && !wk.getWorkDay().equals("Nedelja")) {
+                        CheckOverlapTime(startTime, endTime, wk);
+                    }
+                }
+                break;
+            default:
+                for (WorkingHours wk: existingWorkingHours) {
+                    if (wk.getWorkDay().equals(workDay)) {
+                        CheckOverlapTime(startTime, endTime, wk);
+                    }
+                }
+        }
+        newWorkingHours.setPharmacy(pharmacyAdmin.getPharmacy());
+        newWorkingHours.setDermatologist(dermatologist);
+        existingWorkingHours.add(newWorkingHours);
+        dermatologist.setWorkingHours(existingWorkingHours);
+        dermatologistRepository.save(dermatologist);
+        workingHoursRepository.save(newWorkingHours);
+    }
+
+    private void CheckOverlapTime(Date startTime, Date endTime, WorkingHours wk) {
+        Date start = new Date();
+        start.setTime(wk.getStartTime().getTime());
+        Date end = new Date();
+        end.setTime(wk.getEndTime().getTime());
+        if (startTime.after(start) && startTime.before(end)) {
+            throw new ResourceConflictException(1l,"Preklapa se termin!");
+        }
+        if (endTime.after(start) && endTime.before(end)) {
+            throw new ResourceConflictException(1l,"Preklapa se termin!");
+        }
+    }
 
 
     private PharmacyAdmin getPharmacyAdmin(){

@@ -76,7 +76,7 @@ export class EmployeeService {
   public addDermatologistToPharmacy(dermatologist: DermatologistModel): void {
     this.httpClient.post('http://localhost:8080/dermatologist/addToPharmacy', dermatologist).subscribe(
       (response: any) => {
-        this.toast.success(`Dermatolog je dodat je dodat.`);
+        this.toast.success(`Dermatolog je dodat.`);
       },
       (error => {
         this.toast.error(`Dermatolog nije dodat.`);

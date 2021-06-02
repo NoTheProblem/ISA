@@ -7,6 +7,7 @@ import {DermatologistModel} from '../model/dermatologist.model';
 import {PharmacistModel} from '../model/pharmacist.model';
 import {WorkingHoursModel} from '../model/workingHours.model';
 import {WorkingHoursPharmacist} from '../model/workingHoursPharmacist';
+import {newArray} from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-pharmacy-employees',
@@ -146,7 +147,16 @@ export class PharmacyEmployeesComponent implements OnInit {
 
 
   addToPharmacyDermatologist(dermatologist: DermatologistModel, form: any): void {
-    this.workingHoursDer = new WorkingHoursModel(null, form.startTime, form.endTime, null, null, form.selectedDay);
+    var pocetak = new Date('2021-06-25');
+    var res = form.startTime.split(':');
+    pocetak.setHours(parseInt(res[0]));
+    pocetak.setMinutes(parseInt(res[1]));
+    var kraj = new Date('2021-06-25');
+    var res = form.endTime.split(':');
+    kraj.setHours(parseInt(res[0]));
+    kraj.setMinutes(parseInt(res[1]));
+    this.workingHoursDer = new WorkingHoursModel(null, pocetak, kraj, null, null , this.selectedDay);
+    this.workingHoursDermatologist = new Array<WorkingHoursModel>();
     this.workingHoursDermatologist.push(this.workingHoursDer);
     this.dermatologist.workingHours = this.workingHoursDermatologist;
     this.employeeService.addDermatologistToPharmacy(this.dermatologist);

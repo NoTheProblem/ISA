@@ -71,6 +71,7 @@ export class AppointmentDefComponent implements OnInit {
     this.examination = new ExaminationModel(0, false, false, '', 0, undefined, undefined, 0, 0, 0, 0, '', '', '', undefined, undefined);
     this.examination.date = new Date();
     this.examination.date = form.examinationDateInput;
+    console.log(form.examinationDateInput)  ;
     this.examination.durationMinutes = form.duration;
     this.examination.price = form.price;
     this.examination.time = form.startTime;

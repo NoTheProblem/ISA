@@ -87,4 +87,16 @@ public class WorkingHours {
     public void setWorkDay(String workDay) {
         this.workDay = workDay;
     }
+
+    @Override
+    public String toString() {
+        return "WorkingHours{" +
+                "id=" + id +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", workDay='" + workDay + '\'' +
+                ", pharmacy=" + pharmacy +
+                ", dermatologist=" + dermatologist +
+                '}';
+    }
 }

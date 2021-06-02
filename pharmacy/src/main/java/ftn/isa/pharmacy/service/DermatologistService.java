@@ -12,4 +12,6 @@ public interface DermatologistService {
     public List<DermatologistDto> getAll();
 
     Collection<DermatologistDto> getAllDermatologistsCandidates();
+
+    void addToPharmacy(DermatologistDto dermatologistDto);
 }
