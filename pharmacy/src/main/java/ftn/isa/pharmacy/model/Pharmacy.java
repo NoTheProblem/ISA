@@ -39,6 +39,9 @@ public class Pharmacy {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Pharmacist> pharmacists = new HashSet<Pharmacist>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PersList> perscirptions = new HashSet<PersList>();
+
     @ManyToMany
     @JoinTable(name = "pharmacy_dermatologist", joinColumns = @JoinColumn(name = "pharmacy_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "dermatologist_id", referencedColumnName = "id"))
     private Set<Dermatologist> dermatologists = new HashSet<Dermatologist>();

@@ -17,59 +17,49 @@ public class PharmacyReportController {
         this.pharmacyReportService = pharmacyReportService;
     }
 
-    @GetMapping(value = "/examination/monthly")
-    public ResponseEntity<PharmacyExaminationReportDTO> monthlyExamination(@RequestBody ReportPeriod month) {
-        PharmacyExaminationReportDTO pharmacyExaminationReportDTO =  pharmacyReportService.monthlyExamination(month.year, month.period);
-        return ResponseEntity.ok(pharmacyExaminationReportDTO);
+    @GetMapping(value = "/examination/monthly/{year}/{month}")
+    public ResponseEntity<PharmacyReportDTO> monthlyExamination(@PathVariable String year, @PathVariable String month) {
+        PharmacyReportDTO pharmacyReportDTO =  pharmacyReportService.monthlyExamination(year, month);
+        return ResponseEntity.ok(pharmacyReportDTO);
     }
 
-    @GetMapping(value = "/examination/yearly")
-    public ResponseEntity<PharmacyExaminationReportDTO> yearlyExamination(@RequestBody ReportPeriod year) {
-        PharmacyExaminationReportDTO pharmacyExaminationReportDTO =  pharmacyReportService.yearlyExamination(year.year);
-        return ResponseEntity.ok(pharmacyExaminationReportDTO);
+    @GetMapping(value = "/examination/yearly/{year}")
+    public ResponseEntity<PharmacyReportDTO> yearlyExamination(@PathVariable String year) {
+        PharmacyReportDTO pharmacyReportDTO =  pharmacyReportService.yearlyExamination(year);
+        return ResponseEntity.ok(pharmacyReportDTO);
     }
 
-    @GetMapping(value = "/examination/quartally")
-    public ResponseEntity<PharmacyExaminationReportDTO> quartallyExamination(@RequestBody ReportPeriod quartal) {
-        PharmacyExaminationReportDTO pharmacyExaminationReportDTO =  pharmacyReportService.quartallyExamination(quartal.year,quartal.period);
-        return ResponseEntity.ok(pharmacyExaminationReportDTO);
+    @GetMapping(value = "/examination/quartally/{year}/{period}")
+    public ResponseEntity<PharmacyReportDTO> quartallyExamination(@PathVariable String year, @PathVariable String period) {
+        PharmacyReportDTO pharmacyReportDTO =  pharmacyReportService.quartallyExamination(year,period);
+        return ResponseEntity.ok(pharmacyReportDTO);
     }
 
-    @GetMapping(value = "/medicine/monthly")
-    public ResponseEntity<MedicineReportDTO> monthlyMedicine(@RequestBody ReportPeriod month) {
-        MedicineReportDTO medicineReportDTO =  pharmacyReportService.monthlyMedicine(month.year, month.period);
+    @GetMapping(value = "/medicine/monthly/{year}/{month}")
+    public ResponseEntity<MedicineReportDTO> monthlyMedicine(@PathVariable String year,@PathVariable String month) {
+        MedicineReportDTO medicineReportDTO =  pharmacyReportService.monthlyMedicine(year, month);
         return ResponseEntity.ok(medicineReportDTO);
     }
 
-    @GetMapping(value = "/medicine/yearly}")
-    public ResponseEntity<MedicineReportDTO> yearlyMedicine(@RequestBody ReportPeriod year) {
-        MedicineReportDTO medicineReportDTO =  pharmacyReportService.yearlyMedicine(year.year);
+    @GetMapping(value = "/medicine/yearly/{year}")
+    public ResponseEntity<MedicineReportDTO> yearlyMedicine(@PathVariable String year) {
+        MedicineReportDTO medicineReportDTO =  pharmacyReportService.yearlyMedicine(year);
         return ResponseEntity.ok(medicineReportDTO);
 
     }
 
-    @GetMapping(value = "/medicine/quartally")
-    public ResponseEntity<MedicineReportDTO> quartallyMedicine(@RequestBody ReportPeriod quartal) {
-        MedicineReportDTO medicineReportDTO =  pharmacyReportService.quartallyMedicine(quartal.year, quartal.period);
+    @GetMapping(value = "/medicine/quartally/{year}/{period}")
+    public ResponseEntity<MedicineReportDTO> quartallyMedicine(@PathVariable String year,@PathVariable String period) {
+        MedicineReportDTO medicineReportDTO =  pharmacyReportService.quartallyMedicine(year,period);
         return ResponseEntity.ok(medicineReportDTO);
     }
 
-    @GetMapping(value = "/income")
-    public ResponseEntity<IncomeReportDTO> incomeReport(@RequestBody TimePeriod timePeriod) {
-        IncomeReportDTO incomeReportDTO =  pharmacyReportService.incomeReport(timePeriod.startDate,timePeriod.endDate);
-        return ResponseEntity.ok(incomeReportDTO);
-    }
+    @GetMapping(value = "/income/{start}/{end}")
+    public ResponseEntity<PharmacyReportDTO> incomeReport(@PathVariable String start,@PathVariable String end) {
 
-    static class TimePeriod {
-        private Date startDate;
-        private Date endDate;
+        PharmacyReportDTO pharmacyReportDTO =  pharmacyReportService.incomeReport(start,end);
+        return ResponseEntity.ok(pharmacyReportDTO);
     }
-
-    static class ReportPeriod {
-        private int year;
-        private int period;
-    }
-
 
 
 

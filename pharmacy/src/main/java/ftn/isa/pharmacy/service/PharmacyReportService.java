@@ -1,24 +1,23 @@
 package ftn.isa.pharmacy.service;
 
-import ftn.isa.pharmacy.dto.IncomeReportDTO;
 import ftn.isa.pharmacy.dto.MedicineReportDTO;
-import ftn.isa.pharmacy.dto.PharmacyExaminationReportDTO;
+import ftn.isa.pharmacy.dto.PharmacyReportDTO;
 
 import java.util.Date;
 
 public interface PharmacyReportService {
 
-    MedicineReportDTO yearlyMedicine(int year);
+    MedicineReportDTO yearlyMedicine(String year);
 
-    MedicineReportDTO quartallyMedicine(int year, int quartal);
+    MedicineReportDTO quartallyMedicine(String year, String quartal);
 
-    MedicineReportDTO monthlyMedicine(int year, int month);
+    MedicineReportDTO monthlyMedicine(String year, String month);
 
-    PharmacyExaminationReportDTO yearlyExamination(int year);
+    PharmacyReportDTO yearlyExamination(String year);
 
-    PharmacyExaminationReportDTO quartallyExamination(int year, int quartal);
+    PharmacyReportDTO quartallyExamination(String year, String quartal);
 
-    PharmacyExaminationReportDTO monthlyExamination(int year, int month);
+    PharmacyReportDTO monthlyExamination(String year, String month);
 
-    IncomeReportDTO incomeReport(Date startDate, Date endDate);
+    PharmacyReportDTO incomeReport(String startDate, String endDate);
 }

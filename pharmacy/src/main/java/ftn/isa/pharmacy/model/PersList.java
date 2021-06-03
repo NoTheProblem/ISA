@@ -19,8 +19,15 @@ public class PersList {
     @Column
     private String wayOfUse;
 
+    @Column
+    private float price;
+
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Medicine medicine;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Pharmacy pharmacy;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private EPrescription ePrescription;
@@ -28,12 +35,14 @@ public class PersList {
     public PersList() {
     }
 
-    public PersList(Long id, int quantity, Date dateOfPurchase, String wayOfUse, Medicine medicine, EPrescription ePrescription) {
+    public PersList(Long id, int quantity, Date dateOfPurchase, String wayOfUse, float price, Medicine medicine, Pharmacy pharmacy, EPrescription ePrescription) {
         this.id = id;
         this.quantity = quantity;
         this.dateOfPurchase = dateOfPurchase;
         this.wayOfUse = wayOfUse;
+        this.price = price;
         this.medicine = medicine;
+        this.pharmacy = pharmacy;
         this.ePrescription = ePrescription;
     }
 
@@ -75,5 +84,29 @@ public class PersList {
 
     public void setePrescription(EPrescription ePrescription) {
         this.ePrescription = ePrescription;
+    }
+
+    public Date getDateOfPurchase() {
+        return dateOfPurchase;
+    }
+
+    public void setDateOfPurchase(Date dateOfPurchase) {
+        this.dateOfPurchase = dateOfPurchase;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

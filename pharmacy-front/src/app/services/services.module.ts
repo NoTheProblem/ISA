@@ -13,6 +13,7 @@ import {PharmacyService} from './pharmacy.service';
 import {CounselingComponent} from '../counseling/counseling.component';
 import {MapService} from './map.service';
 import {UserProfileService} from './userProfile.service';
+import {GraphicReportService} from './graphicReport.service';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import {UserProfileService} from './userProfile.service';
     OrderFormService,
     AppointmentService,
     MapService,
+    GraphicReportService,
     UserProfileService
   ],
   imports: [

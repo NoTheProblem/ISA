@@ -17,5 +17,14 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
     List<Examination> findAllByPharmacyAndIsFree(Pharmacy pharmacy, Boolean isFree);
     List<Examination> findAllByDermatologist(Dermatologist dermatologist);
     List<Examination> findAllByDateBetween(Date startDate, Date endDate);
-    List<Examination> findAllByPharmacyAndDateBefore(Pharmacy pharmacy, Date startDate, Date endDate);
+    List<Examination> findAllByPharmacyAndDateBetweenAndIsFree(Pharmacy pharmacy, Date startDate, Date endDate, Boolean isFree);
+    List<Examination> findAllByPharmacyAndDateBetween(Pharmacy pharmacy, Date startDate, Date endDate);
+    List<Examination> findAllByDateBetweenAndPharmacy(Date startDate, Date endDate, Pharmacy pharmacy);
+    List<Examination> findAllByPharmacyAndDateBeforeAndDateAfter(Pharmacy pharmacy, Date startDate, Date endDate);
+
+
+    @Query(value = "select * from examination where pharmacy_id = ?1 and date  between ?2 and ?3",
+            nativeQuery = true)
+    List<Examination> getForReport(Long id, String start, String end);
 }
+

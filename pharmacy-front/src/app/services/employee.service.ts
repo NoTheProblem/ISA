@@ -5,7 +5,6 @@ import {EmployeeModel} from '../model/employee.model';
 import {DermatologistModel} from '../model/dermatologist.model';
 import {PharmacistModel} from '../model/pharmacist.model';
 import {ToastrService} from 'ngx-toastr';
-import {MedicineRegisterModel} from '../model/medicineRegister.model';
 
 @Injectable()
 export class EmployeeService {

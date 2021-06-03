@@ -1,19 +1,15 @@
 package ftn.isa.pharmacy.dto;
 
 import java.util.List;
-import java.util.Stack;
 
-public class MedicineReportDTO {
-
+public class PharmacyReportDTO {
     private List<String> categories;
-    private List<MedQuanReportDTO> data;
+    private List<Float> data;
 
-    public MedicineReportDTO() {
-        this.categories = new Stack<>();
-        this.data = new Stack<>();
+    public PharmacyReportDTO() {
     }
 
-    public MedicineReportDTO(List<String> categories, List<MedQuanReportDTO> data) {
+    public PharmacyReportDTO(List<String> categories, List<Float> data) {
         this.categories = categories;
         this.data = data;
     }
@@ -26,11 +22,11 @@ public class MedicineReportDTO {
         this.categories = categories;
     }
 
-    public List<MedQuanReportDTO> getData() {
+    public List<Float> getData() {
         return data;
     }
 
-    public void setData(List<MedQuanReportDTO> data) {
+    public void setData(List<Float> data) {
         this.data = data;
     }
 }

@@ -101,4 +101,12 @@ public class Reservation {
     public void setMedicineis(Set<MedicineQuantityReservation> medicineis) {
         this.medicineis = medicineis;
     }
+
+    public Date getPickUpDate() {
+        return pickUpDate;
+    }
+
+    public void setPickUpDate(Date pickUpDate) {
+        this.pickUpDate = pickUpDate;
+    }
 }
