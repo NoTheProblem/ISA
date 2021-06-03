@@ -12,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -37,5 +38,10 @@ public class PatientServiceImpl implements PatientService {
             patient.getAllergicMedicines().add(medicine);
             patientRepository.saveAndFlush(patient);
         }
+    }
+
+    @Override
+    public Collection<Patient> getAll() {
+        return patientRepository.findAll();
     }
 }

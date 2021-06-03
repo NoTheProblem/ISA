@@ -39,6 +39,7 @@ import { MapComponent } from './map/map.component';
 import { AngularYandexMapsModule , YaConfig} from 'angular8-yandex-maps';
 import { DermatologistListComponent } from './dermatologist-list/dermatologist-list.component';
 import { PharmacistListComponent } from './pharmacist-list/pharmacist-list.component';
+import { PatientlistComponent } from './patientlist/patientlist.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import {MatDividerModule} from '@angular/material/divider';
 import { HighchartsChartModule } from 'highcharts-angular';
@@ -86,7 +87,9 @@ const mapConfig: YaConfig = {
     PharmacistListComponent,
     ErrorPageComponent,
     GraphicalReportComponent,
-    GraphicalReportMedicineComponent
+    GraphicalReportMedicineComponent,
+    PharmacistListComponent,
+    PatientlistComponent
   ],
   imports: [
     BrowserModule,
@@ -96,9 +99,7 @@ const mapConfig: YaConfig = {
     ServicesModule,
     FormsModule,
     Ng2SearchPipeModule,
-    HighchartsChartModule,
     Ng2OrderModule,
-    MatDividerModule,
     DlDateTimeDateModule,  // <--- Determines the data type of the model
     DlDateTimePickerModule,
     BrowserAnimationsModule,
