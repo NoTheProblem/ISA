@@ -1,5 +1,5 @@
 import {PharmacyModel} from './pharmacy.model';
-import {WorkingHoursModel} from './workingHours.model';
+import {WorkingHoursPharmacist} from './workingHoursPharmacist';
 
 export class PharmacistModel {
   constructor(
@@ -14,7 +14,7 @@ export class PharmacistModel {
     public address: string,
     public phoneNumber: string,
     public birthDate: string,
-    public workingHours: WorkingHoursModel,
+    public workingHours: WorkingHoursPharmacist,
     public pharmacy: PharmacyModel
   ) {
   }

@@ -1,6 +1,5 @@
 import {PharmacyModel} from './pharmacy.model';
 import {DermatologistModel} from './dermatologist.model';
-import {Time} from '@angular/common';
 
 export class ExaminationModel {
   constructor(

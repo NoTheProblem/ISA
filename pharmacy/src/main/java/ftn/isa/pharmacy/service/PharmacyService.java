@@ -2,9 +2,7 @@ package ftn.isa.pharmacy.service;
 
 import ftn.isa.pharmacy.dto.DermatologistDto;
 import ftn.isa.pharmacy.dto.PharmacyDto;
-import ftn.isa.pharmacy.model.Dermatologist;
-import ftn.isa.pharmacy.model.Pharmacist;
-import ftn.isa.pharmacy.model.Pharmacy;
+import ftn.isa.pharmacy.model.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -23,4 +21,10 @@ public interface PharmacyService {
     void addPharmacy(PharmacyDto pharmacyDto);
 
     void updatePharmacyInfo(PharmacyDto pharmacyDto);
+
+    Collection<Medicine> getAvailableMedicines(Long id);
+
+    Collection<Examination> getAvailableExaminations(Long id);
+
+    void deleteEmployee(Long id, String type);
 }

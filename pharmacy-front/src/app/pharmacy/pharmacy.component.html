@@ -9,13 +9,13 @@
     <app-map [adresa]="adresa" > </app-map>
   </div>
   <br>
+  Cena savetovanja: {{pharmacy?.counselingPrice}}
+  <br>
   Opis apoteke: <b> {{pharmacy?.pharmacyDescription}}</b>
   <br><Br>
   <button class="btn btn-primary"  style="margin-right: 10px;" (click)="update=!update">Uredi podatke o apoteci</button>
   <br><Br>
-  <button class="btn btn-primary"  style="margin-right: 10px;" (click)="phaList()">Izmeni spisak farmaceuta</button>
 
-  <button class="btn btn-primary"  style="margin-right: 10px;" (click)="dermaList()">Izmeni spisak dermatologa</button>
 </div>
 
 <div *ngIf="update">
@@ -54,9 +54,18 @@
         required
         #pharmacyDescription="ngModel"
       />
-      <div class="alert-danger" *ngIf="f.submitted && pharmacyDescription.invalid">
-        <div *ngIf="pharmacyDescription.errors.required">Opis je obavezan</div>
-      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Nova cena pregleda</label>
+      <input
+        type="text"
+        class="form-control"
+        name="counselingPrice"
+        [(ngModel)]="form.counselingPrice"
+        required
+        #counselingPrice="ngModel"
+      />
     </div>
 
     <div class="form-group">
@@ -70,9 +79,6 @@
         required
         #address="ngModel"
       />
-      <div class="alert-danger" *ngIf="f.submitted && address.invalid">
-        <div *ngIf="address.errors.required">Opis je obavezan</div>
-      </div>
     </div>
   </form>
   <div *ngIf="showErr">
@@ -81,47 +87,4 @@
   <button class="btn btn-primary" (click)="azuriraj(form)">Azuriraj podatke apoteke</button>
 </div>
 
-
-
-
-<div *ngIf="buttonPress">
-  <div style="text-align: center;">   <h2> {{this?.naziv}} </h2> </div>
-  <div class="wrap">
-    <div class="search">
-      Pretraga:
-      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
-    </div>
-  </div>
-  <div class="m-3">
-    <div class="wrap">
-      <div class="search">
-        Pretraga po ocenama:
-        <input type="number" min="0" max='10' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="filterEvaluationGrade()"  class="searchTerm" placeholder="">
-      </div>
-    </div>
-  </div>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="row" (click)="sort('id')">#</th>
-      <th scope="row" (click)="sort('name')">Ime</th>
-      <th scope="row" (click)="sort('surname')">Prezime</th>
-      <th scope="row" (click)="sort('grade')">Ocena</th>
-      <th scope="col">#</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <tr *ngFor="let emp of employees | orderBy: key: reverse" >
-      <th scope="row">{{ emp.id }}</th>
-      <td>{{ emp.firstName }}</td>
-      <td>{{ emp.lastName}}</td>
-      <td>{{ emp.evaluationGrade}}</td>
-      <td>
-        <button class="btn btn-primary">Uredi</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-</div>
 

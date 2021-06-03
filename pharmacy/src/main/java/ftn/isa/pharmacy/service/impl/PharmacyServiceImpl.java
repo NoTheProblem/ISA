@@ -33,11 +33,15 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final ExaminationRepository examinationRepository;
     private final ExaminationMapperImpl examinationMapper;
     private final PharmacyMapper pharmacyMapper;
+    private final MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository;
+    private final DermatologistRepository dermatologistRepository;
+    private final PharmacistRepository pharmacistRepository;
+
 
 
     // https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/#gatsby-focus-wrapper
     @Autowired
-    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyMapper pharmacyMapper) {
+    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, PromotionRepository promotionRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyMapper pharmacyMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, DermatologistRepository dermatologistRepository, PharmacistRepository pharmacistRepository) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.pharmacyRepository = pharmacyRepository;
         this.patientRepository = patientRepository;
@@ -49,7 +53,9 @@ public class PharmacyServiceImpl implements PharmacyService {
         this.examinationRepository = examinationRepository;
         this.examinationMapper = examinationMapper;
         this.pharmacyMapper = pharmacyMapper;
-
+        this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
+        this.dermatologistRepository = dermatologistRepository;
+        this.pharmacistRepository = pharmacistRepository;
     }
 
     @Override
@@ -157,4 +163,60 @@ public class PharmacyServiceImpl implements PharmacyService {
         pharmacyRepository.save(pharmacy);
     }
 
+    @Override
+    public Collection<Medicine> getAvailableMedicines(Long id) {
+        Pharmacy pharmacy = pharmacyRepository.getOne(id);
+        //Collection<MedicineQuantityPharmacy> medicationQuantities = pharmacy.getMedicationQuantities();
+        List<MedicineQuantityPharmacy> medicationQuantities = medicineQuantityPharmacyRepository.findAllByPharmacy(pharmacy);
+        Collection<Medicine> medicines = new HashSet<>();
+        for (MedicineQuantityPharmacy medQuan:medicationQuantities) {
+            if(medQuan.getQuantity()>0){
+                medicines.add(medQuan.getMedicine());
+            }
+        }
+        return medicines;
+    }
+
+    @Override
+    public Collection<Examination> getAvailableExaminations(Long id) {
+        Pharmacy pharmacy = pharmacyRepository.getOne(id);
+        return examinationRepository.findAllByPharmacyAndIsFree(pharmacy,true);
+
+    }
+
+    @Override
+    public void deleteEmployee(Long id, String type) {
+        PharmacyAdmin pharmacyAdmin  =getPharmacyAdmin();
+        Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
+        //TODO provera da l ima termina;
+        Date today = new Date();
+        if(dermatologistRepository.existsById(id)){
+            Dermatologist dermatologist = dermatologistRepository.getOne(id);
+            Set<Examination> examinations = dermatologist.getExaminations();
+            for (Examination examination:examinations) {
+                if(examination.getDate().after(today)){
+                    return;
+                    //Todo exception
+                }
+            }
+            Set<Dermatologist> dermatologists = pharmacy.getDermatologists();
+            dermatologists.remove(dermatologist);
+            pharmacy.setDermatologists(dermatologists);
+            pharmacyRepository.save(pharmacy);
+        }else {
+            Pharmacist pharmacist = pharmacistRepository.getOne(id);
+            Set<Counseling> counselings = pharmacist.getCounselings();
+            for (Counseling counseling: counselings){
+                if(counseling.getDate().after(today)){
+                    return;
+                    //Exception
+                }
+            }
+            Set<Pharmacist> pharmacists = pharmacy.getPharmacists();
+            pharmacists.remove(pharmacist);
+            pharmacy.setPharmacists(pharmacists);
+            pharmacyRepository.save(pharmacy);
+
+        }
+    }
 }

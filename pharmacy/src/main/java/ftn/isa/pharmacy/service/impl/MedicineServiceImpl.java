@@ -21,10 +21,7 @@ import org.springframework.stereotype.Service;
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.User;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Stack;
+import java.util.*;
 
 @Service
 public class MedicineServiceImpl implements MedicineService {
@@ -124,6 +121,7 @@ public class MedicineServiceImpl implements MedicineService {
         if(pharmacyAdminOptional.isPresent()) {
             return pharmacyAdminOptional.get();
         }
+        // TODO exeption
         return null;
     }
     public List<Medicine> getAllReg() {
@@ -134,6 +132,28 @@ public class MedicineServiceImpl implements MedicineService {
     public void addMedicine(MedicineRegisterDto medicineRegisterDto){
         Medicine medicine = medicineRegisterMapper.bean2Entity(medicineRegisterDto);
         medicineRepository.save(medicine);
+    }
+
+    @Override
+    public Collection<Medicine> getMissingMedicines() {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
+        return pharmacy.getMissingMedicine();
+    }
+
+    @Override
+    public void removeMedicineFromPhamracy(MedicineDto medicineDto) {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
+        Medicine medicine = medicineMapper.bean2Entity(medicineDto);
+        Set<PersList>  medicinePersLists =medicine.getPersLists();
+        for(PersList perscription: medicinePersLists){
+            if(perscription.getePrescription().getStatus().equals("NotTaken")){
+                return;
+                //TODO exception
+            }
+        }
+        medicineQuantityPharmacyRepository.deleteByPharmacyAndMedicine(pharmacy,medicine);
     }
 
     private SysAdmin getSysAdmin(){

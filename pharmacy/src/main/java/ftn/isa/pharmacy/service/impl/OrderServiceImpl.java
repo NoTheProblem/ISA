@@ -58,6 +58,7 @@ public class OrderServiceImpl implements OrderService {
         purchaseOrder.setPharmacyAdmin(pharmacyAdmin);
         purchaseOrder.setStatus("created");
         purchaseOrder.setCreateDate(new Date());
+        //TODO provera data
         purchaseOrder.setOrderMedicines(orderMedicines);
         purchaseOrderRepository.save(purchaseOrder);
         for (MedicineQuantityOrder medicineQuan: orderMedicines) {
@@ -149,6 +150,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(PurchaseOrderDTO purchaseOrderDTO) {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         if(bidRepository.findAllByPurchaseOrder(purchaseOrder).size() != 0){
             throw new ResourceConflictException(1l,"Postoje ponude!");
@@ -158,6 +160,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateOrder(PurchaseOrderDTO purchaseOrderDTO) {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         if(bidRepository.findAllByPurchaseOrder(purchaseOrder).size() != 0){
             throw new ResourceConflictException(1l,"Postoje ponude");

@@ -21,6 +21,8 @@ import { RegisterMedicineComponent } from './register-medicine/register-medicine
 import { RegisterPharmacyComponent } from './register-pharmacy/register-pharmacy.component';
 import {DermatologistListComponent} from './dermatologist-list/dermatologist-list.component';
 import {PharmacistListComponent} from './pharmacist-list/pharmacist-list.component';
+import {ErrorPageComponent} from './error-page/error-page.component';
+import {UserProfileComponent} from './user-profile/user-profile.component';
 import {PatientlistComponent} from './patientlist/patientlist.component';
 import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
 
@@ -41,6 +43,7 @@ const routes: Routes = [
   {path: 'price-list', component: PriceListComponent},
   {path: 'absences', component: AbsencesComponent},
   {path: 'appDef', component: AppointmentDefComponent},
+  {path: 'profile', component: UserProfileComponent},
   {path: 'dermatologistList', component: DermatologistListComponent},
   {path: 'pharmacistList', component: PharmacistListComponent},
   {path: 'pharmacy-medicine', component: PharmacyMedicineComponent},
@@ -48,6 +51,7 @@ const routes: Routes = [
   {path: 'pharmacy-report', component: PharmacyReportComponent},
   {path: 'pharmacy/:id', component: PharmacyDetailsComponent},
   {path: 'orderdetails/:id', component: OrderdetailsComponent},
+  {path: 'error', component: ErrorPageComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

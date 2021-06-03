@@ -1,5 +1,6 @@
 package ftn.isa.pharmacy.service;
 
+import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.PriceMediceDTO;
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.PriceMediceList;
@@ -20,4 +21,7 @@ public interface MedicineService {
     List<Medicine> getAllReg();
     void addMedicine(MedicineRegisterDto medicineRegisterDto);
 
+    Collection<Medicine> getMissingMedicines();
+
+    void removeMedicineFromPhamracy(MedicineDto medicineDto);
 }

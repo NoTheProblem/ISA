@@ -20,7 +20,6 @@ public class ExaminationMapperImpl  extends AbstractMapper<Examination, Examinat
         bean.setDermatologistLastname(entity.getDermatologist().getLastName());
         bean.setDermatologistName(entity.getDermatologist().getFirstName());
         bean.setDate(entity.getDate());
-        System.out.println(bean.getDate());
         return bean;
     }
 

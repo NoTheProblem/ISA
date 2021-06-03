@@ -3,6 +3,7 @@ package ftn.isa.pharmacy.model;
 
 import javax.persistence.*;
 import java.sql.Time;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,6 +20,9 @@ public class Pharmacist extends User {
     @Column
     private Time endTime;
 
+    @OneToOne
+    private WorkingHoursPharmacist workingHours;
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Counseling> counselings = new HashSet<Counseling>();
 
@@ -28,10 +32,12 @@ public class Pharmacist extends User {
     public Pharmacist() {
     }
 
-    public Pharmacist(float evaluationGrade, Time startTime, Time endTime, Set<Counseling> counselings, Pharmacy pharmacy) {
+    public Pharmacist(Long id, String tip, String firstName, String lastName, String username, String password, String email, String country, String city, String address, String phoneNumber, Date birthDate, float evaluationGrade, Time startTime, Time endTime, WorkingHoursPharmacist workingHours, Set<Counseling> counselings, Pharmacy pharmacy) {
+        super(id, tip, firstName, lastName, username, password, email, country, city, address, phoneNumber, birthDate);
         this.evaluationGrade = evaluationGrade;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.workingHours = workingHours;
         this.counselings = counselings;
         this.pharmacy = pharmacy;
     }
@@ -74,5 +80,13 @@ public class Pharmacist extends User {
 
     public void setPharmacy(Pharmacy pharmacy) {
         this.pharmacy = pharmacy;
+    }
+
+    public WorkingHoursPharmacist getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(WorkingHoursPharmacist workingHours) {
+        this.workingHours = workingHours;
     }
 }

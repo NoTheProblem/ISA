@@ -1,5 +1,6 @@
 package ftn.isa.pharmacy.controller;
 
+import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.UserDTO;
 import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.model.User;
@@ -107,6 +108,27 @@ public class UserController {
         return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/username/{username}")
+    public ResponseEntity<UserDTO> getUserUsername(@PathVariable String username) {
+        User user = userService.findByUsername(username);
+
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+    }
+
+
+    @PostMapping("/updateInfo")
+    public ResponseEntity<UserDTO> updateInfo(@RequestBody UserDTO userDTO) {
+        User user =  userService.updateAnyUser(userDTO);
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new UserDTO(user), HttpStatus.OK);
+
+    }
 
     @PostMapping("/signupemployee")
     @PreAuthorize("hasRole('ROLE_SYSADMIN')")

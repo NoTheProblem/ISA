@@ -5,6 +5,8 @@ import {MedicineModel} from '../model/medicine.model';
 import {MedicineService} from '../services/medicine.service';
 import {MedicineQuantityModel} from '../model/medicineQuantity.model';
 import {MedicineQuantityHelpModel} from '../model/medicineQuantityHelpModel';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-order-froms',
@@ -35,11 +37,17 @@ export class OrderFromsComponent implements OnInit {
 
   constructor(
     private medicineService: MedicineService,
-    private orderFormService: OrderFormService
+    private orderFormService: OrderFormService,
+    private tokenStorageService: TokenStorageService,
+    private router: Router
   ) {
   }
 
   ngOnInit(): void {
+    if (this.tokenStorageService.permissionForPage('ROLE_ADMIN'))
+    {
+      this.router.navigate(['/error']);
+    }
     this.initMedicines();
   }
 

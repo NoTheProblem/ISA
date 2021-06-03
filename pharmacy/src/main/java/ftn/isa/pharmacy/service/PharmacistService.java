@@ -7,4 +7,11 @@ import java.util.Collection;
 
 public interface PharmacistService {
     Collection<PharmacistDTO> getAll();
+
+    Collection<PharmacistDTO> getAllFree();
+
+    void addToPharmacy(PharmacistDTO pharmacistDTO);
+
+    void registerToPharmacy(PharmacistDTO pharmacistDTO);
+
 }

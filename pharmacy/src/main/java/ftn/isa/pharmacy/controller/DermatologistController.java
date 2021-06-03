@@ -1,14 +1,13 @@
 package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.DermatologistDto;
+import ftn.isa.pharmacy.dto.PharmacistDTO;
 import ftn.isa.pharmacy.mapper.impl.DermatologistMapperImpl;
 import ftn.isa.pharmacy.service.DermatologistService;
 import ftn.isa.pharmacy.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
@@ -30,5 +29,23 @@ public class DermatologistController {
         Collection<DermatologistDto> dermatologistDtoList = dermatologistService.getAll();
         return ResponseEntity.ok(dermatologistDtoList);
     }
+
+    @GetMapping(value = "/getAllDermatologistsCandidates")
+    public ResponseEntity<Collection<DermatologistDto>> getAllDermatologistsCandidates() {
+        Collection<DermatologistDto> dermatologistDtoList = dermatologistService.getAllDermatologistsCandidates();
+        return ResponseEntity.ok(dermatologistDtoList);
+    }
+
+    @PostMapping("/addToPharmacy")
+    public void addToPharmacy(@RequestBody DermatologistDto dermatologistDto) {
+        dermatologistService.addToPharmacy(dermatologistDto);
+    }
+
+
+
+
+
+
+
 
 }
