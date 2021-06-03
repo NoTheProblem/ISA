@@ -89,18 +89,6 @@ public class AuthenticationController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
-    @PostMapping("/signupemployee")
-    public ResponseEntity<User> addEmployee(@RequestBody UserDTO userRequest, UriComponentsBuilder ucBuilder) {
-
-        User existUser = this.userService.findByUsername(userRequest.getUsername());
-        if (existUser != null) {
-            throw new ResourceConflictException(userRequest.getId(), "Username already exists");
-        }
-        User user = this.userService.saveEmployee(userRequest);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
-    }
 
     // U slucaju isteka vazenja JWT tokena, endpoint koji se poziva da se token osvezi
     @PostMapping(value = "/refresh")

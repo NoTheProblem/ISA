@@ -2,12 +2,16 @@ package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.UserDTO;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.model.User;
 import ftn.isa.pharmacy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,6 +130,20 @@ public class UserController {
 
     }
 
+    @PostMapping("/signupemployee")
+    @PreAuthorize("hasRole('ROLE_SYSADMIN')")
+    public ResponseEntity<User> addSysAdmin(@RequestBody UserDTO userRequest, UriComponentsBuilder ucBuilder) {
+
+        User existUser = this.userService.findByUsername(userRequest.getUsername());
+        if (existUser != null) {
+            throw new ResourceConflictException(userRequest.getId(), "Username already exists");
+        }
+
+        User user = this.userService.saveEmployee(userRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(ucBuilder.path("/api/user/{userId}").buildAndExpand(user.getId()).toUri());
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
 
 
 

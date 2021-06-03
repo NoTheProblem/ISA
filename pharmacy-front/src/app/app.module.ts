@@ -45,6 +45,8 @@ import {MatDividerModule} from '@angular/material/divider';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { GraphicalReportComponent } from './graphical-report/graphical-report.component';
 import { GraphicalReportMedicineComponent } from './graphical-report-medicine/graphical-report-medicine.component';
+import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
+
 
 
 const mapConfig: YaConfig = {
@@ -82,7 +84,8 @@ const mapConfig: YaConfig = {
     OrderdetailsComponent,
     MapComponent,
     RegisterMedicineComponent,
-    RegisterPharmacyComponent,
+    RegisterPharmacyComponent,    
+    RegisterEmployeeComponent,
     DermatologistListComponent,
     PharmacistListComponent,
     ErrorPageComponent,
@@ -90,6 +93,7 @@ const mapConfig: YaConfig = {
     GraphicalReportMedicineComponent,
     PharmacistListComponent,
     PatientlistComponent
+
   ],
   imports: [
     BrowserModule,

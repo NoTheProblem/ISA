@@ -24,6 +24,7 @@ import {PharmacistListComponent} from './pharmacist-list/pharmacist-list.compone
 import {ErrorPageComponent} from './error-page/error-page.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {PatientlistComponent} from './patientlist/patientlist.component';
+import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -38,6 +39,7 @@ const routes: Routes = [
   {path: 'promotions', component: PromotionsComponent},
   {path: 'order-forms', component: OrderFromsComponent},
   {path: 'register-medicine', component: RegisterMedicineComponent},
+  {path: 'register-employee', component: RegisterEmployeeComponent},
   {path: 'price-list', component: PriceListComponent},
   {path: 'absences', component: AbsencesComponent},
   {path: 'appDef', component: AppointmentDefComponent},
