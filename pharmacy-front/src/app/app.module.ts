@@ -84,7 +84,7 @@ const mapConfig: YaConfig = {
     OrderdetailsComponent,
     MapComponent,
     RegisterMedicineComponent,
-    RegisterPharmacyComponent,    
+    RegisterPharmacyComponent,
     RegisterEmployeeComponent,
     DermatologistListComponent,
     PharmacistListComponent,
@@ -103,6 +103,8 @@ const mapConfig: YaConfig = {
     ServicesModule,
     FormsModule,
     Ng2SearchPipeModule,
+    MatDividerModule,
+    HighchartsChartModule,
     Ng2OrderModule,
     DlDateTimeDateModule,  // <--- Determines the data type of the model
     DlDateTimePickerModule,
