@@ -33,7 +33,7 @@ export class AbsenceService {
   }
 
   public sendAnswer(absence: AbsenceModel): void {
-    this.httpClient.post(  Constants.API + '/absence/answer', absence).subscribe(
+    this.httpClient.put(  Constants.API + '/absence/answer', absence).subscribe(
       (response: any) => {
         this.toast.success(`Zahtev je obradjen.`);
       },

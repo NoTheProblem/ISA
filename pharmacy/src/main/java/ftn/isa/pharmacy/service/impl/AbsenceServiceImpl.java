@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.LockModeType;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -67,6 +69,9 @@ public class AbsenceServiceImpl implements AbsenceService {
     public AbsenceRequest answer(AbsenceDTO absenceDTO) {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         AbsenceRequest absenceRequest = getAbsenceForUpdate(absenceDTO.getId());
+        if(!absenceRequest.getStatus().equals("nov")){
+            throw new ResourceConflictException(1l,"Promenjen u medjuvremenu!");
+        }
         absenceRequest.setStatus(absenceDTO.getStatus());
         if(absenceDTO.getStartDate().equals("Odbijeno")){
             absenceRequest.setAnswerText(absenceDTO.getAnswerText());
@@ -80,7 +85,7 @@ public class AbsenceServiceImpl implements AbsenceService {
     @Override
     public Collection<AbsenceRequest> getByEmployeeId(Long id) {
         Date date = new Date();
-        return absenceRequestRepository.findAllByEmployeeIdAndStatusIsNotLikeAndStartDateAfterOrEmployeeIdAndStatusIsNotLikeAndEndDateAfter(id,"nov",date,id,"nov", date);
+        return absenceRequestRepository.findAllByEmployeeIdAndStatusIsLikeAndStartDateAfterOrEmployeeIdAndStatusIsLikeAndEndDateAfter(id,"Odobreno",date,id,"Odobreno", date);
     }
 
 

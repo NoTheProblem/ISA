@@ -47,7 +47,7 @@ public class ExaminationServiceImpl implements ExaminationService {
     public boolean addExamination(ExaminationDto examinationDto) {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         List<AbsenceRequest> absenceRequests = absenceRequestRepository.
-                findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsNotLike(examinationDto.getDermatologistId(),examinationDto.getDate(),examinationDto.getDate(), "nov");
+                findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsLike(examinationDto.getDermatologistId(),examinationDto.getDate(),examinationDto.getDate(), "Odobreno");
         if(absenceRequests.size()!=0){
             throw new ResourceConflictException(1l,"Odsustvo!");
         }

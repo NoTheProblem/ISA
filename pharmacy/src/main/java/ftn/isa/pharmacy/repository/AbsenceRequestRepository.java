@@ -22,11 +22,11 @@ public interface AbsenceRequestRepository extends JpaRepository<AbsenceRequest, 
 
     List<AbsenceRequest> getAllByTypeOfEmployeeAndStatus(String type, String status);
     List<AbsenceRequest> getAllByPharmacyAndTypeOfEmployeeAndStatus(Pharmacy pharmacy, String type, String status);
-    //List<AbsenceRequest> findAllByEmployeeIdAndStartDateAfterAndEndDateBeforeAndStatusIsNotLike(Long id, Date startDate, Date endDate, String status);
-    List<AbsenceRequest> findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsNotLike(Long id, Date start, Date end, String status);
+    //List<AbsenceRequest> findAllByEmployeeIdAndStartDateAfterAndEndDateBeforeAndStatusIsLike(Long id, Date startDate, Date endDate, String status);
+    List<AbsenceRequest> findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsLike(Long id, Date start, Date end, String status);
     List<AbsenceRequest> findAllByEmployeeIdAndStartDateAfterAndStatusIsNotLike(Long id, Date date, String status);
 
-    List<AbsenceRequest> findAllByEmployeeIdAndStatusIsNotLikeAndStartDateAfterOrEmployeeIdAndStatusIsNotLikeAndEndDateAfter(Long id, String status, Date date,Long id2, String status2, Date datee);
+    List<AbsenceRequest> findAllByEmployeeIdAndStatusIsLikeAndStartDateAfterOrEmployeeIdAndStatusIsLikeAndEndDateAfter(Long id, String status, Date date,Long id2, String status2, Date datee);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select ar from AbsenceRequest ar WHERE ar.id = :id")
