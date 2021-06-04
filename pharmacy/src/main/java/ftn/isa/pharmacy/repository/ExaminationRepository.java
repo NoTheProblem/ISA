@@ -23,6 +23,12 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
     List<Examination> findAllByPharmacyAndDateBeforeAndDateAfter(Pharmacy pharmacy, Date startDate, Date endDate);
 
 
+    @Query(value = "select * from examination where pharmacy_id = ?1 and dermatologist_id = ?2 and Date(date) = Date(?3)",
+            nativeQuery = true)
+    List<Examination> customByPharmacyDermatologistAndDate(Long pharmacyId, Long dermatologistId, String date);
+    List<Examination> findAllByPharmacyAndDermatologistAndDate(Pharmacy pharmacy, Dermatologist dermatologist, Date date);
+
+
     @Query(value = "select * from examination where pharmacy_id = ?1 and date  between ?2 and ?3",
             nativeQuery = true)
     List<Examination> getForReport(Long id, String start, String end);

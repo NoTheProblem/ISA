@@ -26,7 +26,6 @@ public class ExaminationController {
     @GetMapping(value = "/getAllFree")
     public ResponseEntity<Collection<ExaminationDto>> getAll() {
         Collection<ExaminationDto> examinationDtoList = examinationMapper.entity2Bean(examinationService.getAllFree(Boolean.TRUE));
-        System.out.println(examinationDtoList);
         return ResponseEntity.ok(examinationDtoList);
     }
 
@@ -35,6 +34,11 @@ public class ExaminationController {
         return examinationService.addExamination(examinationDto);
     }
 
+    @GetMapping(value = "/getByDermaIdAndDateForPhaAdmin/{id}/{date}")
+    public ResponseEntity<Collection<ExaminationDto>> getByDermaIdAndDateForPhaAdmin(@PathVariable Long id, @PathVariable String date) {
+        Collection<ExaminationDto> examinationDtoList = examinationMapper.entity2Bean(examinationService.getByDermaIdAndDateForPhaAdmin(id,date));
+        return ResponseEntity.ok(examinationDtoList);
+    }
 
 
 

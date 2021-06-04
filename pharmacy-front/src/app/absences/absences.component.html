@@ -1,8 +1,6 @@
+<div style="text-align: center;"><h2>Zahtevi za godišnje odmore i odsustva</h2></div>
+<div class="row container-fluid">
 
-<div class="row container-fluid" *ngIf="isShown">
-  <div class="m-3">
-    <h3>Zahtevi za godišnje odmore i odsustva</h3>
-  </div>
   <table class="table table-striped" >
     <thead>
     <tr>
@@ -23,40 +21,12 @@
       <td>{{ ab.startDate | date}}</td>
       <td>{{ ab.endDate | date}}</td>
       <td>
-        <button class="btn btn-primary" (click)="solveAbsence(ab)">Detalji</button>
+        <a [routerLink]="['/absence', ab.id]">
+          Resi zahtev
+        </a>
       </td>
     </tr>
 
     </tbody>
   </table>
-</div>
-
-
-<div *ngIf="!isShown">
-  <p> Zaposleni : {{absence.employeeName}} </p>
-  <p> Tip zahteva: {{absence.typeOfAbsence}}</p>
-  <p> Zahtev :{{absence.requestText}}</p>
-  <p> Pocetak: {{absence.startDate | date}}</p>
-  <p> Kraj: {{absence.endDate | date}}</p>
-
-  <div>
-    <button class="btn btn-primary" (click)="accept()" >Prihvati</button>
-    <button class="btn btn-primary" (click)="decline()" >Odbij</button>
-  </div>
-
-  <div *ngIf="isDeclined">
-
-
-    <label>Unesite razlog odbijanja :</label>
-    <input
-      type="text"
-      class="form-control"
-      name="title"
-      id = "answer"
-      required
-    />
-    <button class="btn btn-primary" (click)="confDecline()" >Potvrdi odbijanje</button>
-
-  </div>
-
 </div>

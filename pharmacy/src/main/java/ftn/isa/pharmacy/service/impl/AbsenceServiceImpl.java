@@ -1,20 +1,27 @@
 package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.dto.AbsenceDTO;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.impl.AbsenceMapperImpl;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.AbsenceRequestRepository;
 import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
 import ftn.isa.pharmacy.service.AbsenceService;
+import org.hibernate.LockMode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.LockModeType;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class AbsenceServiceImpl implements AbsenceService {
 
     private final AbsenceRequestRepository absenceRequestRepository;
@@ -35,41 +42,55 @@ public class AbsenceServiceImpl implements AbsenceService {
 
     @Override
     public Collection<AbsenceRequest> getAllDermatologistRequests() {
-        return absenceRequestRepository.getAllDermatologistRequests();
+        return absenceRequestRepository.getAllByTypeOfEmployeeAndStatus("ROLE_DERMATOLOGIST","nov");
     }
-
     @Override
     public Collection<AbsenceRequest> getAllPharmacistRequests() {
-        return absenceRequestRepository.getAllPharmacistRequests();
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        return absenceRequestRepository.getAllByPharmacyAndTypeOfEmployeeAndStatus(pharmacyAdmin.getPharmacy(),"ROLE_PHARMACIST","nov");
     }
 
     @Override
-    public void acceptAbsencePha(AbsenceDTO absenceDTO) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
-        if(pharmacyAdminOptional.isPresent()){
-            PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
-            AbsenceRequest absenceRequest = absenceMapper.bean2Entity(absenceDTO);
-            absenceRequest.setAdminId(pharmacyAdmin.getId());
-            absenceRequest.setStatus("Odobreno");
-            absenceRequestRepository.saveAndFlush(absenceRequest);
-            mailService.absenceAcceptedNotification(absenceRequest);
-        }
+    @Transactional(readOnly = false)
+    public AbsenceRequest getAbsenceByID(Long id) {
+        return absenceRequestRepository.findOneById(id);
+    }
 
+    @Transactional(readOnly = false)
+    public AbsenceRequest getAbsenceForUpdate(Long id){
+        AbsenceRequest absenceRequest = absenceRequestRepository.findOneById(id);
+        return absenceRequest;
     }
 
     @Override
-    public void declineAbsencePha(AbsenceDTO absenceDTO) {
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+    public AbsenceRequest answer(AbsenceDTO absenceDTO) {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        AbsenceRequest absenceRequest = getAbsenceForUpdate(absenceDTO.getId());
+        absenceRequest.setStatus(absenceDTO.getStatus());
+        if(absenceDTO.getStartDate().equals("Odbijeno")){
+            absenceRequest.setAnswerText(absenceDTO.getAnswerText());
+        }
+        absenceRequest.setAdminId(pharmacyAdmin.getId());
+        absenceRequestRepository.save(absenceRequest);
+        mailService.absenceDeclinedNotification(absenceRequest);
+        return absenceRequest;
+    }
+
+    @Override
+    public Collection<AbsenceRequest> getByEmployeeId(Long id) {
+        Date date = new Date();
+        return absenceRequestRepository.findAllByEmployeeIdAndStatusIsNotLikeAndStartDateAfterOrEmployeeIdAndStatusIsNotLikeAndEndDateAfter(id,"nov",date,id,"nov", date);
+    }
+
+
+    private PharmacyAdmin getPharmacyAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<PharmacyAdmin> pharmacyAdminOptional = pharmacyAdminRepository.findById(((User) authentication.getPrincipal()).getId());
-        if(pharmacyAdminOptional.isPresent()){
+        if(pharmacyAdminOptional.isPresent()) {
             PharmacyAdmin pharmacyAdmin = pharmacyAdminOptional.get();
-            AbsenceRequest absenceRequest = absenceMapper.bean2Entity(absenceDTO);
-            absenceRequest.setAdminId(pharmacyAdmin.getId());
-            absenceRequest.setStatus("Odbijeno");
-            absenceRequestRepository.saveAndFlush(absenceRequest);
-            mailService.absenceDeclinedNotification(absenceRequest);
+            return pharmacyAdmin;
         }
-
+        throw new ResourceConflictException(1l,"Ne postoji administrator apoteke!");
     }
 }

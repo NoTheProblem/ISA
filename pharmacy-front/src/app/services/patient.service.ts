@@ -5,6 +5,7 @@ import {Toast, ToastrService} from 'ngx-toastr';
 import {Observable} from 'rxjs';
 import {DermatologistModel} from '../model/dermatologist.model';
 import {PatientModel} from '../model/patient.model';
+import {Constants} from './constants';
 
 @Injectable()
 export class PatientService {
@@ -16,7 +17,7 @@ export class PatientService {
   }
 
   public addAllergy(medicine: MedicineModel): void {
-    this.httpClient.post('http://localhost:8080/patient/addAllergy', medicine).subscribe(
+    this.httpClient.post(Constants.API + '/patient/addAllergy', medicine).subscribe(
       (response: any) => {
         this.toast.success(`Dodata alergija na ${medicine.name}`);
       },
@@ -27,7 +28,7 @@ export class PatientService {
   }
 
   public getAll(): Observable<Array<PatientModel>> {
-    return this.httpClient.get<Array<PatientModel>>('http://localhost:8080/patient/getAll');
+    return this.httpClient.get<Array<PatientModel>>(Constants.API + '/patient/getAll');
   }
 
 }

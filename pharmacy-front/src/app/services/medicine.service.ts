@@ -3,9 +3,9 @@ import {MedicineModel} from '../model/medicine.model';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PriceMedicineModel} from '../model/priceMedicine.model';
-import {PromotionModel} from '../model/promotion.model';
 import {MedicineRegisterModel} from '../model/medicineRegister.model';
 import {ToastrService} from 'ngx-toastr';
+import {Constants} from './constants';
 
 @Injectable()
 export class MedicineService {
@@ -16,21 +16,21 @@ export class MedicineService {
   }
 
   public getAll(): Observable<Array<MedicineModel>> {
-    return this.httpClient.get<Array<MedicineModel>>('http://localhost:8080/medicine/getAll');
+    return this.httpClient.get<Array<MedicineModel>>(Constants.API + '/medicine/getAll');
   }
 
 
   public getMedicinesForPhaAdmin(): Observable<Array<MedicineModel>> {
-    return this.httpClient.get<Array<MedicineModel>>('http://localhost:8080/medicine/getMedicinesForPhaAdmin');
+    return this.httpClient.get<Array<MedicineModel>>(Constants.API + '/medicine/getMedicinesForPhaAdmin');
   }
 
   public getMedPriceForPhaAdmin(id: number): Observable<PriceMedicineModel> {
-    this.path = 'http://localhost:8080/medicine/getMedPriceForPhaAdmin/' + String(id);
+    this.path = Constants.API + '/medicine/getMedPriceForPhaAdmin/' + String(id);
     return this.httpClient.get<PriceMedicineModel>(this.path);
   }
 
   public addNewMedPrice(priceMedicineModel: PriceMedicineModel): void {
-    this.httpClient.post('http://localhost:8080/medicine/addNewMedPrice', priceMedicineModel).subscribe(
+    this.httpClient.post(Constants.API + '/medicine/addNewMedPrice', priceMedicineModel).subscribe(
       (response: any) => {
         this.toast.success(`Cena je dodata.`);
       },
@@ -41,12 +41,12 @@ export class MedicineService {
   }
 
   public getAllReg(): Observable<Array<MedicineRegisterModel>> {
-    return this.httpClient.get<Array<MedicineRegisterModel>>('http://localhost:8080/medicine/getAllReg');
+    return this.httpClient.get<Array<MedicineRegisterModel>>(Constants.API + '/medicine/getAllReg');
   }
 
 
   public addMedicine(medicine: MedicineRegisterModel): void {
-    this.httpClient.post('http://localhost:8080/medicine/addMedicine', medicine).subscribe(
+    this.httpClient.post(Constants.API + '/medicine/addMedicine', medicine).subscribe(
       (response: any) => {
         this.toast.success(`${medicine.type} je dodat.`);
       },
@@ -57,7 +57,7 @@ export class MedicineService {
   }
 
   public removeMedicineFromPhamracy(medicine: MedicineModel): void {
-    this.path = 'http://localhost:8080/medicine/removeMedicineFromPhamracy';
+    this.path = Constants.API + '/medicine/removeMedicineFromPhamracy';
     this.httpClient.post(this.path, medicine).subscribe(
       (response: any) => {
         this.toast.success(`Lek je uklonjen.`);
@@ -69,7 +69,7 @@ export class MedicineService {
   }
 
   public getMissingMedicines(): Observable<Array<MedicineModel>> {
-    return this.httpClient.get<Array<MedicineModel>>('http://localhost:8080/medicine/getMissingMedicines');
+    return this.httpClient.get<Array<MedicineModel>>(Constants.API + '/medicine/getMissingMedicines');
   }
 
 }

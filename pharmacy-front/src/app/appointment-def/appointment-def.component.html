@@ -26,13 +26,37 @@
 </div>
 
 <div *ngIf="!show">
+  <div style="text-align: center;"><h2>Definisanje termina</h2></div>
   Ime i prezime: {{derma.firstName}} {{derma.lastName}}
   <br>
-  Pocetak radnog vremena :{{workingHours.startTime}}
+  <div *ngIf="showNoAbsence">
+    Nema zakazanih odsustva u buducnosti
+  </div>
+  <div *ngIf="showAbsence">
+    <b>Postoje zakazana odsustva u buducnosti pazite na to! </b>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="row">Pocetak</th>
+        <th scope="row">Kraj</th>
+      </tr>
+      </thead>
+      <tbody>
+
+      <tr *ngFor="let absence of absences" >
+        <td>{{ absence.startDate | date:'longDate' }}</td>
+        <td>{{ absence.endDate | date:'longDate'}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
   <br>
-  Kraj radnog vremena: {{workingHours.endTime }}
+  Radno vreme: <b>{{workingHours.workDay}} {{workingHours.startTime}} - {{workingHours.endTime }} </b>
   <br>
-  Izaberite datum za pravljenje pregleda:
+  <br>
+  Izaberite datum za pravljenje pregleda koji odgovara radnom vremenu:
   <form>
     <input
       type="date"
@@ -41,8 +65,12 @@
       [(ngModel)]="form.examinationDateInput"
     />
   </form>
+  <div *ngIf="showWorkDayError">
+    <p> Niste odabrali dobar dan</p>
+  </div>
+  <br>
   <button class="btn btn-primary" (click)="showExaminations(form)">Prikazi</button>
-
+  <br>
   <div *ngIf="showAppointments">
     <h4>Prikaz termina za {{examinationDateInput  | date:'longDate'}}</h4>
     <table class="table table-striped">
@@ -52,7 +80,6 @@
         <th scope="row">Vreme</th>
         <th scope="row">Trajanje</th>
         <th scope="row">Cena</th>
-        <th scope="row">#</th>
       </tr>
       </thead>
       <tbody>
@@ -62,9 +89,6 @@
         <td>{{ ex.date | date:'shortTime'}}</td>
         <td>{{ ex.durationMinutes}} minuta</td>
         <td>{{ ex.price}}</td>
-        <td>
-          <button class="btn btn-primary" >Izmeni</button>
-        </td>
       </tr>
       </tbody>
     </table>

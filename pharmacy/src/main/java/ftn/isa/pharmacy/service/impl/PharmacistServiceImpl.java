@@ -78,14 +78,13 @@ public class PharmacistServiceImpl implements PharmacistService {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
         Pharmacist pharmacist = pharmacistMapper.bean2Entity(pharmacistDTO);
-        // TODO iz nekog razloga ne prevlazic workingHours
         WorkingHoursPharmacist workingHoursPharmacist = workingHoursPharmacistMapper.bean2Entity(pharmacistDTO.getWorkingHours());
         pharmacist.setPharmacy(pharmacy);
         workingHoursPharmacist.setPharmacist(pharmacist);
         workingHoursPharmacist.setPharmacy(pharmacy);
-        pharmacist.setEnabled(true);
-        // TODO generate random string for pass
-        pharmacist.setPassword(passwordEncoder.encode("dagshiajsfiju1iojh13hy"));
+        pharmacist.setEnabled(false);
+
+        pharmacist.setPassword(passwordEncoder.encode(pharmacist.getFirstName() + "2021"));
         List<Authority> auth = authorityService.findByName("ROLE_PHARMACIST");
         pharmacist.setAuthorities(auth);
         pharmacistRepository.save(pharmacist);
@@ -94,8 +93,6 @@ public class PharmacistServiceImpl implements PharmacistService {
         pharmacy.setPharmacists(pharmacistSet);
         pharmacyRepository.save(pharmacy);
         workingHoursPharmacistRepository.save(workingHoursPharmacist);
-
-
     }
 
 

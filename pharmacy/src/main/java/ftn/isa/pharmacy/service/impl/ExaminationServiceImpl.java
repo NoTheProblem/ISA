@@ -1,12 +1,10 @@
 package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.dto.ExaminationDto;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.impl.ExaminationMapperImpl;
 import ftn.isa.pharmacy.model.*;
-import ftn.isa.pharmacy.repository.DermatologistRepository;
-import ftn.isa.pharmacy.repository.ExaminationRepository;
-import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
-import ftn.isa.pharmacy.repository.WorkingHoursRepository;
+import ftn.isa.pharmacy.repository.*;
 import ftn.isa.pharmacy.service.ExaminationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -14,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -26,15 +25,17 @@ public class ExaminationServiceImpl implements ExaminationService {
     private final PharmacyAdminRepository pharmacyAdminRepository;
     private final DermatologistRepository dermatologistRepository;
     private final WorkingHoursRepository workingHoursRepository;
+    private final AbsenceRequestRepository absenceRequestRepository;
 
 
     @Autowired
-    public ExaminationServiceImpl(ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyAdminRepository pharmacyAdminRepository, DermatologistRepository dermatologistRepository, WorkingHoursRepository workingHoursRepository) {
+    public ExaminationServiceImpl(ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyAdminRepository pharmacyAdminRepository, DermatologistRepository dermatologistRepository, WorkingHoursRepository workingHoursRepository, AbsenceRequestRepository absenceRequestRepository) {
         this.examinationRepository = examinationRepository;
         this.examinationMapper = examinationMapper;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.dermatologistRepository = dermatologistRepository;
         this.workingHoursRepository = workingHoursRepository;
+        this.absenceRequestRepository = absenceRequestRepository;
     }
 
     @Override
@@ -44,6 +45,16 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public boolean addExamination(ExaminationDto examinationDto) {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        List<AbsenceRequest> absenceRequests = absenceRequestRepository.
+                findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsNotLike(examinationDto.getDermatologistId(),examinationDto.getDate(),examinationDto.getDate(), "nov");
+        if(absenceRequests.size()!=0){
+            throw new ResourceConflictException(1l,"Odsustvo!");
+        }
+        Date today = new Date();
+        if(examinationDto.getDate().before(today)){
+            throw new ResourceConflictException(1l,"Zakazivanje u proslost!");
+        }
         String time = examinationDto.getTime();
         Dermatologist dermatologist = dermatologistRepository.getOne(examinationDto.getDermatologistId());
         Examination examination = examinationMapper.bean2Entity(examinationDto);
@@ -56,7 +67,6 @@ public class ExaminationServiceImpl implements ExaminationService {
         Date endDate = new Date();
         endDate.setTime(date.getTime());
         endDate.setMinutes(date.getMinutes()+examination.getDurationMinutes());
-        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
         Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
         WorkingHours wk = workingHoursRepository.getWorkingHoursByPharmacyAndDermatologist(pharmacy,dermatologist);
         Time startShift = wk.getStartTime();
@@ -69,8 +79,8 @@ public class ExaminationServiceImpl implements ExaminationService {
         dateEndShift.setTime(date.getTime());
         dateEndShift.setMinutes(endShift.getMinutes());
         dateEndShift.setHours(endShift.getHours());
-        if(date.after(dateEndShift) || endDate.before(dateStartShift)){
-            return false;
+        if(date.after(dateEndShift) || endDate.before(dateStartShift) || endDate.after(dateEndShift)){
+            throw new ResourceConflictException(1l,"Nije u radnom vremenu!");
         }
         Date startDate = new Date();
         startDate.setTime(date.getTime());
@@ -78,7 +88,6 @@ public class ExaminationServiceImpl implements ExaminationService {
         Date nextDay =  new Date();
         nextDay.setTime(date.getTime());
         nextDay.setHours(23);
-        //TODO proveriti je l ok radno vreme dermatologa
         List<Examination> examinationsOnThatDay = examinationRepository.findAllByDateBetween(startDate,nextDay);
         for (Examination exa: examinationsOnThatDay) {
             Date exaDate = exa.getDate();
@@ -88,10 +97,10 @@ public class ExaminationServiceImpl implements ExaminationService {
             exaEnd.setTime(exaDate.getTime());
             exaEnd.setMinutes(exa.getDate().getHours()+ exa.getDurationMinutes());
             if (date.after(exaStart) && date.before(exaEnd)){
-                return false;
+                throw new ResourceConflictException(1l,"Preklapa se sa terminom!");
             }
             if(endDate.after(exaStart) && endDate.before(exaEnd)){
-                return false;
+                throw new ResourceConflictException(1l,"Preklapa se sa terminom!");
             }
         }
         examination.setPharmacy(pharmacy);
@@ -101,7 +110,12 @@ public class ExaminationServiceImpl implements ExaminationService {
         return  true;
     }
 
-
+    @Override
+    public Collection<Examination> getByDermaIdAndDateForPhaAdmin(Long id, String date) {
+        PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
+        Dermatologist dermatologist = dermatologistRepository.getOne(id);
+        return examinationRepository.customByPharmacyDermatologistAndDate(pharmacyAdmin.getPharmacy().getId(),dermatologist.getId(),date);
+    }
 
 
     private PharmacyAdmin getPharmacyAdmin(){

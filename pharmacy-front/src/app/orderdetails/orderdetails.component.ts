@@ -55,6 +55,7 @@ export class OrderdetailsComponent implements OnInit {
   confirm(bid: BidModel): void {
     this.orderFormService.confirmBid(bid, this.order.id);
     this.showBids = false;
+    this.router.navigate(['/login']);
   }
 
   deleteOrder(): void {

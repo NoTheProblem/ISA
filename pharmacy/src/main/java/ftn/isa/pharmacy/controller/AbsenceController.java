@@ -4,6 +4,7 @@ import ftn.isa.pharmacy.dto.AbsenceDTO;
 import ftn.isa.pharmacy.mapper.impl.AbsenceMapperImpl;
 import ftn.isa.pharmacy.service.AbsenceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,12 +22,23 @@ public class AbsenceController {
         this.absenceService = absenceService;
         this.absenceMapper = absenceMapper;
     }
-
-
     @GetMapping(value = "/getAllDermatologistRequests")
     public ResponseEntity<Collection<AbsenceDTO>> getAllDermatologistRequests() {
         Collection<AbsenceDTO> absenceDTOCollection = absenceMapper.entity2Bean(absenceService.getAllDermatologistRequests());
         return ResponseEntity.ok(absenceDTOCollection);
+    }
+
+
+    @GetMapping(value = "/getById/{id}")
+    public ResponseEntity<AbsenceDTO> getAbsenceByID(@PathVariable Long id){
+        AbsenceDTO absenceDTO = absenceMapper.entity2Bean(absenceService.getAbsenceByID(id));
+        return ResponseEntity.ok(absenceDTO);
+    }
+
+    @GetMapping(value = "/getByEmployeeId/{id}")
+    public ResponseEntity<Collection<AbsenceDTO>> getByEmployeeId(@PathVariable Long id){
+        Collection<AbsenceDTO> absenceDTOS = absenceMapper.entity2Bean(absenceService.getByEmployeeId(id));
+        return ResponseEntity.ok(absenceDTOS);
     }
 
 
@@ -36,15 +48,16 @@ public class AbsenceController {
         return ResponseEntity.ok(absenceDTOCollection);
     }
 
-    @PostMapping("/acceptPha")
-    public void acceptAbsence(@RequestBody AbsenceDTO absenceDTO) {
-        absenceService.acceptAbsencePha(absenceDTO);
+    @PutMapping("/answer")
+    public ResponseEntity<AbsenceDTO> acceptAbsence(@RequestBody AbsenceDTO absenceDTO)  throws Exception  {
+        try{
+            absenceDTO = absenceMapper.entity2Bean(absenceService.answer(absenceDTO));
+        } catch(Exception e) {
+            return new ResponseEntity<AbsenceDTO>(HttpStatus.I_AM_A_TEAPOT); // :)
+        }
+        return ResponseEntity.ok(absenceDTO);
     }
 
-    @PostMapping("/declinePha")
-    public void declineAbsence(@RequestBody AbsenceDTO absenceDTO) {
-        absenceService.declineAbsencePha(absenceDTO);
-    }
 
 
 

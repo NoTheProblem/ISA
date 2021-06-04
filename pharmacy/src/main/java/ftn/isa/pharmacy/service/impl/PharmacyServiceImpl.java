@@ -188,15 +188,13 @@ public class PharmacyServiceImpl implements PharmacyService {
     public void deleteEmployee(Long id, String type) {
         PharmacyAdmin pharmacyAdmin  =getPharmacyAdmin();
         Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
-        //TODO provera da l ima termina;
         Date today = new Date();
         if(dermatologistRepository.existsById(id)){
             Dermatologist dermatologist = dermatologistRepository.getOne(id);
             Set<Examination> examinations = dermatologist.getExaminations();
             for (Examination examination:examinations) {
                 if(examination.getDate().after(today)){
-                    return;
-                    //Todo exception
+                    throw new ResourceConflictException(1l,"Greska!");
                 }
             }
             Set<Dermatologist> dermatologists = pharmacy.getDermatologists();
@@ -208,8 +206,7 @@ public class PharmacyServiceImpl implements PharmacyService {
             Set<Counseling> counselings = pharmacist.getCounselings();
             for (Counseling counseling: counselings){
                 if(counseling.getDate().after(today)){
-                    return;
-                    //Exception
+                    throw new ResourceConflictException(1l,"Greska!");
                 }
             }
             Set<Pharmacist> pharmacists = pharmacy.getPharmacists();

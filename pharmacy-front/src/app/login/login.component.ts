@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getUser().roles;
-      console.log(this.roles);
     }
   }
 
@@ -34,7 +33,6 @@ export class LoginComponent implements OnInit {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
         this.user = this.tokenStorage.getToken();
-        console.log(this.tokenStorage.getToken().sub());
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.username = this.tokenStorage.getUsername();

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PromotionModel} from '../model/promotion.model';
 import {ToastrService} from 'ngx-toastr';
+import {Constants} from './constants';
 
 @Injectable()
 export class PromotionService {
@@ -12,15 +13,15 @@ export class PromotionService {
   }
 
   public getAllActive(): Observable<Array<PromotionModel>> {
-    return this.httpClient.get<Array<PromotionModel>>('http://localhost:8080/promotion/getAllActive');
+    return this.httpClient.get<Array<PromotionModel>>(Constants.API + '/promotion/getAllActiveForPharmacyAdmin');
   }
 
   public getAll(): Observable<Array<PromotionModel>> {
-    return this.httpClient.get<Array<PromotionModel>>('http://localhost:8080/promotion/getAll');
+    return this.httpClient.get<Array<PromotionModel>>(Constants.API + '/promotion/getAllForPharmacyAdmin');
   }
 
   public addPromotion(promotion: PromotionModel): void {
-    this.httpClient.post('http://localhost:8080/promotion/addPromotion', promotion).subscribe(
+    this.httpClient.post(Constants.API + '/promotion/addPromotion', promotion).subscribe(
       (response: any) => {
         this.toast.success(`${promotion.type} je dodata.`);
       },
