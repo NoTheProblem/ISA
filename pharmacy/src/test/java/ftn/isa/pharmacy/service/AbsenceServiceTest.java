@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.config.DebugBeanDefinitionParser;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.xml.crypto.Data;
@@ -41,7 +42,8 @@ public class AbsenceServiceTest {
         Date date = new Date();
         when(absenceRequestRepositoryMock.
                 findAllByEmployeeIdAndStatusIsLikeAndStartDateAfterOrEmployeeIdAndStatusIsLikeAndEndDateAfter
-                        (DB_id,DB_status,date,DB_id,DB_status, date)).thenReturn(Arrays.asList(new AbsenceRequest()));
+                        (DB_id,DB_status,date,DB_id,DB_status, date)).thenReturn(Arrays.asList(new
+                AbsenceRequest(DB_id,DB_status,DB_typeA,DB_request,null,DB_start, DB_end,DB_empID,null)));
 
         Collection<AbsenceRequest> absenceRequests = absenceService.getByEmployeeId(DB_id);
         assertThat(absenceRequests).hasSize(1);
