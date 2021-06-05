@@ -5,6 +5,8 @@ import {EmployeeModel} from '../model/employee.model';
 import {DermatologistModel} from '../model/dermatologist.model';
 import {PharmacistModel} from '../model/pharmacist.model';
 import {ToastrService} from 'ngx-toastr';
+import {Constants} from './constants';
+
 
 @Injectable()
 export class EmployeeService {
@@ -14,25 +16,25 @@ export class EmployeeService {
   }
 
   public getAllDermaByPharmacyID(pharmacyID): Observable<Array<EmployeeModel>> {
-    this.path = 'http://localhost:8080/pharmacy/getDerma/' + String(pharmacyID);
+    this.path = Constants.API + '/pharmacy/getDerma/' + String(pharmacyID);
     return this.httpClient.get<Array<EmployeeModel>>(this.path);
   }
 
   public getAllPharmacistsByPharmacyID(pharmacyID): Observable<Array<EmployeeModel>> {
-    this.path = 'http://localhost:8080/pharmacy/getPharma/' + String(pharmacyID);
+    this.path = Constants.API + '/pharmacy/getPharma/' + String(pharmacyID);
     return this.httpClient.get<Array<EmployeeModel>>(this.path);
   }
 
   public getAllPharmacists(): Observable<Array<PharmacistModel>> {
-    return this.httpClient.get<Array<PharmacistModel>>('http://localhost:8080/pharmacist/getAll');
+    return this.httpClient.get<Array<PharmacistModel>>(Constants.API + '/pharmacist/getAll');
   }
 
   public getAllDermatologists(): Observable<Array<DermatologistModel>> {
-    return this.httpClient.get<Array<DermatologistModel>>('http://localhost:8080/dermatologist/getAll');
+    return this.httpClient.get<Array<DermatologistModel>>(Constants.API + '/dermatologist/getAll');
   }
 
   public deleteEmployee(emp: EmployeeModel): void {
-    this.path = 'http://localhost:8080/pharmacy/deleteEmployee/' + String(emp.id);
+    this.path = Constants.API + '/pharmacy/deleteEmployee/' + String(emp.id);
     this.httpClient.post(this.path, ' ').subscribe(
       (response: any) => {
         this.toast.success(`Zaposleni je uklonjen`);
@@ -44,15 +46,15 @@ export class EmployeeService {
   }
 
   public getAllFreePharmacists(): Observable<Array<PharmacistModel>> {
-    return this.httpClient.get<Array<PharmacistModel>>('http://localhost:8080/pharmacist/getAllFree');
+    return this.httpClient.get<Array<PharmacistModel>>(Constants.API + '/pharmacist/getAllFree');
   }
 
   public getAllDermatologistsCandidates(): Observable<Array<DermatologistModel>> {
-    return this.httpClient.get<Array<DermatologistModel>>('http://localhost:8080/dermatologist/getAllDermatologistsCandidates');
+    return this.httpClient.get<Array<DermatologistModel>>(Constants.API + '/dermatologist/getAllDermatologistsCandidates');
   }
 
   public addPharmacistToPharmacy(pharmacist: PharmacistModel): void {
-    this.httpClient.post('http://localhost:8080/pharmacist/addToPharmacy', pharmacist).subscribe(
+    this.httpClient.post(Constants.API + '/pharmacist/addToPharmacy', pharmacist).subscribe(
       (response: any) => {
         this.toast.success(`Farmaceut je dodat.`);
       },
@@ -63,7 +65,7 @@ export class EmployeeService {
   }
 
   public registerNewPharmacistForPharmacy(pharmacist: PharmacistModel): void {
-    this.httpClient.post('http://localhost:8080/pharmacist/registerToPharmacy', pharmacist).subscribe(
+    this.httpClient.post(Constants.API + '/pharmacist/registerToPharmacy', pharmacist).subscribe(
       (response: any) => {
         this.toast.success(`Farmaceut je dodat.`);
       },
@@ -73,7 +75,7 @@ export class EmployeeService {
     );
   }
   public addDermatologistToPharmacy(dermatologist: DermatologistModel): void {
-    this.httpClient.post('http://localhost:8080/dermatologist/addToPharmacy', dermatologist).subscribe(
+    this.httpClient.post(Constants.API + '/dermatologist/addToPharmacy', dermatologist).subscribe(
       (response: any) => {
         this.toast.success(`Dermatolog je dodat.`);
       },
@@ -82,7 +84,5 @@ export class EmployeeService {
       })
     );
   }
-
-
 
 }

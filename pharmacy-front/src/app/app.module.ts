@@ -46,6 +46,7 @@ import { HighchartsChartModule } from 'highcharts-angular';
 import { GraphicalReportComponent } from './graphical-report/graphical-report.component';
 import { GraphicalReportMedicineComponent } from './graphical-report-medicine/graphical-report-medicine.component';
 import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
+import { AbsenceComponent } from './absence/absence.component';
 
 
 
@@ -92,7 +93,8 @@ const mapConfig: YaConfig = {
     GraphicalReportComponent,
     GraphicalReportMedicineComponent,
     PharmacistListComponent,
-    PatientlistComponent
+    PatientlistComponent,
+    AbsenceComponent
 
   ],
   imports: [

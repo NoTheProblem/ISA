@@ -25,6 +25,7 @@ import {ErrorPageComponent} from './error-page/error-page.component';
 import {UserProfileComponent} from './user-profile/user-profile.component';
 import {PatientlistComponent} from './patientlist/patientlist.component';
 import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
+import {AbsenceComponent} from './absence/absence.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -49,6 +50,7 @@ const routes: Routes = [
   {path: 'pharmacy-medicine', component: PharmacyMedicineComponent},
   {path: 'pharmacy-employees', component: PharmacyEmployeesComponent},
   {path: 'pharmacy-report', component: PharmacyReportComponent},
+  {path: 'absence/:id', component: AbsenceComponent},
   {path: 'pharmacy/:id', component: PharmacyDetailsComponent},
   {path: 'orderdetails/:id', component: OrderdetailsComponent},
   {path: 'error', component: ErrorPageComponent},

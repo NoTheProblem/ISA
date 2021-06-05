@@ -45,6 +45,15 @@ public class Promotion {
         this.pharmacy = pharmacy;
     }
 
+    public Promotion(Long id, String title, String text, String type, Date startDate, Date endDate) {
+        this.id = id;
+        this.title = title;
+        this.text = text;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.type = type;
+    }
+
     public Long getId() {
         return id;
     }

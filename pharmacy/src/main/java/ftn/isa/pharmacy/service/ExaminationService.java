@@ -5,6 +5,7 @@ import ftn.isa.pharmacy.model.Examination;
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.Pharmacy;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ExaminationService {
@@ -13,4 +14,6 @@ public interface ExaminationService {
 
 
     boolean addExamination(ExaminationDto examinationDto);
+
+    Collection<Examination> getByDermaIdAndDateForPhaAdmin(Long id, String date);
 }

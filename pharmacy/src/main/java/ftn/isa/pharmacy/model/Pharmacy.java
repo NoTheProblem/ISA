@@ -59,6 +59,9 @@ public class Pharmacy {
     private Set<Promotion> promotions = new HashSet<Promotion>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<AbsenceRequest> absenceRequests = new HashSet<AbsenceRequest>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PharmacyAdmin> pharmacyAdmins = new HashSet<PharmacyAdmin>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -66,6 +69,9 @@ public class Pharmacy {
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Reservation> reservations = new HashSet<Reservation>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<PurchaseOrder> purchaseOrders = new HashSet<PurchaseOrder>();
 
     public Set<Patient> getSubscribedPatients() {
         return subscribedPatients;
@@ -258,5 +264,29 @@ public class Pharmacy {
 
     public void setMissingMedicine(Set<Medicine> missingMedicine) {
         this.missingMedicine = missingMedicine;
+    }
+
+    public Set<PersList> getPerscirptions() {
+        return perscirptions;
+    }
+
+    public void setPerscirptions(Set<PersList> perscirptions) {
+        this.perscirptions = perscirptions;
+    }
+
+    public Set<PurchaseOrder> getPurchaseOrders() {
+        return purchaseOrders;
+    }
+
+    public void setPurchaseOrders(Set<PurchaseOrder> purchaseOrders) {
+        this.purchaseOrders = purchaseOrders;
+    }
+
+    public Set<AbsenceRequest> getAbsenceRequests() {
+        return absenceRequests;
+    }
+
+    public void setAbsenceRequests(Set<AbsenceRequest> absenceRequests) {
+        this.absenceRequests = absenceRequests;
     }
 }

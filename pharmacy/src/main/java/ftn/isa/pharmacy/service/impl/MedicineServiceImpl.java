@@ -121,8 +121,7 @@ public class MedicineServiceImpl implements MedicineService {
         if(pharmacyAdminOptional.isPresent()) {
             return pharmacyAdminOptional.get();
         }
-        // TODO exeption
-        return null;
+        throw new ResourceConflictException(1l,"Greska!");
     }
     public List<Medicine> getAllReg() {
         return medicineRepository.findAll();
@@ -149,8 +148,7 @@ public class MedicineServiceImpl implements MedicineService {
         Set<PersList>  medicinePersLists =medicine.getPersLists();
         for(PersList perscription: medicinePersLists){
             if(perscription.getePrescription().getStatus().equals("NotTaken")){
-                return;
-                //TODO exception
+                throw new ResourceConflictException(1l,"Greska!");
             }
         }
         medicineQuantityPharmacyRepository.deleteByPharmacyAndMedicine(pharmacy,medicine);

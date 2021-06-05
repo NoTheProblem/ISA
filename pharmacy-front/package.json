@@ -1,8 +1,9 @@
-{
+  {
   "name": "pharmacy-front",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "heroku-postbuild": "ng build --prod && nmp install -g http-server-spa",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",

@@ -104,7 +104,6 @@ public class PharmacyReportServiceImpl implements PharmacyReportService {
             categories.add(String.valueOf(i));
             helpInteger.add(0);
         }
-        //TODO not checked
         for(Reservation reservation: reservations){
             List<MedicineQuantityReservation> medicineQuantityReservations = medicineQuantityReservationRepository.findAllByReservation(reservation);
             for(MedicineQuantityReservation medQuan: medicineQuantityReservations){
@@ -323,7 +322,6 @@ public class PharmacyReportServiceImpl implements PharmacyReportService {
         }
         for (Examination examination: examinations){
             if(!examination.getFree()){
-                // TODO kako ovo radi?
                 int day = examination.getDate().getMonth()-quartalStart;
                 data.set(day,data.get(day) + 1);
             }

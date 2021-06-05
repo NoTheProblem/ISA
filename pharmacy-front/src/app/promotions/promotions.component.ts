@@ -15,6 +15,7 @@ export class PromotionsComponent implements OnInit {
   form: any = {};
   isSignUpFailed = false;
   errorMessage = '';
+  showError = false;
 
   constructor(private promotionService: PromotionService
   ) {
@@ -29,6 +30,11 @@ export class PromotionsComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.showError = false;
+    if (!this.form.type){
+      this.showError  = true;
+      return;
+    }
     this.promotionService.addPromotion(this.form);
     window.location.reload();
   }

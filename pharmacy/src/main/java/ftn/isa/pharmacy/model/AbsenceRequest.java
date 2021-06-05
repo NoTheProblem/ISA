@@ -32,6 +32,7 @@ public class AbsenceRequest {
     @Column
     private String typeOfEmployee;
 
+
     public String getTypeOfEmployee() {
         return typeOfEmployee;
     }
@@ -56,6 +57,9 @@ public class AbsenceRequest {
 
     @Column
     private Long adminId;
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Pharmacy pharmacy;
 
     public AbsenceRequest() {
     }
@@ -142,5 +146,13 @@ public class AbsenceRequest {
 
     public void setAdminId(Long adminId) {
         this.adminId = adminId;
+    }
+
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
     }
 }

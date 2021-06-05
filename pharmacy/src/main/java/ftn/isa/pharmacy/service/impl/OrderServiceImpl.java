@@ -52,13 +52,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void addPurchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
         PharmacyAdmin pharmacyAdmin = getPharmacyAdmin();
-        Pharmacy pharmacy = pharmacyAdmin.getPharmacy();;
+        Date today = new Date();
+        if(purchaseOrderDTO.getEndDate().before(today)){
+            throw new ResourceConflictException(1l,"Greska!");
+
+        }
+        Pharmacy pharmacy = pharmacyAdmin.getPharmacy();
         PurchaseOrder purchaseOrder = purchaseOrderMapper.bean2Entity(purchaseOrderDTO);
         Set<MedicineQuantityOrder> orderMedicines = quantityMapper.quantityOrderDTOtoQuantityOrder(purchaseOrderDTO.getMedQuan(),purchaseOrder);
         purchaseOrder.setPharmacyAdmin(pharmacyAdmin);
         purchaseOrder.setStatus("created");
-        purchaseOrder.setCreateDate(new Date());
-        //TODO provera data
+        purchaseOrder.setCreateDate(today);
         purchaseOrder.setOrderMedicines(orderMedicines);
         purchaseOrderRepository.save(purchaseOrder);
         for (MedicineQuantityOrder medicineQuan: orderMedicines) {
@@ -112,16 +116,15 @@ public class OrderServiceImpl implements OrderService {
             throw new ResourceConflictException(1l,"Niste vi napravili porudzbenicu");
 
         }
-        // TODO check date again
+        Date today = new Date();
+        if(purchaseOrder.getEndDate().before(today)){
+            throw new ResourceConflictException(1l,"Greska!");
+        }
         Bid bid = bidMapper.bean2Entity(bidDTO);
         Long suppID = bidDTO.getSupplier().getId();
         Supplier supplier = supplierRepository.getOne(suppID);
         purchaseOrder.setStatus("obradjen");
         purchaseOrder.setPrice(bid.getPrice());
-        purchaseOrder.setChosenSupplier(supplier);
-        Set<PurchaseOrder> wonOrders = supplier.getWonPurchaseOrders();
-        wonOrders.add(purchaseOrder);
-        supplier.setWonPurchaseOrders(wonOrders);
         // Set<Bid> allBids = purchaseOrder.getBids();
         List<Bid> allBids = bidRepository.findAllByPurchaseOrder(purchaseOrder);
         String subj = "Status porudzbenice";
@@ -168,7 +171,6 @@ public class OrderServiceImpl implements OrderService {
         purchaseOrderRepository.save(purchaseOrder);
 
     }
-
 
     private PharmacyAdmin getPharmacyAdmin(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

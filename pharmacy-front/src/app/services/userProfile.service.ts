@@ -5,6 +5,7 @@ import {UserModel} from '../model/user.model';
 import {PromotionModel} from '../model/promotion.model';
 import {ToastrService} from 'ngx-toastr';
 import {PasswordChangerModel} from '../model/passwordChanger.model';
+import {Constants} from './constants';
 
 @Injectable()
 export class UserProfileService {
@@ -17,12 +18,12 @@ export class UserProfileService {
   }
 
   public getUserInfo(username: string): Observable<UserModel> {
-    this.path = 'http://localhost:8080/users/username/' + username;
+    this.path = Constants.API + '/users/username/' + username;
     return this.httpClient.get<UserModel>(this.path);
   }
 
   public updateProfile(user: UserModel): void {
-    this.httpClient.post('http://localhost:8080/users/updateInfo', user).subscribe(
+    this.httpClient.post(Constants.API + '/users/updateInfo', user).subscribe(
       (response: any) => {
         this.toast.success(`Profil azuriran!`);
       },
@@ -33,7 +34,7 @@ export class UserProfileService {
   }
 
   public changePassword(pw: PasswordChangerModel): void {
-    this.httpClient.post('http://localhost:8080/auth/change-password', pw).subscribe(
+    this.httpClient.post(Constants.API + '/auth/change-password', pw).subscribe(
       (response: any) => {
         this.toast.success(`Sifra azurirana!`);
       },

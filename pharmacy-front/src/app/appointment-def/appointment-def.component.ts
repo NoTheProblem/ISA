@@ -5,6 +5,8 @@ import {ExaminationModel} from '../model/examination.model';
 import {WorkingHoursModel} from '../model/workingHours.model';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {ExaminationService} from '../services/examination.service';
+import {AbsenceModel} from '../model/absence.model';
+import {AbsenceService} from '../services/absence.service';
 
 
 @Component({
@@ -20,17 +22,24 @@ export class AppointmentDefComponent implements OnInit {
   private examinationsBackUp: Array<ExaminationModel> = new Array<ExaminationModel>();
   private examination: ExaminationModel;
   private examinationDateInput: Date;
+  private wd = '';
+  public absences: Array<AbsenceModel>;
 
+
+  showWorkDayError = false;
   show = true;
   showAppointments = false;
   showMake = false;
   form: any = {};
   private x: Date;
   private y: Date;
+  showNoAbsence = false;
+  showAbsence = false;
 
 
   constructor(private appointmentService: AppointmentService,
               private tokenStorageService: TokenStorageService,
+              private absenceService: AbsenceService,
               private examinationService: ExaminationService
   ) { }
 
@@ -41,11 +50,20 @@ export class AppointmentDefComponent implements OnInit {
   }
 
   openDerma(der: DermatologistModel): void {
+    this.showNoAbsence = false;
+    this.showAbsence = false;
     this.show = false;
     this.derma = der;
     this.workingHours = this.getMyWorkingHours(der.workingHours);
-    this.examinations = der.examinations;
-    this.examinationsBackUp = der.examinations;
+    this.absenceService.getAbsenceByEmpID(this.derma.id).subscribe((absences: Array<AbsenceModel>) => {
+      this.absences = absences;
+      if (absences.length !== 0 ){
+        this.showAbsence = true;
+      }
+      else {
+        this.showNoAbsence = true;
+      }
+    });
     return;
   }
 
@@ -54,29 +72,60 @@ export class AppointmentDefComponent implements OnInit {
   }
 
   showExaminations(form): void {
-    this.examinations = this.examinationsBackUp;
-    this.showAppointments = true;
+    this.showAppointments = false;
+    this.showWorkDayError = false;
     this.y = new Date(form.examinationDateInput);
-    for (const examination of this.examinations){
-      this.x = new Date(examination.date);
-      if (this.x.getDate() !== this.y.getDate() || this.x.getMonth() !== this.y.getMonth()){
-        // @ts-ignore
-        this.examinations.pop(examination);
-      }
+    if (!this.checkIfWorkingDay(this.y.getDay())){
+      this.showWorkDayError = true;
+      return;
     }
-    return;
+    // tslint:disable-next-line:max-line-length
+    this.examinationService.getExaminationsForDermatologistByDateForPhaAdmin(this.derma, this.form.examinationDateInput).subscribe((examinations: Array<ExaminationModel>) => {
+      this.examinations = examinations;
+    });
+    this.showAppointments = true;
+
   }
 
-  createAppointment(form: any): void {
+  checkIfWorkingDay(day: number): boolean{
+    this.wd = this.workingHours.workDay;
+    switch (this.wd) {
+      case 'Svaki dan':
+        return true;
+      case 'Vikend':
+        return day === 0 || day === 6;
+      case 'Ponedeljak':
+        return day === 1;
+      case 'Utorak':
+        return day === 2;
+      case 'Sreda':
+        return day === 3;
+      case 'Cetvrtak':
+        return day === 4;
+      case 'Petak':
+        return day === 5;
+      case 'Subota':
+        return day === 6;
+      case 'Nedelja':
+        return day === 0;
+      case 'Radni dan':
+        return day !== 0 && day !== 6;
+      default:
+        return false;
+    }
+  }
+
+   createAppointment(form: any): void {
     this.examination = new ExaminationModel(0, false, false, '', 0, undefined, undefined, 0, 0, 0, 0, '', '', '', undefined, undefined);
     this.examination.date = new Date();
     this.examination.date = form.examinationDateInput;
-    console.log(form.examinationDateInput)  ;
     this.examination.durationMinutes = form.duration;
     this.examination.price = form.price;
     this.examination.time = form.startTime;
     this.examination.dermatologistId = this.derma.id;
     this.examinationService.addExamination(this.examination);
+
   }
+
 }
 

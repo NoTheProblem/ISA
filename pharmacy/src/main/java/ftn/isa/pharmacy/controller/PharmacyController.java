@@ -96,7 +96,6 @@ public class PharmacyController {
         Collection<ExaminationDto> examinationDtos = examinationMapper.entity2Bean(pharmacyService.getAvailableExaminations(id));
         return ResponseEntity.ok(examinationDtos);
     }
-    //TODO promeniti na DeleteMapping?
     @PostMapping(value = "/deleteEmployee/{id}")
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id,@RequestBody String type) {
         pharmacyService.deleteEmployee(id,type);

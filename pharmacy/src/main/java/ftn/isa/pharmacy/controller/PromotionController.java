@@ -29,11 +29,39 @@ public class PromotionController {
         return ResponseEntity.ok(promotionDTOS);
     }
 
+    @GetMapping(value = "/getAllByPharmacyID/{id}")
+    public ResponseEntity<Collection<PromotionDTO>> getAllByPharmacyID(@PathVariable Long id) {
+        Collection<PromotionDTO> promotionDTOS = promotionMapper.entity2Bean(promotionService.getAllByPharmacyID(id));
+        return ResponseEntity.ok(promotionDTOS);
+    }
+
+
     @GetMapping(value = "/getAllActive")
     public ResponseEntity<Collection<PromotionDTO>> getAllActive() {
         Collection<PromotionDTO> promotionDTOS = promotionMapper.entity2Bean(promotionService.getAllActive());
         return ResponseEntity.ok(promotionDTOS);
     }
+
+    @GetMapping(value = "/getAllActiveByPharmacyID/{id}")
+    public ResponseEntity<Collection<PromotionDTO>> getAllActiveByPharmacyID(@PathVariable Long id) {
+        Collection<PromotionDTO> promotionDTOS = promotionMapper.entity2Bean(promotionService.getAllActiveByPharmacyID(id));
+        return ResponseEntity.ok(promotionDTOS);
+    }
+
+    @GetMapping(value = "/getAllActiveForPharmacyAdmin")
+    public ResponseEntity<Collection<PromotionDTO>> getAllActiveForPharmacyAdmin() {
+        Collection<PromotionDTO> promotionDTOS = promotionMapper.entity2Bean(promotionService.getAllActiveForPharmacyAdmin());
+        return ResponseEntity.ok(promotionDTOS);
+    }
+
+    @GetMapping(value = "/getAllForPharmacyAdmin")
+    public ResponseEntity<Collection<PromotionDTO>> getAllForPharmacyAdmin() {
+        Collection<PromotionDTO> promotionDTOS = promotionMapper.entity2Bean(promotionService.getAllForPharmacyAdmin());
+        return ResponseEntity.ok(promotionDTOS);
+    }
+
+
+
 
     @PostMapping("/addPromotion")
     public void addPromotion(@RequestBody PromotionDTO promotionDTO) {

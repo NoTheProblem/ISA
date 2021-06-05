@@ -1,13 +1,14 @@
-<div class="m-3">
+<div style="text-align: center;">
+  <h2>  Akcije/Promocije</h2>
+</div>
+
+<div class="m-3" style="text-align: center;">
     <button class="btn btn-primary"  *ngIf="isShown" (click)="toggle()" >Dodaj novu akciju/promociju</button>
     <button class="btn btn-primary" *ngIf="!isShown"  (click)="toggle()" >Prikazi sve akcije/promocije</button>
 </div>
 
-
 <div *ngIf="!isShown" class="row container-fluid"  id="divshow1">
-  <div class="m-3">
-    <h3>Definisanje nove Akcije/Promocije</h3>
-  </div>
+
   <div>
     <form
       *ngIf="!isSuccessful"
@@ -88,15 +89,15 @@
         </div>
       </div>
 
-
+      <div *ngIf="showError">
+        <p style="color:red;"> Niste dobro popunili formu </p>
+      </div>
 
       <div class="form-group">
         <button class="btn btn-primary btn-block" >Napravi akciju/promociju</button>
       </div>
 
-      <div class="alert alert-warning" *ngIf="f.submitted && isSignUpFailed">
-        Pravljenje akcije/promocije nije uspelo<br />{{ errorMessage }}
-      </div>
+
     </form>
   </div>
 </div>
@@ -105,9 +106,6 @@
 
 
 <div *ngIf="isShown" class="row container-fluid"  id="divshow">
-  <div class="m-3">
-    <h3>Akcije/Promocije</h3>
-  </div>
   <table class="table table-striped" >
     <thead>
     <tr>

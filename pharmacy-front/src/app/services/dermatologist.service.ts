@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {DermatologistModel} from '../model/dermatologist.model';
+import {Constants} from './constants';
+
 
 @Injectable()
 export class DermatologistService {
@@ -10,7 +12,7 @@ export class DermatologistService {
   }
 
   public getAll(): Observable<Array<DermatologistModel>> {
-    return this.httpClient.get<Array<DermatologistModel>>('http://localhost:8080/dermatologist/getAll');
+    return this.httpClient.get<Array<DermatologistModel>>(Constants.API + '/dermatologist/getAll');
   }
 
 }

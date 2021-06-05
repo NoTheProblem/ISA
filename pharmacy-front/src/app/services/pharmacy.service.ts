@@ -6,6 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import {MedicineRegisterModel} from '../model/medicineRegister.model';
 import {MedicineModel} from '../model/medicine.model';
 import {ExaminationModel} from '../model/examination.model';
+import {Constants} from './constants';
 
 @Injectable()
 export class PharmacyService {
@@ -17,20 +18,20 @@ export class PharmacyService {
   }
 
   public getAll(): Observable<Array<PharmacyModel>> {
-    return this.httpClient.get<Array<PharmacyModel>>('http://localhost:8080/pharmacy/getAll');
+    return this.httpClient.get<Array<PharmacyModel>>(Constants.API + '/pharmacy/getAll');
   }
 
   public getPharmacyByAdmin(): Observable<PharmacyModel> {
-    return this.httpClient.get<PharmacyModel>('http://localhost:8080/pharmacy/admin');
+    return this.httpClient.get<PharmacyModel>(Constants.API + '/pharmacy/admin');
   }
 
   public getPharmacyByID(pharmacyID: number): Observable<PharmacyModel> {
-    this.path = 'http://localhost:8080/pharmacy/unauth/pharmacy/' + String(pharmacyID);
+    this.path = Constants.API + '/pharmacy/unauth/pharmacy/' + String(pharmacyID);
     return this.httpClient.get<PharmacyModel>(this.path);
   }
 
   public addPharmacy(pharmacy: PharmacyModel): void {
-    this.httpClient.post('http://localhost:8080/pharmacy/addPharmacy', pharmacy).subscribe(
+    this.httpClient.post(Constants.API + '/pharmacy/addPharmacy', pharmacy).subscribe(
       (response: any) => {
         this.toast.success(`${pharmacy.name} je dodat.`);
       },
@@ -51,7 +52,7 @@ export class PharmacyService {
     );
   }
   public updatePharmacyInfo(pharmacy: PharmacyModel): void {
-    this.httpClient.post('http://localhost:8080/pharmacy/updatePharmacyInfo', pharmacy).subscribe(
+    this.httpClient.post(Constants.API + '/pharmacy/updatePharmacyInfo', pharmacy).subscribe(
       (response: any) => {
         this.toast.success(`Azuriranje je uspelo.`);
       },
@@ -62,12 +63,12 @@ export class PharmacyService {
   }
 
   public getAvailableMedicines(pharmacyID: number): Observable<Array<MedicineModel>> {
-    this.path = 'http://localhost:8080/pharmacy/unauth/medicines/' + String(pharmacyID);
+    this.path = Constants.API + '/pharmacy/unauth/medicines/' + String(pharmacyID);
     return this.httpClient.get<Array<MedicineModel>>(this.path);
   }
 
   public getAvailableExaminations(pharmacyID: number): Observable<Array<ExaminationModel>> {
-    this.path = 'http://localhost:8080/pharmacy/unauth/examinations/' + String(pharmacyID);
+    this.path = Constants.API + '/pharmacy/unauth/examinations/' + String(pharmacyID);
     return this.httpClient.get<Array<ExaminationModel>>(this.path);
   }
 }

@@ -10,7 +10,10 @@ public interface AbsenceService {
 
     Collection<AbsenceRequest> getAllPharmacistRequests();
 
-    void acceptAbsencePha(AbsenceDTO absenceDTO);
+    AbsenceRequest getAbsenceByID(Long id);
+    AbsenceRequest getAbsenceForUpdate(Long id);
 
-    void declineAbsencePha(AbsenceDTO absenceDTO);
+    AbsenceRequest answer(AbsenceDTO absenceDTO);
+
+    Collection<AbsenceRequest> getByEmployeeId(Long id);
 }

@@ -30,8 +30,9 @@ public class PurchaseOrder {
     @ManyToOne(fetch = FetchType.EAGER)
     private PharmacyAdmin pharmacyAdmin;
 
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Supplier chosenSupplier;
+    private Pharmacy pharmacy;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityOrder> orderMedicines = new HashSet<MedicineQuantityOrder>();
@@ -39,7 +40,7 @@ public class PurchaseOrder {
     public PurchaseOrder() {
     }
 
-    public PurchaseOrder(Long id, Date createDate, Date endDate, String status, float price, Set<Bid> bids, PharmacyAdmin pharmacyAdmin, Supplier chosenSupplier, Set<MedicineQuantityOrder> orderMedicines) {
+    public PurchaseOrder(Long id, Date createDate, Date endDate, String status, float price, Set<Bid> bids, PharmacyAdmin pharmacyAdmin, Pharmacy pharmacy, Set<MedicineQuantityOrder> orderMedicines) {
         this.id = id;
         this.createDate = createDate;
         this.endDate = endDate;
@@ -47,7 +48,7 @@ public class PurchaseOrder {
         this.price = price;
         this.bids = bids;
         this.pharmacyAdmin = pharmacyAdmin;
-        this.chosenSupplier = chosenSupplier;
+        this.pharmacy = pharmacy;
         this.orderMedicines = orderMedicines;
     }
 
@@ -115,11 +116,11 @@ public class PurchaseOrder {
         this.price = price;
     }
 
-    public Supplier getChosenSupplier() {
-        return chosenSupplier;
+    public Pharmacy getPharmacy() {
+        return pharmacy;
     }
 
-    public void setChosenSupplier(Supplier chosenSupplier) {
-        this.chosenSupplier = chosenSupplier;
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
     }
 }
