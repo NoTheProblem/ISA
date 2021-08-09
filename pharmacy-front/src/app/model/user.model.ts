@@ -9,7 +9,8 @@ export class UserModel {
     public city: string,
     public address: string,
     public phoneNumber: string,
-    public birthDate: string
+    public birthDate: string,
+    public loyaltyScore: number
   ) {
   }
 }

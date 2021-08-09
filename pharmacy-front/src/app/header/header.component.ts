@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TokenStorageService} from '../_services/token-storage.service';
+import {MedicineModel} from '../model/medicine.model';
 
 @Component({
   selector: 'app-header',
@@ -29,5 +30,7 @@ export class HeaderComponent implements OnInit {
     this.tokenStorageService.signOut();
     window.location.reload();
   }
+
+
 
 }

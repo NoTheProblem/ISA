@@ -1,4 +1,4 @@
-package ftn.isa.pharmacy.service;
+/*package ftn.isa.pharmacy.service;
 
 import static ftn.isa.pharmacy.constants.PromotionConstants.*;
 
@@ -71,3 +71,4 @@ public class PromotionServiceTest {
         verifyNoMoreInteractions(promotionRepositoryMock);
     }
 }
+*/

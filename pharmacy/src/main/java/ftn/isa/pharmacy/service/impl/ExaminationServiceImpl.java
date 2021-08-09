@@ -24,18 +24,20 @@ public class ExaminationServiceImpl implements ExaminationService {
     private final ExaminationMapperImpl examinationMapper;
     private final PharmacyAdminRepository pharmacyAdminRepository;
     private final DermatologistRepository dermatologistRepository;
+    private final PatientRepository patientRepository;
     private final WorkingHoursRepository workingHoursRepository;
     private final AbsenceRequestRepository absenceRequestRepository;
 
 
     @Autowired
-    public ExaminationServiceImpl(ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyAdminRepository pharmacyAdminRepository, DermatologistRepository dermatologistRepository, WorkingHoursRepository workingHoursRepository, AbsenceRequestRepository absenceRequestRepository) {
+    public ExaminationServiceImpl(PatientRepository patientRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyAdminRepository pharmacyAdminRepository, DermatologistRepository dermatologistRepository, WorkingHoursRepository workingHoursRepository, AbsenceRequestRepository absenceRequestRepository) {
         this.examinationRepository = examinationRepository;
         this.examinationMapper = examinationMapper;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.dermatologistRepository = dermatologistRepository;
         this.workingHoursRepository = workingHoursRepository;
         this.absenceRequestRepository = absenceRequestRepository;
+        this.patientRepository  = patientRepository;
     }
 
     @Override
@@ -125,5 +127,15 @@ public class ExaminationServiceImpl implements ExaminationService {
             return pharmacyAdminOptional.get();
         }
         throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
+    }
+
+    @Override
+    public Collection<Examination> getAllScheduledAppointmentForPatient(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        return examinationRepository.customByPatientIdAndDate(patient.getId());
+
     }
 }

@@ -52,6 +52,8 @@ import { LoyaltyProgramComponent} from './loyalty-program/loyalty-program.compon
 import {PreviousOffersComponent} from './previous-offers/previous-offers.component';
 import {PurchaseOrderComponent} from './purchase-order/purchase-order.component';
 import {SupplierUpdateComponent} from './supplier-update/supplier-update.component';
+import { PatientProfileComponent } from './patient-profile/patient-profile.component';
+import { AppointmentDermaComponent } from './appointment-derma/appointment-derma.component';
 
 const mapConfig: YaConfig = {
   apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
@@ -102,7 +104,9 @@ const mapConfig: YaConfig = {
     ViewComplaintsComponent,
     LoyaltyProgramComponent,
     PreviousOffersComponent,
-    PurchaseOrderComponent
+    PurchaseOrderComponent,
+    PatientProfileComponent,
+    AppointmentDermaComponent
 
   ],
   imports: [

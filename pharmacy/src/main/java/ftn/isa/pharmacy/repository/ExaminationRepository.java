@@ -32,5 +32,9 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
     @Query(value = "select * from examination where pharmacy_id = ?1 and date  between ?2 and ?3",
             nativeQuery = true)
     List<Examination> getForReport(Long id, String start, String end);
+
+    @Query(value = "select * from examination where patient_id = ?1 and date >= current_date ",
+            nativeQuery = true)
+    List<Examination> customByPatientIdAndDate(Long id);
 }
 

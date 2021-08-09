@@ -14,4 +14,6 @@ public interface ExaminationService {
     boolean addExamination(ExaminationDto examinationDto);
 
     Collection<Examination> getByDermaIdAndDateForPhaAdmin(Long id, String date);
+
+    Collection<Examination> getAllScheduledAppointmentForPatient();
 }

@@ -1,4 +1,4 @@
-package ftn.isa.pharmacy.service;
+/*package ftn.isa.pharmacy.service;
 
 import ftn.isa.pharmacy.mapper.impl.AbsenceMapperImpl;
 import ftn.isa.pharmacy.model.AbsenceRequest;
@@ -48,4 +48,4 @@ public class AbsenceServiceTest {
     }
 
 
-}
+}*/

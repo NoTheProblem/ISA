@@ -69,11 +69,11 @@ insert into bid(end_date,price,status,purchase_order_id,supplier_id) values('202
 insert into bid(end_date,price,status,purchase_order_id,supplier_id) values('2021-07-09',1300,'obrada',2,9);
 insert into bid(end_date,price,status,purchase_order_id,supplier_id) values('2021-07-08',1750,'obrada',2,9);
 
-insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-05-31 08:00:00',30,false,400,2,1,0);
-insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-05-31 10:00:00',30,false,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-31 08:00:00',30,false,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-31 10:00:00',30,false,400,2,1,0);
 
-insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-06-14 08:00:00',30,true,400,2,1,0);
-insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-06-14 10:00:00',30,true,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-14 08:00:00',30,true,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-10 10:00:00',30,true,400,2,1,0);
 
 insert into reservation(end_date, pick_up_date, picked_up, price, patient_id, pharmacy_id) values ('2021-06-05','2021-06-05', true, 1000, 5,1);
 insert into medicine_quantity_reservation(quantity,medicine_id,reservation_id) values (10,1,1);
@@ -83,6 +83,6 @@ insert into reservation_medicineis values (1,1);
 insert into reservation_medicineis values (1,2);
 
 
-
-
-
+insert into loyalty_program values (1,0.01, 0, 'clan', 100);
+insert into loyalty_program values (2,1.0, 101, 'bronzani', 500);
+insert into loyalty_program values (3,3.0, 501, 'zlatni' ,99999);
