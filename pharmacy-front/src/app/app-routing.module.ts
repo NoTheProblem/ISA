@@ -26,6 +26,7 @@ import {UserProfileComponent} from './user-profile/user-profile.component';
 import {PatientlistComponent} from './patientlist/patientlist.component';
 import {RegisterEmployeeComponent} from './register-employee/register-employee.component';
 import {AbsenceComponent} from './absence/absence.component';
+import {AppointmentDermaComponent} from './appointment-derma/appointment-derma.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -54,6 +55,7 @@ const routes: Routes = [
   {path: 'pharmacy/:id', component: PharmacyDetailsComponent},
   {path: 'orderdetails/:id', component: OrderdetailsComponent},
   {path: 'error', component: ErrorPageComponent},
+  {path: 'scheduledAppointment', component: AppointmentDermaComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

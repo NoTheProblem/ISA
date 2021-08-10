@@ -2,9 +2,13 @@ package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.PriceMediceDTO;
+import ftn.isa.pharmacy.dto.UserDTO;
 import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
+import ftn.isa.pharmacy.model.User;
 import ftn.isa.pharmacy.service.MedicineService;
+import ftn.isa.pharmacy.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ftn.isa.pharmacy.dto.MedicineRegisterDto;
 import ftn.isa.pharmacy.mapper.impl.MedicineRegisterMapperImpl;
@@ -19,6 +23,8 @@ public class MedicineController {
     private final MedicineService medicineService;
     private final MedicineMapperImpl medicineMapper;
     private final MedicineRegisterMapperImpl medicineRegisterMapper;
+    @Autowired
+    private UserService userService;
 
     @Autowired
     public MedicineController(MedicineService medicineService, MedicineMapperImpl medicineMapper,MedicineRegisterMapperImpl medicineRegisterMapper) {
@@ -73,6 +79,8 @@ public class MedicineController {
     public void removeMedicineFromPhamracy(@RequestBody MedicineDto medicineDto) {
         medicineService.removeMedicineFromPhamracy(medicineDto);
     }
+
+
 
 }
 

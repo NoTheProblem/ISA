@@ -19,7 +19,7 @@
     <th scope="row" (click)="sort('shape')">Oblik</th>
     <th scope="row" (click)="sort('composition')">Sastav</th>
     <th scope="row" (click)="sort('manufacturer')">Proizvođač</th>
-    <th scope="col">#</th>
+    <th *ngIf="isLoggedIn" scope="col">#</th>
   </tr>
   </thead>
   <tbody>
@@ -32,7 +32,8 @@
     <td>{{ medicine.shape}}</td>
     <td>{{ medicine.composition}}</td>
     <td>{{ medicine.manufacturer}}</td>
-    <td>
+
+    <td *ngIf="isLoggedIn">
       <button class="btn btn-primary" (click)="addAllergy(medicine)">Dodaj alergiju</button>
     </td>
   </tr>

@@ -3,6 +3,10 @@ import {UserProfileService} from '../services/userProfile.service';
 import {UserModel} from '../model/user.model';
 import {TokenStorageService} from '../_services/token-storage.service';
 import {PasswordChangerModel} from '../model/passwordChanger.model';
+import {MedicineModel} from '../model/medicine.model';
+import {PharmacyModel} from '../model/pharmacy.model';
+import {PatientService} from '../services/patient.service';
+import {LoyaltyProgram} from '../model/loyalty.model';
 
 @Component({
   selector: 'app-user-profile',
@@ -15,10 +19,18 @@ export class UserProfileComponent implements OnInit {
   form: any = {};
   private pw: PasswordChangerModel;
   error = false;
+  isLoggedIn = false;
+  role: string;
+  showMedicines = false;
+  showLoyalty = false;
+  public medicines: Array<MedicineModel>;
+  public loyalty: LoyaltyProgram;
+  public pharmacy: PharmacyModel;
 
   constructor(
     private tokenStorageService: TokenStorageService,
-    private userProfileService: UserProfileService
+    private userProfileService: UserProfileService,
+    private patientService: PatientService
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +38,11 @@ export class UserProfileComponent implements OnInit {
       .subscribe((userModel: UserModel) => {
         this.user = userModel;
       });
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      this.role = this.tokenStorageService.getUserType();
+    }
   }
 
   updateProfile(form: any): void {
@@ -66,5 +83,26 @@ export class UserProfileComponent implements OnInit {
     this.pw = new PasswordChangerModel(this.form.oldPassword, this.form.password);
     this.userProfileService.changePassword(this.pw);
     this.showPWChange = false;
+  }
+
+  showAllergyForPatient(): void {
+    this.showMedicines = !this.showMedicines;
+    if (!this.showMedicines){
+      return;
+    }
+    this.patientService.getAllAllergyForPatient(this.user.username).subscribe((medicines: Array<MedicineModel>) => {
+      this.medicines = medicines;
+    });
+
+  }
+
+  showMyLoyalty(): void {
+    this.showLoyalty = !this.showLoyalty;
+    if (!this.showLoyalty){
+      return;
+    }
+    this.patientService.getPatientLoyalty(this.user.username).subscribe((loyalty: LoyaltyProgram) => {
+      this.loyalty = loyalty;
+    });
   }
 }

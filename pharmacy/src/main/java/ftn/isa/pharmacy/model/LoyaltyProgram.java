@@ -11,6 +11,14 @@ public class LoyaltyProgram {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    public LoyaltyProgram(Long id, int downScore, int upScore, float discountPercentage, String typeOfLoyalty) {
+        this.id = id;
+        this.downScore = downScore;
+        this.upScore = upScore;
+        this.discountPercentage = discountPercentage;
+        this.typeOfLoyalty = typeOfLoyalty;
+    }
+
     @Column
     private int downScore;
 

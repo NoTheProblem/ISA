@@ -17,6 +17,7 @@ export class MedicinesComponent implements OnInit {
   reverse = false;
   name = '';
   key = '';
+  isLoggedIn = false;
 
 
   constructor(
@@ -63,6 +64,7 @@ export class MedicinesComponent implements OnInit {
       .subscribe((medicineList: Array<MedicineModel>) => {
         this.medicines = medicineList;
       });
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
   }
 
 }

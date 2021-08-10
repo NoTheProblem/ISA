@@ -48,18 +48,7 @@
                        #username="ngModel">
               </div>
             </div>
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <h6 class="mb-0">email</h6>
-              </div>
-              <div class="col-sm-9 text-secondary">
-                <input type="text" class="form-control"
-                       name="email"
-                       [(ngModel)]="form.email"
-                       [value]="user?.email"
-                       #email="ngModel">
-              </div>
-            </div>
+
             <div class="row mb-3">
               <div class="col-sm-3">
                 <h6 class="mb-0">Telefon</h6>
@@ -166,3 +155,53 @@
 
   </div>
 </div>
+    <button *ngIf="isLoggedIn && role==='ROLE_USER'" class="btn btn-primary" (click)="showMyLoyalty()">Prikazi moj lojalti</button>
+    <button *ngIf="isLoggedIn && role==='ROLE_USER'" class="btn btn-primary" (click)="showAllergyForPatient()">Prikazi moje alergije</button>
+<div>
+
+
+
+  <div *ngIf="showMedicines">
+    <br><br>
+    <h2>Prikaz alergija</h2>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th scope="row">#</th>
+        <th scope="row">Šifra</th>
+        <th scope="row">Ime</th>
+        <th scope="row">Vrsta</th>
+        <th scope="row">Oblik</th>
+        <th scope="row">Sastav</th>
+        <th scope="row">Proizvođač</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let medicine of medicines ">
+        <th scope="row">{{ medicine.id }}</th>
+        <td>{{ medicine.code }}</td>
+        <td>{{ medicine.name}}</td>
+        <td>{{ medicine.type}}</td>
+        <td>{{ medicine.shape}}</td>
+        <td>{{ medicine.composition}}</td>
+        <td>{{ medicine.manufacturer}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+
+
+      <div *ngIf="showLoyalty">
+        <br><br>
+        <h2>Prikaz lojaliti</h2>
+
+        <label>{{ loyalty.typeOfLoyalty}}</label>
+        <label>{{ loyalty.discountPercentage}}</label>
+        <label>{{ user.loyaltyScore}}</label>
+
+      </div>
+    </div>
+  </div>
