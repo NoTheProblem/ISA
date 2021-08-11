@@ -1,10 +1,89 @@
-<dl-date-time-picker
-  startView="day"
-  maxView="year"
-  minView="minute"
-  [(ngModel)]="selectedDate"
->
-</dl-date-time-picker>
+<label *ngIf="showTimeDate"> Izaberite datum za savetovanje: </label>
+<form *ngIf="showTimeDate">
+  <input
+    type="date"
+    class="form-control"
+    name="examinationDateInput"
+    [(ngModel)]="dateInput"
+  />
+</form>
 
 
-<label>{{selectedDate}}</label>
+<div class="md-form" *ngIf="showTimeDate">
+  <label for="input">Izaberi vreme za savetovanje:</label>
+  <input
+    type="time"
+    id="input"
+    class="form-control"
+    value="13:00"
+    mdbInput
+    [(ngModel)]="timeInput"
+  />
+
+</div>
+
+<br *ngIf="showTimeDate">
+<button *ngIf="showTimeDate" class="btn btn-primary" (click)="showPharmacy(dateInput,timeInput)">Prikazi</button>
+<br>
+
+
+<table class="table table-striped" *ngIf = showPharmacies>
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')" >#</th>
+    <th scope="row" (click)="sort('name')" >Ime</th>
+    <th scope="row" (click)="sort('country')" scope="col">Država</th>
+    <th scope="row" (click)="sort('city')" scope="col">Grad</th>
+    <th scope="row" (click)="sort('address')" scope="col">Adresa apoteke</th>
+    <th scope="row" (click)="sort('pharmacyDescription')" scope="col">Opis apoteke</th>
+    <th scope="row" (click)="sort('evaluationGrade')" scope="col">Ocena apoteke</th>
+    <th scope="row" (click)="sort('counselingPrice')" scope="col">Cena pregleda</th>
+    <th scope="row" ></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pharmacy of pharmacies | orderBy: key: reverse " >
+    <th scope="row" >{{ pharmacy.id }}</th>
+    <td>
+        {{ pharmacy.name }}
+    </td>
+    <td>{{ pharmacy.country }}</td>
+    <td>{{ pharmacy.city}}</td>
+    <td>{{ pharmacy.address}}</td>
+    <td>{{ pharmacy.pharmacyDescription}}</td>
+    <td>{{ pharmacy.evaluationGrade}}</td>
+    <td>{{ pharmacy.counselingPrice}}</td>
+    <td>
+      <button class="btn btn-primary" (click)="showPharmacists(pharmacy,dateInput,timeInput)">Prikaz farmaceuta</button>
+    </td>
+
+  </tr>
+  </tbody>
+</table>
+<label *ngIf="showPharmacist"> Slobodni farmaceuti: </label>>
+<table class="table table-striped" *ngIf = showPharmacist>
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')" >#</th>
+    <th scope="row" (click)="sort('firstName')" >Ime</th>
+    <th scope="row" (click)="sort('lastName')" scope="col">Prezime</th>
+    <th scope="row" (click)="sort('evaluationGrade')" scope="col">Ocena</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pharmacist of pharmacists | orderBy: key: reverse " >
+    <th scope="row" >{{ pharmacist.id }}</th>
+    <td>
+      {{ pharmacist.firstName }}
+    </td>
+    <td>{{ pharmacist.lastName }}</td>
+    <td>{{ pharmacist.evaluationGrade}}</td>
+    <td>
+      <button class="btn btn-primary" (click)="scheduledCounseling(pharmacist, pharmacyChoosen, dateInput, timeInput)">Zakazi termin</button>
+    </td>
+
+
+  </tr>
+  </tbody>
+</table>

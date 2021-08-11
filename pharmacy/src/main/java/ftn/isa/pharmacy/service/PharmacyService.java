@@ -4,6 +4,7 @@ import ftn.isa.pharmacy.dto.DermatologistDto;
 import ftn.isa.pharmacy.dto.PharmacyDto;
 import ftn.isa.pharmacy.model.*;
 
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -27,4 +28,6 @@ public interface PharmacyService {
     Collection<Examination> getAvailableExaminations(Long id);
 
     void deleteEmployee(Long id, String type);
+
+    Collection<Pharmacy> getAvailablePharmacies(String time, String date) throws ParseException;
 }

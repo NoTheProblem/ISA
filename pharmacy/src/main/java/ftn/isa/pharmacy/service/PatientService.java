@@ -1,5 +1,6 @@
 package ftn.isa.pharmacy.service;
 
+import ftn.isa.pharmacy.dto.CounselingDTO;
 import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.model.LoyaltyProgram;
@@ -19,5 +20,9 @@ public interface PatientService {
     LoyaltyProgram getLoyaltyProgramForPatient(String username);
 
     void addExamination(ExaminationDto examinationDto);
-    void cancelExamination(ExaminationDto examinationDto);
+    boolean cancelExamination(ExaminationDto examinationDto);
+
+    void addCounseling(CounselingDTO counselingDto);
+
+    boolean cancelCounseling(CounselingDTO counselingDto);
 }

@@ -1,0 +1,33 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime farmaceuta</th>
+    <th scope="row" >Prezime farmaceuta</th>
+    <th scope="row"  >Ocena farmaceuta</th>
+    <th scope="row"  >Cena farmaceuta</th>
+    <th scope="row" >Datum pregleda</th>
+    <th scope="row" >Vreme pregleda</th>
+
+
+
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let counseling of counselings " >
+    <th ></th>
+    <th >{{ counseling.pharmacistName }}</th>
+    <th >{{ counseling.pharmacistLastname }}</th>
+    <th >{{ counseling.pharmacistEvaluationGrade }}</th>
+    <th >{{ counseling.price }}</th>
+    <th >{{ change(counseling.date)}}</th>
+    <th >{{ counseling.time }}</th>
+    <th ><label *ngIf="(counseling.date-86400000) < currentDate">Nije moguće otkazati termin,manje od 24h</label></th>
+    <th ><button class="Otkazi" (click)="cancelAppointment(counseling) " *ngIf="(counseling.date-86400000) > currentDate">Otkazi</button></th>
+
+
+
+  </tr>
+  </tbody>
+</table>

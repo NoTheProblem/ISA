@@ -1,14 +1,14 @@
 package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.config.MailConfig;
+import ftn.isa.pharmacy.dto.CounselingDTO;
 import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.MedicineDto;
+import ftn.isa.pharmacy.mapper.CounselingMapper;
 import ftn.isa.pharmacy.mapper.ExaminationMapper;
 import ftn.isa.pharmacy.mapper.MedicineMapper;
 import ftn.isa.pharmacy.model.*;
-import ftn.isa.pharmacy.repository.ExaminationRepository;
-import ftn.isa.pharmacy.repository.LoyaltyProgramRepository;
-import ftn.isa.pharmacy.repository.PatientRepository;
+import ftn.isa.pharmacy.repository.*;
 import ftn.isa.pharmacy.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -31,15 +31,21 @@ public class PatientServiceImpl implements PatientService {
     private final PatientRepository patientRepository;
     private final ExaminationRepository examinationRepository;
     private final LoyaltyProgramRepository loyaltyProgramRepository;
+    private final CounselingMapper counselingMapper;
+    private final CounselingRepository counselingRepository;
+    private final PharmacistRepository pharmacistRepository;
 
     @Autowired
-    public PatientServiceImpl(MailConfig mailConfig, MedicineMapper medicineMapper, PatientRepository patientRepository, LoyaltyProgramRepository loyaltyProgramRepository, ExaminationMapper examinationMapper, ExaminationRepository examinationRepository) {
+    public PatientServiceImpl(PharmacistRepository pharmacistRepository, CounselingRepository counselingRepository, CounselingMapper counselingMapper, MailConfig mailConfig, MedicineMapper medicineMapper, PatientRepository patientRepository, LoyaltyProgramRepository loyaltyProgramRepository, ExaminationMapper examinationMapper, ExaminationRepository examinationRepository) {
         this.medicineMapper = medicineMapper;
         this.patientRepository = patientRepository;
         this.loyaltyProgramRepository = loyaltyProgramRepository;
         this.examinationMapper = examinationMapper;
         this.examinationRepository = examinationRepository;
         this.mailConfig = mailConfig;
+        this.counselingMapper = counselingMapper;
+        this.counselingRepository = counselingRepository;
+        this.pharmacistRepository = pharmacistRepository;
     }
 
     private JavaMailSenderImpl getJMS(){
@@ -85,7 +91,7 @@ public class PatientServiceImpl implements PatientService {
             mailMessage.setSubject("Zakazivanje termina");
             mailMessage.setText("Postovani " + patient.getFirstName() + ",\n"+ "\n"+
                     "Uspesno ste zakazali termin za " + examination.getDate() +
-                    " kod lekara" + examination.getDermatologist().getFirstName() + examination.getDermatologist().getLastName() +  "\n"+ "\n"+
+                    " kod lekara" + examination.getDermatologist().getFirstName() + "  " + examination.getDermatologist().getLastName() +  "\n"+ "\n"+
                     "Pozdrav," + "\n"+
                     "AP tim");
             mailSender.send(mailMessage);
@@ -95,7 +101,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void cancelExamination(ExaminationDto examinationDto) {
+    public boolean cancelExamination(ExaminationDto examinationDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // Patient patient = (Patient) authentication.getPrincipal(); --> ovo radi, ali ne povuce allergicMedicines jer je lazy
         Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
@@ -107,15 +113,21 @@ public class PatientServiceImpl implements PatientService {
             Patient patient = patientOptional.get();
             long helper;
             helper = examination.getDate().getTime();
-            if ((helper + 86400000) < System.currentTimeMillis()) {
+            System.out.println(helper);
+            System.out.println(System.currentTimeMillis());
+            if ((helper - 86400000) > System.currentTimeMillis()) {
                 examination.setPatient(null);
-                examination.setFree(false);
+                examination.setFree(true);
+                System.out.println(System.currentTimeMillis());
+                examinationRepository.saveAndFlush(examination);
+                return true;
             }
 
 
 
-            examinationRepository.saveAndFlush(examination);
+            //examinationRepository.saveAndFlush(examination);
         }
+        return false;
     }
 
     @Override
@@ -150,5 +162,72 @@ public class PatientServiceImpl implements PatientService {
         loyaltyProgramRepository.saveAndFlush(loyaltyProgram);
         return patient.getLoyaltyProgram();
 
+    }
+
+    @Override
+    public void addCounseling(CounselingDTO counselingDto){
+        System.out.println("Servis");
+        Counseling counseling = counselingMapper.bean2Entity(counselingDto);
+        System.out.println("Maper");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        counseling.setPatient(patient);
+        counseling.setPharmacist(pharmacistRepository.getOne(counselingDto.getPharmacistId()));
+        System.out.println(patient);
+        System.out.println(counseling);
+        int hours = Integer.parseInt(counselingDto.getTime().substring(0,2));
+        int minutes = Integer.parseInt(counselingDto.getTime().substring(3));
+        Date dateAddTime = counselingDto.getDate();
+        dateAddTime.setHours(hours);
+        dateAddTime.setMinutes(minutes);
+        counseling.setDate(dateAddTime);
+
+        JavaMailSenderImpl mailSender = getJMS();
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom("apoteka@gmail.com");
+        mailMessage.setTo(patient.getEmail());
+        mailMessage.setSubject("Zakazivanje termina");
+        mailMessage.setText("Postovani " + patient.getFirstName() + ",\n"+ "\n"+
+                "Uspesno ste zakazali termin za farmaceuta " + counseling.getDate() +
+                " kod lekara" + counseling.getPharmacist().getFirstName() + "  " + counseling.getPharmacist().getLastName() +  "\n"+ "\n"+
+                "Pozdrav," + "\n"+
+                "AP tim");
+        mailSender.send(mailMessage);
+
+        counselingRepository.saveAndFlush(counseling);
+
+
+    }
+
+    @Override
+    public boolean cancelCounseling(CounselingDTO counselingDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Patient patient = (Patient) authentication.getPrincipal(); --> ovo radi, ali ne povuce allergicMedicines jer je lazy
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        if(patientOptional.isPresent()) {
+            Counseling counseling = counselingMapper.bean2Entity(counselingDto);
+            Optional<Counseling> counseling1 = counselingRepository.findById(counselingDto.getId());
+            counseling = counseling1.get();
+
+            Patient patient = patientOptional.get();
+            long helper;
+            helper = counseling.getDate().getTime();
+            System.out.println(helper);
+            System.out.println(System.currentTimeMillis());
+            if ((helper - 86400000) > System.currentTimeMillis()) {
+                counseling.setPatient(null);
+                counseling.setFree(true);
+                System.out.println(System.currentTimeMillis());
+                counselingRepository.saveAndFlush(counseling);
+                return true;
+            }
+
+
+
+            //examinationRepository.saveAndFlush(examination);
+        }
+        return false;
     }
 }

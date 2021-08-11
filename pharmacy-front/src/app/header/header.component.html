@@ -14,14 +14,11 @@
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_USER'" >
-      <li><a class="nav-link" routerLink="pharmacies">Istorija poseta</a></li>
-      <li><a class="nav-link" routerLink="dermatologistList">Dermatolozi</a></li>
-      <li><a class="nav-link" routerLink="pharmacistList">Farmaceuti</a></li>
+      <li><a class="nav-link" routerLink="pharmacies">Apoteke</a></li>
       <li><a class="nav-link" routerLink="freeExamination">Termini dermatolog</a></li>
       <li><a class="nav-link" routerLink="freeCounseling">Termini farmaceut</a></li>
-      <li><a class="nav-link" routerLink="freeExamination">Zakazivanje termina</a></li>
-      <li><a class="nav-link" routerLink="freeExamination">Pisanje žalbi</a></li>
       <li><a class="nav-link" routerLink="scheduledAppointment">Zakazani termini dermatolog</a></li>
+      <li><a class="nav-link" routerLink="appointmentp">Zakazani termini farmaceut</a></li>
       <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
     </ul>
 
@@ -39,6 +36,8 @@
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_PHARMACIST'" >
       <li><a class="nav-link" routerLink="lista-korisnika">Lista korisnika</a></li>
+      <li><a class="nav-link" routerLink="dermatologistList">Dermatolozi</a></li>
+      <li><a class="nav-link" routerLink="pharmacistList">Farmaceuti</a></li>
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_SYSADMIN'" >

@@ -14,6 +14,22 @@ public class Counseling {
     @Column
     private Boolean free;
 
+    @Override
+    public String toString() {
+        return "Counseling{" +
+                "id=" + id +
+                ", free=" + free +
+                ", penalty=" + penalty +
+                ", counselingReport='" + counselingReport + '\'' +
+                ", loyaltyScore=" + loyaltyScore +
+                ", date=" + date +
+                ", time=" + time +
+                ", price=" + price +
+                ", patient=" + patient +
+                ", pharmacist=" + pharmacist +
+                '}';
+    }
+
     @Column
     private Boolean penalty;
 
@@ -27,7 +43,7 @@ public class Counseling {
     private Date date;
 
     @Column
-    private Time time;
+    private String time;
 
     @Column
     private float price;
@@ -42,7 +58,7 @@ public class Counseling {
     public Counseling() {
     }
 
-    public Counseling(Long id, Boolean free, Boolean penalty, String counselingReport, int loyaltyScore, Date date, Time time, float price, Patient patient, Pharmacist pharmacist) {
+    public Counseling(Long id, Boolean free, Boolean penalty, String counselingReport, int loyaltyScore, Date date, String time, float price, Patient patient, Pharmacist pharmacist) {
         this.id = id;
         this.free = free;
         this.penalty = penalty;
@@ -103,11 +119,11 @@ public class Counseling {
         this.date = date;
     }
 
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

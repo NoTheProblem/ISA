@@ -8,6 +8,8 @@ import {Constants} from './constants';
 import {UserModel} from '../model/user.model';
 import {LoyaltyProgram} from '../model/loyalty.model';
 import {ExaminationModel} from '../model/examination.model';
+import {PharmacyModel} from '../model/pharmacy.model';
+import {CounselingModel} from '../model/counseling.model';
 
 @Injectable()
 export class PatientService {
@@ -65,6 +67,29 @@ export class PatientService {
       },
       (error => {
         this.toast.error(`Termin nije otkazan za ${examination.date}`);
+      }),
+    );
+  }
+
+  public scheduledCounseling(counseling: CounselingModel): void {
+    this.httpClient.post(Constants.API + '/patient/addCounseling', counseling).subscribe(
+      (response: any) => {
+        this.toast.success(`Termin je zakazan za ${counseling.date}`);
+      },
+      (error => {
+        this.toast.error(`Termin nije zakazan za ${counseling.date}`);
+      })
+    );
+
+  }
+
+  public cancelCounseling(counseling: CounselingModel): void {
+    this.httpClient.post(Constants.API + '/patient/cancelCounseling', counseling).subscribe(
+      (response: true) => {
+        this.toast.success(`Termin je otkazan za ${counseling.date}`);
+      },
+      (error => {
+        this.toast.error(`Termin nije otkazan za ${counseling.date}`);
       }),
     );
   }

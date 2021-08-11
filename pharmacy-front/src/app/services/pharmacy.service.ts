@@ -6,6 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import {MedicineModel} from '../model/medicine.model';
 import {ExaminationModel} from '../model/examination.model';
 import {Constants} from './constants';
+import {DermatologistModel} from '../model/dermatologist.model';
 
 @Injectable()
 export class PharmacyService {
@@ -70,5 +71,13 @@ export class PharmacyService {
     this.path = Constants.API + '/pharmacy/unauth/examinations/' + String(pharmacyID);
     return this.httpClient.get<Array<ExaminationModel>>(this.path);
   }
+
+  public getPharmacyForPatientByDateAndTime(timeInput: any, dateInput: any): Observable<Array<PharmacyModel>> {
+    this.path = Constants.API + '/pharmacy/unauth/counseling/' + String(timeInput) + '/' + String(dateInput);
+    return this.httpClient.get<Array<PharmacyModel>>(this.path);
+  }
+
+
+
 }
 
