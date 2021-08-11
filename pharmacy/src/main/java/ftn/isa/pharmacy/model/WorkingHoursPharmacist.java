@@ -1,6 +1,7 @@
 package ftn.isa.pharmacy.model;
 
 import javax.persistence.*;
+import java.sql.Time;
 
 @Entity
 public class WorkingHoursPharmacist {
@@ -10,10 +11,10 @@ public class WorkingHoursPharmacist {
     private Long id;
 
     @Column
-    private String startTime;
+    private Time startTime;
 
     @Column
-    private String endTime;
+    private Time endTime;
 
     @Column
     private String workDay;
@@ -27,7 +28,7 @@ public class WorkingHoursPharmacist {
     public WorkingHoursPharmacist() {
     }
 
-    public WorkingHoursPharmacist(Long id, String startTime, String endTime, String workDay, Pharmacy pharmacy, Pharmacist pharmacist) {
+    public WorkingHoursPharmacist(Long id, Time startTime, Time endTime, String workDay, Pharmacy pharmacy, Pharmacist pharmacist) {
         this.id = id;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -44,19 +45,19 @@ public class WorkingHoursPharmacist {
         this.id = id;
     }
 
-    public String getStartTime() {
+    public Time getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(String startTime) {
+    public void setStartTime(Time startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
+    public Time getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(String endTime) {
+    public void setEndTime(Time endTime) {
         this.endTime = endTime;
     }
 

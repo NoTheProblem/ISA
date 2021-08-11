@@ -23,10 +23,9 @@
     <th >{{ examination.price }}</th>
     <th >{{ change(examination.date)}}</th>
     <th >{{ examination.time }}</th>
-    <th ><button class="Otkazi" (click)="cancelAppointment(examination)">Otkazi</button></th>
+    <th ><label *ngIf="(examination.date-86400000) < currentDate">Nije moguće otkazati termin,manje od 24h</label></th>
+    <th ><button class="Otkazi" (click)="cancelAppointment(examination) " *ngIf="(examination.date-86400000) > currentDate">Otkazi</button></th>
 
 
 
-  </tr>
-  </tbody>
-</table>
+

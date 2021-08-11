@@ -1,8 +1,13 @@
 package ftn.isa.pharmacy.controller;
 
+import java.text.ParseException;
 import java.util.Collection;
 import ftn.isa.pharmacy.dto.*;
 import ftn.isa.pharmacy.mapper.impl.*;
+import ftn.isa.pharmacy.model.Counseling;
+import ftn.isa.pharmacy.model.Pharmacy;
+import ftn.isa.pharmacy.service.PharmacistService;
+import ftn.isa.pharmacy.service.impl.PharmacistServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,15 +25,17 @@ public class PharmacyController {
     private final PharmacistMapperImpl pharmacistMapper;
     private final MedicineMapperImpl medicineMapper;
     private final ExaminationMapperImpl examinationMapper;
+    private final PharmacistServiceImpl pharmacistService;
 
     @Autowired
-    public PharmacyController(PharmacyService pharmacyService, PharmacyMapperImpl pharmacyMapper, DermatologistMapperImpl dermatologistMapper, PharmacistMapperImpl pharmacistMapper, MedicineMapperImpl medicineMapper, ExaminationMapperImpl examinationMapper) {
+    public PharmacyController(PharmacistServiceImpl pharmacistService, PharmacyService pharmacyService, PharmacyMapperImpl pharmacyMapper, DermatologistMapperImpl dermatologistMapper, PharmacistMapperImpl pharmacistMapper, MedicineMapperImpl medicineMapper, ExaminationMapperImpl examinationMapper) {
         this.pharmacyService = pharmacyService;
         this.pharmacyMapper = pharmacyMapper;
         this.dermatologistMapper = dermatologistMapper;
         this.pharmacistMapper = pharmacistMapper;
         this.medicineMapper = medicineMapper;
         this.examinationMapper = examinationMapper;
+        this.pharmacistService = pharmacistService;
     }
 
     @GetMapping(value = "/getAll")
@@ -99,6 +106,20 @@ public class PharmacyController {
         pharmacyService.deleteEmployee(id,type);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping(value = "/unauth/counseling/{time}/{date}")
+    public ResponseEntity<Collection<PharmacyDto>> getAvailablePharmacies(@PathVariable String time, @PathVariable String date) throws ParseException {
+        Collection<PharmacyDto> pharmacyDtos = pharmacyMapper.entity2Bean(pharmacyService.getAvailablePharmacies(time, date));
+        return ResponseEntity.ok(pharmacyDtos);
+    }
+
+    @GetMapping(value = "/unauth/counseling/{id}/{time}/{date}")
+    public ResponseEntity<Collection<PharmacistDTO>> getAvailablePharmacist(@PathVariable Long id, @PathVariable String time, @PathVariable String date) throws ParseException {
+        Collection<PharmacistDTO> pharmacistDTOs = pharmacistMapper.entity2Bean(pharmacistService.getAvailablePharmacist(id, time, date));
+        return ResponseEntity.ok(pharmacistDTOs);
+    }
+
+
 
 
 }

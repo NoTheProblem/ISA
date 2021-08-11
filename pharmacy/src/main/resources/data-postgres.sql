@@ -27,16 +27,26 @@ insert into registeredusers (tip,first_name,last_name,username,password,email,co
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id,evaluation_grade) values ('ROLE_PHARMACIST','Farmaceut','farmaceutic','ris99','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','risfizidsfka@gmail.com','Srbija','Jagodina','despotovac',true, '2021-01-02 18:57:58.508-07',null ,0);
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id) values ('ROLE_ADMIN','Branislav','Lazarevic','slav12','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','branislavlazarevic12@gmail.com','Srbija','Sabac','Marsala Tita 140',true, '2021-01-02 18:57:58.508-07',1);
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, evaluation_grade) values ('ROLE_SUPPLIER','Aleksa','Milenovic','sup','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','supleksa@gmail.com','Srbija','Novi Sad','Negde u NS',true, '2021-01-02 18:57:58.508-07', 6);
+insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id,evaluation_grade) values ('ROLE_PHARMACIST','Pera','Savic','ris11','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','risfifdfszika@gmail.com','Srbija','Jagodina','despotovac',true, '2021-01-02 18:57:58.508-07',3,0);
+insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id,evaluation_grade) values ('ROLE_PHARMACIST','Kristijan','Peric','ris12','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','risfizfdsfdsfdsfsdika@gmail.com','Srbija','Jagodina','despotovac',true, '2021-01-02 18:57:58.508-07',3,2);
+insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id,evaluation_grade) values ('ROLE_PHARMACIST','Pera','Peric','ris13','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','risffsfsfizika@gmail.com','Srbija','Jagodina','despotovac',true, '2021-01-02 18:57:58.508-07',3,4);
 
 insert into absence_request(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name,pharmacy_id) values ('zahtev za godisnji', '2021-01-11', '2021-03-30','nov', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris',1);
-insert into absence_request(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name,pharmacy_id) values ('zahtev za godisnji', '2021-05-05', '2021-07-07','Odobreno', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris',1);
+insert into absence_request(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name,pharmacy_id) values ('zahtev za godisnji', '2021-05-05', '2021-12-12','Odobreno', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris',1);
 
 insert into pharmacy_dermatologist(pharmacy_id, dermatologist_id) values (1,2);
 
 insert into pharmacy_pharmacists(pharmacy_id, pharmacists_id) values(1,4);
+insert into pharmacy_pharmacists(pharmacy_id, pharmacists_id) values(2,7);
 
 insert into working_hours(end_time,start_time, work_day, dermatologist_id, pharmacy_id) values ('15:00:00.000','08:00:00.000','Ponedeljak',2,1);
 insert into working_hours(end_time,start_time, work_day, dermatologist_id, pharmacy_id) values ('15:00:00','08:00:00','Ponedeljak', 6,2);
+insert into working_hours_pharmacist(end_time,start_time, work_day, pharmacist_id, pharmacy_id) values ('23:00:00','15:00:00','Ponedeljak', 4, 1);
+insert into working_hours_pharmacist(end_time,start_time, work_day, pharmacist_id, pharmacy_id) values ('23:00:00','15:00:00','Ponedeljak', 7, 2);
+insert into working_hours_pharmacist(end_time,start_time, work_day, pharmacist_id, pharmacy_id) values ('23:00:00','15:00:00','Ponedeljak', 10, 3);
+insert into working_hours_pharmacist(end_time,start_time, work_day, pharmacist_id, pharmacy_id) values ('23:00:00','15:00:00','Ponedeljak', 11, 3);
+insert into working_hours_pharmacist(end_time,start_time, work_day, pharmacist_id, pharmacy_id) values ('23:00:00','15:00:00','Ponedeljak', 12, 3);
+
 
 insert into promotion(title,text,start_date,end_date,type,pharmacy_id) values('Bekutan promocija','Za sve bekutan proizvode vazi promocija 2+1','2021-01-11','2021-07-30','promocija',1);
 

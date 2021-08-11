@@ -5,6 +5,8 @@ import {ExaminationModel} from '../model/examination.model';
 import {Constants} from '../services/constants';
 import {HttpClient} from '@angular/common/http';
 import {ToastrService} from 'ngx-toastr';
+import {CounselingModel} from '../model/counseling.model';
+import {CounselingService} from '../services/counseling.service';
 
 @Component({
   selector: 'app-appointment-derma',
@@ -13,14 +15,18 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class AppointmentDermaComponent implements OnInit {
 
-  constructor(private examinationService: ExaminationService, private patientService: PatientService, private httpClient: HttpClient,
+  constructor( private examinationService: ExaminationService, private patientService: PatientService, private httpClient: HttpClient,
               private toast: ToastrService) { }
   public examinations: Array<ExaminationModel>;
+  public counselings: Array<CounselingModel>;
+
+  public  currentDate = new Date();
 
   ngOnInit(): void {
     this.examinationService.getAllScheduledAppointment().subscribe((examinationList: Array<ExaminationModel>) => {
       this.examinations = examinationList;
     });
+
   }
 
   change(medicine): any {
@@ -36,6 +42,8 @@ export class AppointmentDermaComponent implements OnInit {
     this.patientService.cancelExamination(examination);
 
   }
+
+
 
 
 

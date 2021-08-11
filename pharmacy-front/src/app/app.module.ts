@@ -54,6 +54,7 @@ import {PurchaseOrderComponent} from './purchase-order/purchase-order.component'
 import {SupplierUpdateComponent} from './supplier-update/supplier-update.component';
 import { PatientProfileComponent } from './patient-profile/patient-profile.component';
 import { AppointmentDermaComponent } from './appointment-derma/appointment-derma.component';
+import { AppointmentpComponent } from './appointmentp/appointmentp.component';
 
 const mapConfig: YaConfig = {
   apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
@@ -106,7 +107,8 @@ const mapConfig: YaConfig = {
     PreviousOffersComponent,
     PurchaseOrderComponent,
     PatientProfileComponent,
-    AppointmentDermaComponent
+    AppointmentDermaComponent,
+    AppointmentpComponent
 
   ],
   imports: [

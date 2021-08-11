@@ -17,6 +17,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.*;
 
 @Service
@@ -29,18 +34,20 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final DermatologistMapperImpl dermatologistMapper;
     private final WorkingHoursMapperImpl workingHoursMapper;
     private final WorkingHoursRepository workingHoursRepository;
+    private final WorkingHoursPharmacistRepository workingHoursPharmacistRepository;
     private final ExaminationRepository examinationRepository;
     private final ExaminationMapperImpl examinationMapper;
     private final PharmacyMapper pharmacyMapper;
     private final MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository;
     private final DermatologistRepository dermatologistRepository;
     private final PharmacistRepository pharmacistRepository;
-
+    private final AbsenceRequestRepository absenceRequestRepository;
+    private final CounselingRepository counselingRepository;
 
 
     // https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/#gatsby-focus-wrapper
     @Autowired
-    public PharmacyServiceImpl(PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyMapper pharmacyMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, DermatologistRepository dermatologistRepository, PharmacistRepository pharmacistRepository) {
+    public PharmacyServiceImpl(CounselingRepository counselingRepository, AbsenceRequestRepository absenceRequestRepository ,WorkingHoursPharmacistRepository workingHoursPharmacistRepository ,PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyMapper pharmacyMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, DermatologistRepository dermatologistRepository, PharmacistRepository pharmacistRepository) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.pharmacyRepository = pharmacyRepository;
         this.patientRepository = patientRepository;
@@ -54,6 +61,9 @@ public class PharmacyServiceImpl implements PharmacyService {
         this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
         this.dermatologistRepository = dermatologistRepository;
         this.pharmacistRepository = pharmacistRepository;
+        this.workingHoursPharmacistRepository = workingHoursPharmacistRepository;
+        this.absenceRequestRepository = absenceRequestRepository;
+        this.counselingRepository  = counselingRepository;
     }
 
     @Override
@@ -208,4 +218,79 @@ public class PharmacyServiceImpl implements PharmacyService {
         }
         pharmacyRepository.save(pharmacy);
     }
+
+    @Override
+    public Collection<Pharmacy> getAvailablePharmacies(String date, String time) throws ParseException {
+        Collection<Pharmacy> freePharmacies = new HashSet<>();
+        Collection<Pharmacy> allPharmacies = pharmacyRepository.findAll();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date dateParse = formatter.parse(date);
+        int dayOfWeekInt = dateParse.getDay();
+        int hours = Integer.parseInt(time.substring(0,2));
+        int minutes = Integer.parseInt(time.substring(3));
+        dateParse.setHours(hours);
+        dateParse.setMinutes(minutes);
+        System.out.println(dateParse);
+
+        Collection<WorkingHoursPharmacist> workingHoursPharmacists = workingHoursPharmacistRepository.findByWorkDay(dayOfWeek(dayOfWeekInt));
+        for (WorkingHoursPharmacist wk:workingHoursPharmacists){
+            System.out.println("Manje" + wk.getStartTime());
+            Time help = new Time(0);
+            help.setHours(hours);
+            help.setMinutes(minutes);
+            System.out.println("Pomoc" + help);
+            System.out.println("Manje" + wk.getStartTime());
+            System.out.println("Vece" + wk.getEndTime());
+            List<AbsenceRequest> absenceRequests = absenceRequestRepository.
+                    findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsLike(wk.getPharmacist().getId(),dateParse,dateParse, "Odobreno");
+            if(absenceRequests.size()!=0){
+                continue;
+            }
+            Date today = new Date();
+            if(dateParse.before(today)){
+                throw new ResourceConflictException(1L,"Zakazivanje u proslost!");
+            }
+
+            boolean hasAppointment = false;
+            Collection<Counseling> scheduledCounseling = counselingRepository.findAllByDateAndPharmacist(dateParse, wk.getPharmacist());;
+            if (scheduledCounseling.size() != 0) {continue;}
+
+            if (wk.getStartTime().before(help) && wk.getEndTime().after(help)) {
+                freePharmacies.add(wk.getPharmacy());
+            }
+        }
+
+
+
+
+
+
+
+        return freePharmacies;
+    }
+
+    String dayOfWeek(int day){
+        switch(day) {
+            case 1:
+                return "Ponedeljak";
+            case 2:
+                return "Utorak";
+
+            case 3:
+                return "Sreda";
+            case 4:
+                return "Cetvrtak";
+
+            case 5:
+                return "Petak";
+
+            case 6:
+                return "Subota";
+            default:
+                return "Nedelja";
+        }
+
+    }
+
+
 }

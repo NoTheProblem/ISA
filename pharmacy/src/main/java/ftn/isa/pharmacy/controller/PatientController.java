@@ -3,13 +3,9 @@ package ftn.isa.pharmacy.controller;
 import ftn.isa.pharmacy.dto.*;
 import ftn.isa.pharmacy.mapper.LoyaltyProgramMapper;
 import ftn.isa.pharmacy.mapper.MedicineMapper;
-import ftn.isa.pharmacy.mapper.impl.ExaminationMapperImpl;
-import ftn.isa.pharmacy.mapper.impl.LoyaltyProgramMapperImpl;
-import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
-import ftn.isa.pharmacy.mapper.impl.PatientMapperImpl;
-import ftn.isa.pharmacy.model.Examination;
-import ftn.isa.pharmacy.model.LoyaltyProgram;
-import ftn.isa.pharmacy.model.User;
+import ftn.isa.pharmacy.mapper.impl.*;
+import ftn.isa.pharmacy.model.*;
+import ftn.isa.pharmacy.service.CounselingService;
 import ftn.isa.pharmacy.service.ExaminationService;
 import ftn.isa.pharmacy.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +29,10 @@ public class PatientController {
     private final ExaminationService examinationService;
     private final MedicineMapperImpl medicineMapper;
     private final LoyaltyProgramMapperImpl loyaltyProgramMapper;
+    private final CounselingMapperImpl counselingMapper;
+    private final CounselingService counselingService;
     @Autowired
-    public PatientController(PatientService patientService, PatientMapperImpl patientMapper, MedicineMapperImpl medicineMapper, LoyaltyProgramMapperImpl loyaltyProgramMapper,
+    public PatientController(CounselingService counselingService, CounselingMapperImpl counselingMapper, PatientService patientService, PatientMapperImpl patientMapper, MedicineMapperImpl medicineMapper, LoyaltyProgramMapperImpl loyaltyProgramMapper,
                              ExaminationMapperImpl examinationMapper, ExaminationService examinationService     ) {
         this.patientService = patientService;
         this.patientMapper = patientMapper;
@@ -42,6 +40,8 @@ public class PatientController {
         this.loyaltyProgramMapper = loyaltyProgramMapper;
         this.examinationMapper = examinationMapper;
         this.examinationService  = examinationService;
+        this.counselingMapper = counselingMapper;
+        this.counselingService = counselingService;
     }
 
     @PostMapping("/addAllergy")
@@ -54,9 +54,22 @@ public class PatientController {
         patientService.addExamination(examinationDto);
     }
 
+
     @PostMapping("/cancelExamination")
-    public void cancelExamination(@RequestBody ExaminationDto examinationDto) {
-        patientService.addExamination(examinationDto);
+    public boolean cancelExamination(@RequestBody ExaminationDto examinationDto) {
+        System.out.println(111);
+        return patientService.cancelExamination(examinationDto);
+    }
+
+    @PostMapping("/addCounseling")
+    public void addCounseling(@RequestBody CounselingDTO counselingDto) {
+        System.out.println("Kontroler");
+        patientService.addCounseling(counselingDto);
+    }
+
+    @PostMapping("/cancelCounseling")
+    public void cancelCounseling(@RequestBody CounselingDTO counselingDto) {
+        patientService.cancelCounseling(counselingDto);
     }
 
     @GetMapping(value = "/getAll")
@@ -81,6 +94,12 @@ public class PatientController {
     public ResponseEntity<Collection<ExaminationDto>> getAllScheduledAppointmentForPatient(){
         Collection<ExaminationDto> examinationsDto = examinationMapper.entity2Bean(examinationService.getAllScheduledAppointmentForPatient());
         return ResponseEntity.ok(examinationsDto);
+    }
+
+    @GetMapping(value = "getAllScheduledAppointmentPha")
+    public ResponseEntity<Collection<CounselingDTO>> getAllScheduledAppointmentPhaForPatient(){
+        Collection<CounselingDTO> counselingsDto = counselingMapper.entity2Bean(counselingService.getAllScheduledAppointmentForPatient());
+        return ResponseEntity.ok(counselingsDto);
     }
 
 

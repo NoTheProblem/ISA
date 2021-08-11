@@ -14,6 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -28,8 +31,10 @@ public class PharmacistServiceImpl implements PharmacistService {
     private final WorkingHoursPharmacistRepository workingHoursPharmacistRepository;
     private final AuthorityService authorityService;
     private final PasswordEncoder passwordEncoder;
+    private final AbsenceRequestRepository absenceRequestRepository;
+    private final CounselingRepository counselingRepository;
 
-    public PharmacistServiceImpl(PharmacistRepository pharmacistRepository, PharmacistMapperImpl pharmacistMapper, PharmacyMapperImpl pharmacyMapper, PharmacyAdminRepository pharmacyAdminRepository, PharmacyRepository pharmacyRepository, WorkingHoursPharmacistMapperImpl workingHoursPharmacistMapper, WorkingHoursPharmacistRepository workingHoursPharmacistRepository, AuthorityService authorityService, PasswordEncoder passwordEncoder) {
+    public PharmacistServiceImpl(CounselingRepository counselingRepository, AbsenceRequestRepository absenceRequestRepository, PharmacistRepository pharmacistRepository, PharmacistMapperImpl pharmacistMapper, PharmacyMapperImpl pharmacyMapper, PharmacyAdminRepository pharmacyAdminRepository, PharmacyRepository pharmacyRepository, WorkingHoursPharmacistMapperImpl workingHoursPharmacistMapper, WorkingHoursPharmacistRepository workingHoursPharmacistRepository, AuthorityService authorityService, PasswordEncoder passwordEncoder) {
         this.pharmacistRepository = pharmacistRepository;
         this.pharmacistMapper = pharmacistMapper;
         this.pharmacyMapper = pharmacyMapper;
@@ -39,6 +44,9 @@ public class PharmacistServiceImpl implements PharmacistService {
         this.workingHoursPharmacistRepository = workingHoursPharmacistRepository;
         this.authorityService = authorityService;
         this.passwordEncoder = passwordEncoder;
+        this.absenceRequestRepository = absenceRequestRepository;
+        this.counselingRepository = counselingRepository;
+
     }
 
     @Override
@@ -104,4 +112,78 @@ public class PharmacistServiceImpl implements PharmacistService {
         throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
     }
 
+    public Collection<Pharmacist> getAvailablePharmacist(Long id, String date, String time) throws ParseException {
+        Collection<Pharmacist> freePharmacist = new HashSet<>();
+        Optional<Pharmacy> pharmacy = pharmacyRepository.findById(id);
+        Pharmacy ph  = pharmacy.get();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        Date dateParse = formatter.parse(date);
+        int dayOfWeekInt = dateParse.getDay();
+        int hours = Integer.parseInt(time.substring(0,2));
+        int minutes = Integer.parseInt(time.substring(3));
+        dateParse.setHours(hours);
+        dateParse.setMinutes(minutes);
+        System.out.println(dateParse);
+
+        Collection<WorkingHoursPharmacist> workingHoursPharmacists = workingHoursPharmacistRepository.findByWorkDayAndPharmacy(dayOfWeek(dayOfWeekInt), ph);
+        for (WorkingHoursPharmacist wk:workingHoursPharmacists){
+            System.out.println("Manje" + wk.getStartTime());
+            Time help = new Time(0);
+            help.setHours(hours);
+            help.setMinutes(minutes);
+            System.out.println("Pomoc" + help);
+            System.out.println("Manje" + wk.getStartTime());
+            System.out.println("Vece" + wk.getEndTime());
+            List<AbsenceRequest> absenceRequests = absenceRequestRepository.
+                    findAllByEmployeeIdAndStartDateBeforeAndEndDateAfterAndStatusIsLike(wk.getPharmacist().getId(),dateParse,dateParse, "Odobreno");
+            if(absenceRequests.size()!=0){
+                continue;
+            }
+            Date today = new Date();
+            if(dateParse.before(today)){
+                throw new ResourceConflictException(1L,"Zakazivanje u proslost!");
+            }
+
+            boolean hasAppointment = false;
+            Collection<Counseling> scheduledCounseling = counselingRepository.findAllByDateAndPharmacistAndFree(dateParse, wk.getPharmacist(), false);
+            System.out.println(dateParse);
+            System.out.println(wk.getPharmacist());
+            if (scheduledCounseling.size() != 0) {continue;}
+
+            if (wk.getStartTime().before(help) && wk.getEndTime().after(help)) {
+                freePharmacist.add(wk.getPharmacist());
+            }
+        }
+
+
+
+
+
+
+
+        return freePharmacist;
+    }
+    String dayOfWeek(int day){
+        switch(day) {
+            case 1:
+                return "Ponedeljak";
+            case 2:
+                return "Utorak";
+
+            case 3:
+                return "Sreda";
+            case 4:
+                return "Cetvrtak";
+
+            case 5:
+                return "Petak";
+
+            case 6:
+                return "Subota";
+            default:
+                return "Nedelja";
+        }
+
+    }
 }

@@ -20,8 +20,10 @@ public class Pharmacist extends User {
     @Column
     private Time endTime;
 
-    @OneToOne
-    private WorkingHoursPharmacist workingHours;
+
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<WorkingHoursPharmacist> workingHoursPharmacists = new HashSet<WorkingHoursPharmacist>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Counseling> counselings = new HashSet<Counseling>();
@@ -32,14 +34,14 @@ public class Pharmacist extends User {
     public Pharmacist() {
     }
 
-    public Pharmacist(Long id, String tip, String firstName, String lastName, String username, String password, String email, String country, String city, String address, String phoneNumber, Date birthDate, float evaluationGrade, Time startTime, Time endTime, WorkingHoursPharmacist workingHours, Set<Counseling> counselings, Pharmacy pharmacy) {
+    public Pharmacist(Set<WorkingHoursPharmacist> workingHoursPharmacists, Long id, String tip, String firstName, String lastName, String username, String password, String email, String country, String city, String address, String phoneNumber, Date birthDate, float evaluationGrade, Time startTime, Time endTime, WorkingHoursPharmacist workingHours, Set<Counseling> counselings, Pharmacy pharmacy) {
         super(id, tip, firstName, lastName, username, password, email, country, city, address, phoneNumber, birthDate);
         this.evaluationGrade = evaluationGrade;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.workingHours = workingHours;
         this.counselings = counselings;
         this.pharmacy = pharmacy;
+        this.workingHoursPharmacists = workingHoursPharmacists;
     }
 
     public float getEvaluationGrade() {
@@ -82,11 +84,12 @@ public class Pharmacist extends User {
         this.pharmacy = pharmacy;
     }
 
-    public WorkingHoursPharmacist getWorkingHours() {
-        return workingHours;
+    public Set<WorkingHoursPharmacist> getWorkingHoursPharmacists() {
+        return workingHoursPharmacists;
     }
 
-    public void setWorkingHours(WorkingHoursPharmacist workingHours) {
-        this.workingHours = workingHours;
+    public void setWorkingHoursPharmacists(Set<WorkingHoursPharmacist> workingHoursPharmacists) {
+        this.workingHoursPharmacists = workingHoursPharmacists;
     }
+
 }
