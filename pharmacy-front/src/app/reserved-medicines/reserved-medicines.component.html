@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime leka</th>
+    <th scope="row" >Ime apoteke</th>
+    <th scope="row"  >Datum roka za preuzimanje leka</th>
+    <th scope="row"  >Vreme roka za preuzimanje leka</th>
+
+
+
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let reservation of reservations " >
+    <th >{{ reservation.id }}</th>
+    <th >{{ reservation.medicineName }}</th>
+    <th >{{ reservation.pharmacyName }}</th>
+    <th >{{ change(reservation.endDate)}}</th>
+    <th >{{ reservation.endTime}}</th>
+    <th ><label *ngIf="(reservation.endDate-86400000) < currentDate">Nije moguće otkazati rezervaciju,manje od 24h</label></th>
+    <th ><button class="Otkazi" (click)="cancelReservation(reservation) " *ngIf="(reservation.endDate-86400000) > currentDate">Otkazi</button></th>
+
+  </tr>
+  </tbody>
+</table>
+

@@ -1,5 +1,6 @@
 package ftn.isa.pharmacy.repository;
 
+import ftn.isa.pharmacy.model.Counseling;
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.MedicineQuantityPharmacy;
 import ftn.isa.pharmacy.model.Pharmacy;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MedicineQuantityPharmacyRepository extends JpaRepository<MedicineQuantityPharmacy, Long> {
 
@@ -27,5 +29,14 @@ public interface MedicineQuantityPharmacyRepository extends JpaRepository<Medici
 
     Boolean deleteByPharmacyAndMedicine(Pharmacy pharmacy, Medicine medicine);
 
+    @Query(value = "select * from medicine_quantity_pharmacy where quantity > ?1 ",
+            nativeQuery = true)
+    List<MedicineQuantityPharmacy> findByQuantity(int quantity);
 
+    @Query(value = "select * from medicine_quantity_pharmacy where quantity > ?1 and medicine_id = ?2",
+            nativeQuery = true)
+    List<MedicineQuantityPharmacy> findByQuantityAndMedicineID(int quantity,Long id);
+
+
+    MedicineQuantityPharmacy findAllByPharmacyAndMedicine(Pharmacy pharmacy, Medicine medicine);
 }

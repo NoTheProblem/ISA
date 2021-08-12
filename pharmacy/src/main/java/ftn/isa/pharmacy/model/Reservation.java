@@ -1,6 +1,7 @@
 package ftn.isa.pharmacy.model;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +21,28 @@ public class Reservation {
     @Column
     private Date endDate;
 
+    public String getPickUpTime() {
+        return pickUpTime;
+    }
+
+    public void setPickUpTime(String pickUpTime) {
+        this.pickUpTime = pickUpTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    @Column
+    private String pickUpTime;
+
+    @Column
+    private String endTime;
+
     @Column
     private float price;
 
@@ -29,13 +52,24 @@ public class Reservation {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Patient patient;
 
+    @OneToOne
+    private Medicine medicine;
+
+    public Medicine getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
+    }
+
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MedicineQuantityReservation> medicineis = new HashSet<MedicineQuantityReservation>();
 
     public Reservation() {
     }
 
-    public Reservation(Long id, Boolean pickedUp, Date pickUpDate, Date endDate, float price, Pharmacy pharmacy, Patient patient, Set<MedicineQuantityReservation> medicineis) {
+    public Reservation(Long id, Boolean pickedUp, Date pickUpDate, Date endDate, String pickUpTime, String endTime, float price, Pharmacy pharmacy, Patient patient, Medicine medicine) {
         this.id = id;
         this.pickedUp = pickedUp;
         this.pickUpDate = pickUpDate;
@@ -44,6 +78,9 @@ public class Reservation {
         this.pharmacy = pharmacy;
         this.patient = patient;
         this.medicineis = medicineis;
+        this.endTime = endTime;
+        this.pickUpTime = pickUpTime;
+        this.medicine = medicine;
     }
 
     public Long getId() {

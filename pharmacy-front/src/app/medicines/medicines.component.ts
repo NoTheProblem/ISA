@@ -67,6 +67,8 @@ export class MedicinesComponent implements OnInit {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
   }
 
+
+
 }
 
 

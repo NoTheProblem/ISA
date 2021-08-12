@@ -12,17 +12,9 @@
   <br><br>
   <button class="btn btn-primary" style="margin-right: 10px;" (click)="showAvailableMedicines()">Prikazi lekove koje apoteka ima</button>
 
-  <button *ngIf="isLoggedIn" class="btn btn-primary" style="margin-right: 10px;" (click)="showAvailableExaminations()">Prikazi termine kod dermatologa</button>
-  <br>
+
 
   <div *ngIf="isLoggedIn">
-    <br>
-    <button class="btn btn-primary" style="margin-right: 10px;">Rezervisi lek</button>
-    <button class="btn btn-primary" style="margin-right: 10px;" (click)="checkEPerscription()">Dostupnost leka (E-Recept)</button>
-    <br>
-    <br>
-    <button class="btn btn-primary" style="margin-right: 10px;">Zakazi savetovanje kod farmaceuta</button>
-    <button class="btn btn-primary" style="margin-right: 10px;">Zakazi pregled kod dermatologa</button>
     <button class="btn btn-primary" style="margin-right: 10px;"  (click)="subscribeToPromotions()">Pretplati se na akcije/promocije</button>
   </div>
 

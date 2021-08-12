@@ -80,6 +80,12 @@ public class MedicineController {
         medicineService.removeMedicineFromPhamracy(medicineDto);
     }
 
+    @GetMapping(value = "/getAvailableMedicines")
+    public ResponseEntity<Collection<MedicineDto>> getAvailableMedicines() {
+        Collection<MedicineDto> medicineDtoList = medicineMapper.entity2Bean(medicineService.getAvailableMedicines());
+        return ResponseEntity.ok(medicineDtoList);
+    }
+
 
 
 }

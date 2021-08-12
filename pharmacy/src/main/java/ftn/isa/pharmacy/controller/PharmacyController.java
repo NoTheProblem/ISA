@@ -120,6 +120,11 @@ public class PharmacyController {
     }
 
 
+    @GetMapping(value = "/unauth/medicine/{id}")
+    public ResponseEntity<Collection<PharmacyDto>> getAllPharmacyForMedicine(@PathVariable Long id) {
+        Collection<PharmacyDto> pharmacyDtos = pharmacyMapper.entity2Bean(pharmacyService.getAllPharmacyForMedicine(id));
+        return ResponseEntity.ok(pharmacyDtos);
+    }
 
 
 }

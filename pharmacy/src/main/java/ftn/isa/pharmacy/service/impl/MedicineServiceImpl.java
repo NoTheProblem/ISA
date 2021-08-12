@@ -1,7 +1,6 @@
 package ftn.isa.pharmacy.service.impl;
 
-import ftn.isa.pharmacy.dto.MedicineDto;
-import ftn.isa.pharmacy.dto.PriceMediceDTO;
+import ftn.isa.pharmacy.dto.*;
 import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.PriceMediceMapper;
 import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
@@ -9,7 +8,6 @@ import ftn.isa.pharmacy.repository.MedicineQuantityPharmacyRepository;
 import ftn.isa.pharmacy.repository.MedicineRepository;
 import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
 import ftn.isa.pharmacy.repository.PriceMediceListRepository;
-import ftn.isa.pharmacy.dto.MedicineRegisterDto;
 import ftn.isa.pharmacy.mapper.MedicineRegisterMapper;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.SysAdminRepository;
@@ -148,6 +146,16 @@ public class MedicineServiceImpl implements MedicineService {
             }
         }
         medicineQuantityPharmacyRepository.deleteByPharmacyAndMedicine(pharmacy,medicine);
+    }
+
+    @Override
+    public Collection<Medicine> getAvailableMedicines() {
+        List<Medicine> medicines = new Stack<>();
+        List<MedicineQuantityPharmacy> mqps= medicineQuantityPharmacyRepository.findByQuantity(0);
+        for (MedicineQuantityPharmacy medicineQuantityPharmacy: mqps) {
+            medicines.add(medicineQuantityPharmacy.getMedicine());
+        }
+        return medicines;
     }
 
 

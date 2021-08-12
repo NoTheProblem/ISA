@@ -292,5 +292,16 @@ public class PharmacyServiceImpl implements PharmacyService {
 
     }
 
+    @Override
+    public List<Pharmacy> getAllPharmacyForMedicine(Long id) {
+        List<Pharmacy> pharmacies = new Stack<>();
+        System.out.println(id);
+        List<MedicineQuantityPharmacy> mqps= medicineQuantityPharmacyRepository.findByQuantityAndMedicineID(0,id);
+        for (MedicineQuantityPharmacy medicineQuantityPharmacy: mqps) {
+            pharmacies.add(medicineQuantityPharmacy.getPharmacy());
+        }
+        return pharmacies;
+    }
+
 
 }

@@ -10,6 +10,7 @@ import {LoyaltyProgram} from '../model/loyalty.model';
 import {ExaminationModel} from '../model/examination.model';
 import {PharmacyModel} from '../model/pharmacy.model';
 import {CounselingModel} from '../model/counseling.model';
+import {ReservationModel} from '../model/reservation.model';
 
 @Injectable()
 export class PatientService {
@@ -93,4 +94,39 @@ export class PatientService {
       }),
     );
   }
+  public getAllPharmacyForMedicine(medicine: MedicineModel): Observable<Array<PharmacyModel>> {
+    return this.httpClient.get<Array<PharmacyModel>>(Constants.API + '/patient/getAllPharmacyForMedicine');
+  }
+
+  public reserveMedicine(reservation: ReservationModel): void {
+    console.log(reservation);
+    this.httpClient.post(Constants.API + '/patient/reserveMedicine', reservation).subscribe(
+      (response: true) => {
+        this.toast.success(`Rezervisan je lek `);
+      },
+      (error => {
+        this.toast.error(`Rezervisan je lek `);
+      }),
+    );
+  }
+
+  public getAllReservedMedication(): Observable<Array<ReservationModel>> {
+    return this.httpClient.get<Array<ReservationModel>>(Constants.API + '/patient/getAllReservedMedicine');
+  }
+
+  public cancelReservation(reservation: ReservationModel): void {
+    this.httpClient.post(Constants.API + '/patient/cancelReservation', reservation).subscribe(
+      (response: true) => {
+        this.toast.success(`Rezervacija je otkazana za ${reservation.id}`);
+      },
+      (error => {
+        this.toast.error(`Termin nije otkazan za ${reservation.id}`);
+      }),
+    );
+  }
+
+
+
+
+
 }

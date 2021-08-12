@@ -8,6 +8,7 @@ import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.service.CounselingService;
 import ftn.isa.pharmacy.service.ExaminationService;
 import ftn.isa.pharmacy.service.PatientService;
+import ftn.isa.pharmacy.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,11 @@ public class PatientController {
     private final LoyaltyProgramMapperImpl loyaltyProgramMapper;
     private final CounselingMapperImpl counselingMapper;
     private final CounselingService counselingService;
+    private final ReservationMapperImpl reservationMapper;
+    private final ReservationService reservationService;
+
     @Autowired
-    public PatientController(CounselingService counselingService, CounselingMapperImpl counselingMapper, PatientService patientService, PatientMapperImpl patientMapper, MedicineMapperImpl medicineMapper, LoyaltyProgramMapperImpl loyaltyProgramMapper,
+    public PatientController(ReservationService reservationService, ReservationMapperImpl reservationMapper, CounselingService counselingService, CounselingMapperImpl counselingMapper, PatientService patientService, PatientMapperImpl patientMapper, MedicineMapperImpl medicineMapper, LoyaltyProgramMapperImpl loyaltyProgramMapper,
                              ExaminationMapperImpl examinationMapper, ExaminationService examinationService     ) {
         this.patientService = patientService;
         this.patientMapper = patientMapper;
@@ -42,6 +46,8 @@ public class PatientController {
         this.examinationService  = examinationService;
         this.counselingMapper = counselingMapper;
         this.counselingService = counselingService;
+        this.reservationMapper = reservationMapper;
+        this.reservationService = reservationService;
     }
 
     @PostMapping("/addAllergy")
@@ -100,6 +106,23 @@ public class PatientController {
     public ResponseEntity<Collection<CounselingDTO>> getAllScheduledAppointmentPhaForPatient(){
         Collection<CounselingDTO> counselingsDto = counselingMapper.entity2Bean(counselingService.getAllScheduledAppointmentForPatient());
         return ResponseEntity.ok(counselingsDto);
+    }
+    @PostMapping("/reserveMedicine")
+    public void addReservation(@RequestBody ReservationDTO reservationDTO) {
+        System.out.println("Kontroler");
+        System.out.println(reservationDTO);
+        patientService.addReservation(reservationDTO);
+    }
+
+    @GetMapping(value = "getAllReservedMedicine")
+    public ResponseEntity<Collection<ReservationDTO>> getAllReservedMedicineForPatient(){
+        Collection<ReservationDTO> reservationDTOS = reservationMapper.entity2Bean(reservationService.getAllReservedMedicineForPatient());
+        return ResponseEntity.ok(reservationDTOS);
+    }
+
+    @PostMapping("/cancelReservation")
+    public void cancelReservation(@RequestBody ReservationDTO reservationDto) {
+        patientService.cancelReservation(reservationDto);
     }
 
 

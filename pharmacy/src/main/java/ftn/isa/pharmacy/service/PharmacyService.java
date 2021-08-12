@@ -30,4 +30,6 @@ public interface PharmacyService {
     void deleteEmployee(Long id, String type);
 
     Collection<Pharmacy> getAvailablePharmacies(String time, String date) throws ParseException;
+
+    List<Pharmacy> getAllPharmacyForMedicine(Long id);
 }
