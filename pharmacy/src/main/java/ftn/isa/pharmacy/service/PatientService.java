@@ -3,6 +3,7 @@ package ftn.isa.pharmacy.service;
 import ftn.isa.pharmacy.dto.CounselingDTO;
 import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.MedicineDto;
+import ftn.isa.pharmacy.dto.ReservationDTO;
 import ftn.isa.pharmacy.model.LoyaltyProgram;
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.Patient;
@@ -25,4 +26,8 @@ public interface PatientService {
     void addCounseling(CounselingDTO counselingDto);
 
     boolean cancelCounseling(CounselingDTO counselingDto);
+
+    void addReservation(ReservationDTO reservationDTO);
+
+    boolean cancelReservation(ReservationDTO reservationDto);
 }

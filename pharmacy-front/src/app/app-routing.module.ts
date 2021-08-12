@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, OnInit} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
@@ -28,6 +28,8 @@ import {RegisterEmployeeComponent} from './register-employee/register-employee.c
 import {AbsenceComponent} from './absence/absence.component';
 import {AppointmentDermaComponent} from './appointment-derma/appointment-derma.component';
 import {AppointmentpComponent} from './appointmentp/appointmentp.component';
+import {AvailableMedicinesComponent} from './available-medicines/available-medicines.component';
+import {ReservedMedicinesComponent} from './reserved-medicines/reserved-medicines.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -58,6 +60,8 @@ const routes: Routes = [
   {path: 'error', component: ErrorPageComponent},
   {path: 'scheduledAppointment', component: AppointmentDermaComponent},
   {path: 'appointmentp', component: AppointmentpComponent},
+  {path: 'availableMedicines', component: AvailableMedicinesComponent},
+  {path: 'reservedMedicines', component: ReservedMedicinesComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

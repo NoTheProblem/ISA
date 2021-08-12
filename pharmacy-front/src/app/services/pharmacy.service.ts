@@ -77,6 +77,11 @@ export class PharmacyService {
     return this.httpClient.get<Array<PharmacyModel>>(this.path);
   }
 
+  public getAllPharmacyForMedicine(medicineID: number): Observable<Array<PharmacyModel>> {
+    this.path = Constants.API + '/pharmacy/unauth/medicine/' + String(medicineID);
+    return this.httpClient.get<Array<PharmacyModel>>(this.path);
+  }
+
 
 
 }

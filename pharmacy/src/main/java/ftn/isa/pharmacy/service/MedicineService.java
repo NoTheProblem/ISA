@@ -21,4 +21,6 @@ public interface MedicineService {
     Collection<Medicine> getMissingMedicines();
 
     void removeMedicineFromPhamracy(MedicineDto medicineDto);
+
+    Collection<Medicine> getAvailableMedicines();
 }

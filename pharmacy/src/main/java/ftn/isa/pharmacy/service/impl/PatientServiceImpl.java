@@ -4,9 +4,11 @@ import ftn.isa.pharmacy.config.MailConfig;
 import ftn.isa.pharmacy.dto.CounselingDTO;
 import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.MedicineDto;
+import ftn.isa.pharmacy.dto.ReservationDTO;
 import ftn.isa.pharmacy.mapper.CounselingMapper;
 import ftn.isa.pharmacy.mapper.ExaminationMapper;
 import ftn.isa.pharmacy.mapper.MedicineMapper;
+import ftn.isa.pharmacy.mapper.ReservationMapper;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.*;
 import ftn.isa.pharmacy.service.PatientService;
@@ -17,6 +19,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -34,9 +38,14 @@ public class PatientServiceImpl implements PatientService {
     private final CounselingMapper counselingMapper;
     private final CounselingRepository counselingRepository;
     private final PharmacistRepository pharmacistRepository;
+    private final ReservationRepository reservationRepository;
+    private final ReservationMapper reservationMapper;
+    private final PharmacyRepository pharmacyRepository;
+    private final MedicineRepository medicineRepository;
+    private final MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository;
 
     @Autowired
-    public PatientServiceImpl(PharmacistRepository pharmacistRepository, CounselingRepository counselingRepository, CounselingMapper counselingMapper, MailConfig mailConfig, MedicineMapper medicineMapper, PatientRepository patientRepository, LoyaltyProgramRepository loyaltyProgramRepository, ExaminationMapper examinationMapper, ExaminationRepository examinationRepository) {
+    public PatientServiceImpl(MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository, PharmacyRepository pharmacyRepository, ReservationMapper reservationMapper, ReservationRepository reservationRepository,PharmacistRepository pharmacistRepository, CounselingRepository counselingRepository, CounselingMapper counselingMapper, MailConfig mailConfig, MedicineMapper medicineMapper, PatientRepository patientRepository, LoyaltyProgramRepository loyaltyProgramRepository, ExaminationMapper examinationMapper, ExaminationRepository examinationRepository) {
         this.medicineMapper = medicineMapper;
         this.patientRepository = patientRepository;
         this.loyaltyProgramRepository = loyaltyProgramRepository;
@@ -46,6 +55,11 @@ public class PatientServiceImpl implements PatientService {
         this.counselingMapper = counselingMapper;
         this.counselingRepository = counselingRepository;
         this.pharmacistRepository = pharmacistRepository;
+        this.reservationRepository = reservationRepository;
+        this.reservationMapper = reservationMapper;
+        this.pharmacyRepository = pharmacyRepository;
+        this.medicineRepository = medicineRepository;
+        this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
     }
 
     private JavaMailSenderImpl getJMS(){
@@ -221,6 +235,87 @@ public class PatientServiceImpl implements PatientService {
                 counseling.setFree(true);
                 System.out.println(System.currentTimeMillis());
                 counselingRepository.saveAndFlush(counseling);
+                return true;
+            }
+
+
+
+            //examinationRepository.saveAndFlush(examination);
+        }
+        return false;
+    }
+
+    @Override
+    public void addReservation(ReservationDTO reservationDto){
+        Reservation reservation = reservationMapper.bean2Entity(reservationDto);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        if(patientOptional.isPresent()) {
+            Optional<Pharmacy> pharmacy= pharmacyRepository.findById((long) reservationDto.getPharmacyid());
+            reservation.setPharmacy(pharmacy.get());
+            Optional<Medicine> medicine= medicineRepository.findById((long) reservationDto.getMedicineid());
+            reservation.setMedicine(medicine.get());
+            reservation.setEndDate(reservationDto.getEndDate());
+            reservation.setPickUpTime(reservationDto.getPickedUpTime());
+            reservation.setEndTime(reservationDto.getEndTime());
+            reservation.setPatient(patientOptional.get());
+            Patient patient = patientOptional.get();
+
+            reservationRepository.saveAndFlush(reservation);
+
+            Reservation reservation1 = reservationRepository.findByPharmacyAndMedicineAndPatient(pharmacy.get(),medicine.get(),patient);
+
+            JavaMailSenderImpl mailSender = getJMS();
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setFrom("apoteka@gmail.com");
+            mailMessage.setTo(patient.getEmail());
+            mailMessage.setSubject("Rezervisanje leka");
+            mailMessage.setText("Postovani " + patient.getFirstName() + ",\n"+ "\n"+
+                    "Uspesno ste rezervisali lek " + reservation.getMedicine().getName() +
+                    " broj rezervacije" + reservation1.getId() +  "\n"+ "\n"+
+                    "Pozdrav," + "\n"+
+                    "AP tim");
+            mailSender.send(mailMessage);
+
+            MedicineQuantityPharmacy mqp = medicineQuantityPharmacyRepository.findAllByPharmacyAndMedicine(pharmacy.get(),medicine.get());
+            mqp.setQuantity(mqp.getQuantity() - 1);
+
+            medicineQuantityPharmacyRepository.saveAndFlush(mqp);
+
+
+
+        }
+
+
+
+
+    }
+
+    @Override
+    public boolean cancelReservation(ReservationDTO reservationDto) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Patient patient = (Patient) authentication.getPrincipal(); --> ovo radi, ali ne povuce allergicMedicines jer je lazy
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        if(patientOptional.isPresent()) {
+            Reservation reservation = reservationMapper.bean2Entity(reservationDto);
+            Optional<Reservation> reservation1 = reservationRepository.findById(reservationDto.getId());
+            reservation = reservation1.get();
+
+            Patient patient = patientOptional.get();
+            long helper;
+            helper = reservation.getEndDate().getTime();
+            System.out.println(helper);
+            System.out.println(System.currentTimeMillis());
+            if ((helper - 86400000) > System.currentTimeMillis()) {
+
+
+                MedicineQuantityPharmacy mqp = medicineQuantityPharmacyRepository.findAllByPharmacyAndMedicine(reservation.getPharmacy(),reservation.getMedicine());
+                mqp.setQuantity(mqp.getQuantity() + 1);
+
+                medicineQuantityPharmacyRepository.saveAndFlush(mqp);
+                reservation.setPatient(null);
+                reservationRepository.saveAndFlush(reservation);
+
                 return true;
             }
 

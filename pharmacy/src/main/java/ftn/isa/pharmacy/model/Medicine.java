@@ -76,6 +76,9 @@ public class Medicine {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<PersList> persLists = new HashSet<PersList>();
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Reservation> reservations = new HashSet<Reservation>();
+
     public Medicine() {
     }
 

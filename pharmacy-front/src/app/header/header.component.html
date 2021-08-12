@@ -14,12 +14,13 @@
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_USER'" >
-      <li><a class="nav-link" routerLink="pharmacies">Apoteke</a></li>
       <li><a class="nav-link" routerLink="freeExamination">Termini dermatolog</a></li>
       <li><a class="nav-link" routerLink="freeCounseling">Termini farmaceut</a></li>
       <li><a class="nav-link" routerLink="scheduledAppointment">Zakazani termini dermatolog</a></li>
       <li><a class="nav-link" routerLink="appointmentp">Zakazani termini farmaceut</a></li>
       <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
+      <li><a class="nav-link" routerLink="availableMedicines">Rezervacija leka</a></li>
+      <li><a class="nav-link" routerLink="reservedMedicines">Rezervisani lekovi</a></li>
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_ADMIN'" >

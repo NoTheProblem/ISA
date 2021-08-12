@@ -1,0 +1,101 @@
+<div class="m-3">
+  <h3>Lekovi</h3>
+  <div class="wrap">
+    <div class="search">
+      <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')">#</th>
+    <th scope="row" (click)="sort('code')">Šifra</th>
+    <th scope="row" (click)="sort('name')">Ime</th>
+    <th scope="row" (click)="sort('type')">Vrsta</th>
+    <th scope="row" (click)="sort('shape')">Oblik</th>
+    <th scope="row" (click)="sort('composition')">Sastav</th>
+    <th scope="row" (click)="sort('manufacturer')">Proizvođač</th>
+    <th *ngIf="isLoggedIn" scope="col">#</th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let medicine of medicines | orderBy: key: reverse" >
+    <th scope="row">{{ medicine.id }}</th>
+    <td>{{ medicine.code }}</td>
+    <td>{{ medicine.name}}</td>
+    <td>{{ medicine.type}}</td>
+    <td>{{ medicine.shape}}</td>
+    <td>{{ medicine.composition}}</td>
+    <td>{{ medicine.manufacturer}}</td>
+
+    <td *ngIf="isLoggedIn">
+      <button class="btn btn-primary" (click)="showPharmacies(medicine.id,medicine)">Prikazi apoteke</button>
+    </td>
+
+  </tr>
+  </tbody>
+</table>
+
+
+<table *ngIf="showPharmacy" class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" (click)="sort('id')" >#</th>
+    <th scope="row" (click)="sort('name')" >Ime</th>
+    <th scope="row" (click)="sort('country')" scope="col">Država</th>
+    <th scope="row" (click)="sort('city')" scope="col">Grad</th>
+    <th scope="row" (click)="sort('address')" scope="col">Adresa apoteke</th>
+    <th scope="row" (click)="sort('pharmacyDescription')" scope="col">Opis apoteke</th>
+    <th scope="row" (click)="sort('evaluationGrade')" scope="col">Ocena apoteke</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pharmacy of pharmacies | orderBy: key: reverse " >
+    <th scope="row" >{{ pharmacy.id }}</th>
+    <td>
+      <a [routerLink]="['/pharmacy', pharmacy.id]">
+        {{ pharmacy.name }}
+      </a>
+    </td>
+    <td>{{ pharmacy.country }}</td>
+    <td>{{ pharmacy.city}}</td>
+    <td>{{ pharmacy.address}}</td>
+    <td>{{ pharmacy.pharmacyDescription}}</td>
+    <td>{{ pharmacy.evaluationGrade}}</td>
+    <td *ngIf="isLoggedIn">
+      <button class="btn btn-primary" (click)="showDateTime(pharmacy.id,pharmacy)">Odaberi apoteku</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<label *ngIf="dateTime"> Izaberite datum za preuzimanje leka: </label>
+<form *ngIf="dateTime">
+  <input
+    type="date"
+    class="form-control"
+    name="examinationDateInput"
+    [(ngModel)]="dateInput"
+  />
+</form>
+
+
+<div class="md-form" *ngIf="dateTime">
+  <label for="input">Izaberi vreme za preuzimanje leka:</label>
+  <input
+    type="time"
+    id="input"
+    class="form-control"
+    value="13:00"
+    mdbInput
+    [(ngModel)]="timeInput"
+  />
+
+</div>
+
+<button *ngIf="dateTime" class="btn btn-primary" (click)="reserveMedicine()">Rezervisi lek</button>
