@@ -1,6 +1,8 @@
 package ftn.isa.pharmacy.controller;
 
+import ftn.isa.pharmacy.dto.PharmacyDto;
 import ftn.isa.pharmacy.dto.PromotionDTO;
+import ftn.isa.pharmacy.mapper.PharmacyMapper;
 import ftn.isa.pharmacy.mapper.impl.PromotionMapperImpl;
 import ftn.isa.pharmacy.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,13 @@ public class PromotionController {
 
     private final PromotionService promotionService;
     private final PromotionMapperImpl promotionMapper;
+    private final PharmacyMapper pharmacyMapper;
 
     @Autowired
-    public PromotionController(PromotionService promotionService, PromotionMapperImpl promotionMapper) {
+    public PromotionController(PromotionService promotionService, PromotionMapperImpl promotionMapper, PharmacyMapper pharmacyMapper) {
         this.promotionService = promotionService;
         this.promotionMapper = promotionMapper;
+        this.pharmacyMapper = pharmacyMapper;
     }
 
     @GetMapping(value = "/getAll")
@@ -60,13 +64,15 @@ public class PromotionController {
     }
 
 
-
-
     @PostMapping("/addPromotion")
     public void addPromotion(@RequestBody PromotionDTO promotionDTO) {
         promotionService.addPromotion(promotionDTO);
     }
 
-
+    @GetMapping(value = "/getAllPharmacyForPatient")
+    public ResponseEntity<Collection<PharmacyDto>> getAllPharmacyForPatient() {
+        Collection<PharmacyDto> pharmacyDTOS = pharmacyMapper.entity2Bean(promotionService.getAllPharmacyForPatient());
+        return ResponseEntity.ok(pharmacyDTOS);
+    }
 
 }

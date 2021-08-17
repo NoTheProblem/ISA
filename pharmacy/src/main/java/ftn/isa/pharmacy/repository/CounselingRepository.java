@@ -20,4 +20,10 @@ public interface CounselingRepository extends JpaRepository<Counseling, Long> {
     List<Counseling> customByPatientIdAndDate(Long id);
 
     Collection<Counseling> findAllByDateAndPharmacistAndFree(Date dateParse, Pharmacist pharmacist, boolean b);
+
+    List<Counseling> findAllByDateBetween(Date date1, Date date2);
+
+    @Query(value = "select * from counseling where patient_id = ?1 and date < current_date and penalty = true ",
+            nativeQuery = true)
+    Collection<Counseling> customByPatientIdAndDateAndPenalty(Long id);
 }

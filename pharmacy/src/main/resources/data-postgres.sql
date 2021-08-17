@@ -48,7 +48,7 @@ insert into working_hours_pharmacist(end_time,start_time, work_day, pharmacist_i
 insert into working_hours_pharmacist(end_time,start_time, work_day, pharmacist_id, pharmacy_id) values ('23:00:00','15:00:00','Ponedeljak', 12, 3);
 
 
-insert into promotion(title,text,start_date,end_date,type,pharmacy_id) values('Bekutan promocija','Za sve bekutan proizvode vazi promocija 2+1','2021-01-11','2021-07-30','promocija',1);
+insert into promotion(title,text,start_date,end_date,type,pharmacy_id, patient_id) values('Bekutan promocija','Za sve bekutan proizvode vazi promocija 2+1','2021-01-11','2021-07-30','promocija',1, 5);
 
 insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-06-07 08:00:00',30,false,400,2,1,0);
 insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-06-07 10:00:00',30,false,400,2,1,0);
@@ -85,6 +85,9 @@ insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pha
 insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-14 08:00:00',30,true,400,2,1,0);
 insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-10 10:00:00',30,true,400,2,1,0);
 
+insert into examination(date,duration_minutes,is_free,penalty,price,dermatologist_id,patient_id, pharmacy_id,loyalty_score) values ('2021-06-07 10:00:00',30,false,false,400,2,5,1,0);
+insert into examination(date,duration_minutes,is_free,penalty,price,dermatologist_id,patient_id, pharmacy_id,loyalty_score) values ('2021-06-08 10:00:00',40,false,false,500,2,5,1,0);
+
 insert into reservation(end_date, pick_up_date, picked_up, price, patient_id, pharmacy_id) values ('2021-06-05','2021-06-05', true, 1000, 5,1);
 insert into medicine_quantity_reservation(quantity,medicine_id,reservation_id) values (10,1,1);
 insert into medicine_quantity_reservation(quantity,medicine_id,reservation_id) values (10,2,1);
@@ -96,3 +99,6 @@ insert into reservation_medicineis values (1,2);
 insert into loyalty_program values (1,0.01, 0, 'clan', 100);
 insert into loyalty_program values (2,1.0, 101, 'bronzani', 500);
 insert into loyalty_program values (3,3.0, 501, 'zlatni' ,99999);
+
+insert into counseling(date,duration_minutes,free,penalty,price,pharmacist_id,patient_id,loyalty_score) values ('2021-06-07 10:00:00',30,false,true,400,4,5,0);
+insert into counseling(date,duration_minutes,free,penalty,price,pharmacist_id,patient_id,loyalty_score) values ('2021-06-08 10:00:00',30,false,true,500,7,5,0);

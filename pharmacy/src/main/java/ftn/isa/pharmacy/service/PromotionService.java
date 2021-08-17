@@ -2,6 +2,7 @@ package ftn.isa.pharmacy.service;
 
 
 import ftn.isa.pharmacy.dto.PromotionDTO;
+import ftn.isa.pharmacy.model.Pharmacy;
 import ftn.isa.pharmacy.model.Promotion;
 
 import java.util.Collection;
@@ -19,4 +20,6 @@ public interface PromotionService {
     Collection<Promotion> getAllActiveForPharmacyAdmin();
 
     Collection<Promotion> getAllForPharmacyAdmin();
+
+    Collection<Pharmacy> getAllPharmacyForPatient();
 }

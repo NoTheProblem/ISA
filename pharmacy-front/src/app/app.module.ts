@@ -57,6 +57,10 @@ import { AppointmentDermaComponent } from './appointment-derma/appointment-derma
 import { AppointmentpComponent } from './appointmentp/appointmentp.component';
 import { AvailableMedicinesComponent } from './available-medicines/available-medicines.component';
 import { ReservedMedicinesComponent } from './reserved-medicines/reserved-medicines.component';
+import { HistoryDermaComponent } from './history-derma/history-derma.component';
+import { HistoryPharmacistComponent } from './history-pharmacist/history-pharmacist.component';
+import { PromotionsPatientComponent } from './promotions-patient/promotions-patient.component';
+import { EReceptComponent } from './erecept/erecept.component';
 
 const mapConfig: YaConfig = {
   apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
@@ -112,7 +116,11 @@ const mapConfig: YaConfig = {
     AppointmentDermaComponent,
     AppointmentpComponent,
     AvailableMedicinesComponent,
-    ReservedMedicinesComponent
+    ReservedMedicinesComponent,
+    HistoryDermaComponent,
+    HistoryPharmacistComponent,
+    PromotionsPatientComponent,
+    EReceptComponent
 
   ],
   imports: [

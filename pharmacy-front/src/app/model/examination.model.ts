@@ -4,7 +4,7 @@ import {DermatologistModel} from './dermatologist.model';
 export class ExaminationModel {
   constructor(
     public id: number = 0,
-    public penalty: boolean,
+    public penalty: boolean = true,
     public isFree: boolean,
     public examinationReport: string = '',
     public loyaltyScore: number = 0,
@@ -18,7 +18,8 @@ export class ExaminationModel {
     public dermatologistLastname: string = '',
     public dermatologistEvaluationGrade: string = '',
     public pharmacy: PharmacyModel,
-    public dermatologist: DermatologistModel
+    public dermatologist: DermatologistModel,
+    public visited: boolean = false,
   ) {
   }
 }

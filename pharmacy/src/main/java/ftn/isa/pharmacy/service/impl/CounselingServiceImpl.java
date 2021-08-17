@@ -43,5 +43,15 @@ public class CounselingServiceImpl implements CounselingService {
         return counselingRepository.customByPatientIdAndDate(patient.getId());
 
     }
+
+    @Override
+    public Collection<Counseling> getAllHistoryPha(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        return counselingRepository.customByPatientIdAndDateAndPenalty(patient.getId());
+
+    }
 }
 

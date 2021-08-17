@@ -1,0 +1,35 @@
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime dermatologa</th>
+    <th scope="row" >Prezime dermatologa</th>
+    <th scope="row" >Ocena dermatologa</th>
+    <th scope="row" (click)="sort('price')" >Cena pregleda</th>
+    <th scope="row" (click)="sort('date')">Datum pregleda</th>
+    <th scope="row" (click)="sort('durationMinutes')">Trajanje pregleda</th>
+
+
+
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let examination of examinations | orderBy: key: reverse" >
+    <th ></th>
+    <th >{{ examination.dermatologistName }}</th>
+    <th >{{ examination.dermatologistLastname }}</th>
+    <th >{{ examination.dermatologistEvaluationGrade }}</th>
+    <th >{{ examination.price }}</th>
+    <th >{{ change(examination.date)}}</th>
+    <th >{{ examination.durationMinutes }}</th>
+    <th ><button  (click)="evaluate(examination)">Oceni</button></th>
+
+
+
+  </tr>
+  </tbody>
+</table>
+
+<input *ngIf="showInput"   [(ngModel)]="grade" type="text" id="fname" name="fname"><br><br>

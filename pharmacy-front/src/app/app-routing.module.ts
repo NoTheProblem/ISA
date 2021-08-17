@@ -30,6 +30,9 @@ import {AppointmentDermaComponent} from './appointment-derma/appointment-derma.c
 import {AppointmentpComponent} from './appointmentp/appointmentp.component';
 import {AvailableMedicinesComponent} from './available-medicines/available-medicines.component';
 import {ReservedMedicinesComponent} from './reserved-medicines/reserved-medicines.component';
+import {HistoryDermaComponent} from './history-derma/history-derma.component';
+import {HistoryPharmacistComponent} from './history-pharmacist/history-pharmacist.component';
+import {PromotionsPatientComponent} from './promotions-patient/promotions-patient.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -62,6 +65,9 @@ const routes: Routes = [
   {path: 'appointmentp', component: AppointmentpComponent},
   {path: 'availableMedicines', component: AvailableMedicinesComponent},
   {path: 'reservedMedicines', component: ReservedMedicinesComponent},
+  {path: 'historyDerma', component: HistoryDermaComponent},
+  {path: 'historyPha', component: HistoryPharmacistComponent},
+  {path: 'promotion', component: PromotionsPatientComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

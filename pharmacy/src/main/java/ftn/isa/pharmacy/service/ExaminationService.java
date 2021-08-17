@@ -16,4 +16,6 @@ public interface ExaminationService {
     Collection<Examination> getByDermaIdAndDateForPhaAdmin(Long id, String date);
 
     Collection<Examination> getAllScheduledAppointmentForPatient();
+
+    Collection<Examination> getAllHistoryDerma();
 }

@@ -1,5 +1,6 @@
 package ftn.isa.pharmacy.repository;
 
+import ftn.isa.pharmacy.model.Patient;
 import ftn.isa.pharmacy.model.Pharmacy;
 import ftn.isa.pharmacy.model.Promotion;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,5 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
     List<Promotion> findAllByPharmacy(Pharmacy pharmacy);
     List<Promotion> findAllByPharmacyAndEndDateAfter(Pharmacy pharmacy, Date endDate);
 
+    List<Promotion> findAllByPatient(Patient patient);
 }

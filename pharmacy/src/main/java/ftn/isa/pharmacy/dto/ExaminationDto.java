@@ -25,10 +25,20 @@ public class ExaminationDto {
 
     private DermatologistDto dermatologistDto;
 
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
+    }
+
+    private boolean visited;
+
     public ExaminationDto() {
     }
 
-    public ExaminationDto(Long id, Boolean penalty, Boolean isFree, String examinationReport, int loyaltyScore, Date date, String time, int durationMinutes, float price, DermatologistDto dermatologistDto, Long patientId, String dermatologistName, String dermatologistLastname, Long dermatologistId, Float dermatologistEvaluationGrade) {
+    public ExaminationDto(Long id, Boolean penalty, Boolean isFree, String examinationReport, int loyaltyScore, Date date, String time, int durationMinutes, float price, DermatologistDto dermatologistDto, Long patientId, String dermatologistName, String dermatologistLastname, Long dermatologistId, Float dermatologistEvaluationGrade, boolean visited) {
         this.id = id;
         this.penalty = penalty;
         this.isFree = isFree;
@@ -44,6 +54,7 @@ public class ExaminationDto {
         this.dermatologistLastname = dermatologistLastname;
         this.dermatologistId = dermatologistId;
         this.dermatologistEvaluationGrade = dermatologistEvaluationGrade;
+        this.visited = visited;
     }
 
     public Long getDermatologistId() {
