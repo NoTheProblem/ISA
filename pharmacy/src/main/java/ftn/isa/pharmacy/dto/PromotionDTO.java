@@ -1,6 +1,8 @@
 package ftn.isa.pharmacy.dto;
 
 
+import ftn.isa.pharmacy.model.Pharmacy;
+
 import java.util.Date;
 
 public class PromotionDTO {
@@ -10,6 +12,25 @@ public class PromotionDTO {
     private Date startDate;
     private Date endDate;
     private String type;
+
+    public PatientDTO getPatientDTO() {
+        return patientDTO;
+    }
+
+    public void setPatientDTO(PatientDTO patientDTO) {
+        this.patientDTO = patientDTO;
+    }
+
+    public PharmacyDto getPharmacyDTO() {
+        return pharmacyDTO;
+    }
+
+    public void setPharmacyDTO(PharmacyDto pharmacyDTO) {
+        this.pharmacyDTO = pharmacyDTO;
+    }
+
+    private PatientDTO patientDTO;
+    private PharmacyDto pharmacyDTO;
 
     public long getId() {
         return id;

@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -36,5 +37,9 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
     @Query(value = "select * from examination where patient_id = ?1 and date >= current_date ",
             nativeQuery = true)
     List<Examination> customByPatientIdAndDate(Long id);
+
+    @Query(value = "select * from examination where patient_id = ?1 and date <= current_date and penalty=false",
+            nativeQuery = true)
+    Collection<Examination> customByPatientIdAndDateAndPenalty(Long id);
 }
 

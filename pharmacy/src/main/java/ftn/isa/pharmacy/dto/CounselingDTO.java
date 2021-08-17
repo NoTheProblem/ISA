@@ -24,6 +24,16 @@ public class CounselingDTO {
 
     private PharmacistDTO pharmacistDto;
 
+    public int getDurationMinutes() {
+        return durationMinutes;
+    }
+
+    public void setDurationMinutes(int durationMinutes) {
+        this.durationMinutes = durationMinutes;
+    }
+
+    private int durationMinutes;
+
     public Long getId() {
         return id;
     }
@@ -148,7 +158,7 @@ public class CounselingDTO {
     Long pharmacistId;
     Float pharmacistEvaluationGrade;
 
-    public CounselingDTO(Long id, Boolean penalty, Boolean isFree, String counselingReport, int loyaltyScore, Date date, String time, float price, PharmacistDTO pharmacistDto, Long patientId, String pharmacistName, String pharmacistLastname, Long pharmacistId, Float pharmacistEvaluationGrade) {
+    public CounselingDTO(Long id, Boolean penalty, Boolean isFree, String counselingReport, int loyaltyScore, Date date, String time, float price, PharmacistDTO pharmacistDto, Long patientId, String pharmacistName, String pharmacistLastname, Long pharmacistId, Float pharmacistEvaluationGrade, int durationMinutes) {
         this.id = id;
         this.penalty = penalty;
         this.isFree = isFree;
@@ -163,6 +173,7 @@ public class CounselingDTO {
         this.pharmacistLastName = pharmacistLastName;
         this.pharmacistId = pharmacistId;
         this.pharmacistEvaluationGrade = pharmacistEvaluationGrade;
+        this.durationMinutes = durationMinutes;
     }
 
 

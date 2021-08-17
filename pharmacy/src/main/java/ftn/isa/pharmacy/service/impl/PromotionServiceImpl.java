@@ -4,6 +4,7 @@ import ftn.isa.pharmacy.dto.PromotionDTO;
 import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.PromotionMapper;
 import ftn.isa.pharmacy.model.*;
+import ftn.isa.pharmacy.repository.PatientRepository;
 import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
 import ftn.isa.pharmacy.repository.PharmacyRepository;
 import ftn.isa.pharmacy.repository.PromotionRepository;
@@ -13,10 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PromotionServiceImpl implements PromotionService {
@@ -26,15 +24,17 @@ public class PromotionServiceImpl implements PromotionService {
     private final PromotionMapper promotionMapper;
     private final MailServiceImpl mailService;
     private final PharmacyRepository pharmacyRepository;
+    private final PatientRepository patientRepository;
 
 
     @Autowired
-    public PromotionServiceImpl(PromotionRepository promotionRepository, PharmacyAdminRepository pharmacyAdminRepository, PromotionMapper promotionMapper, MailServiceImpl mailService, PharmacyRepository pharmacyRepository) {
+    public PromotionServiceImpl(PatientRepository patientRepository,PromotionRepository promotionRepository, PharmacyAdminRepository pharmacyAdminRepository, PromotionMapper promotionMapper, MailServiceImpl mailService, PharmacyRepository pharmacyRepository) {
         this.promotionRepository = promotionRepository;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.promotionMapper = promotionMapper;
         this.mailService = mailService;
         this.pharmacyRepository = pharmacyRepository;
+        this.patientRepository  = patientRepository;
     }
 
     @Override
@@ -106,5 +106,19 @@ public class PromotionServiceImpl implements PromotionService {
         }
         throw new ResourceConflictException(1L,"Ne postoji administrator apoteke!");
     }
+
+    @Override
+    public Collection<Pharmacy> getAllPharmacyForPatient(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        List<Promotion> promotions = promotionRepository.findAllByPatient(patientOptional.get());
+        List<Pharmacy> pharmacies = new Stack<>();
+        for (Promotion promotion: promotions) {
+            pharmacies.add(promotion.getPharmacy());
+        }
+        return pharmacies;
+    }
+
+
 
 }

@@ -20,4 +20,9 @@ export class AppointmentService {
     return this.httpClient.get<Array<CounselingModel>>(Constants.API + '/patient/getAllScheduledAppointmentPha');
   }
 
+  public getAllHistoryPha(): Observable<Array<CounselingModel>> {
+    return this.httpClient.get<Array<CounselingModel>>(Constants.API + '/patient/getAllHistoryPha');
+  }
+
+
 }

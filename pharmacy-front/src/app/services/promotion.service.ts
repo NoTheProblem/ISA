@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {PromotionModel} from '../model/promotion.model';
 import {ToastrService} from 'ngx-toastr';
 import {Constants} from './constants';
+import {PharmacyModel} from '../model/pharmacy.model';
 
 @Injectable()
 export class PromotionService {
@@ -30,5 +31,10 @@ export class PromotionService {
       })
     );
   }
+
+  public getAllPharmaciesForPatient(): Observable<Array<PharmacyModel>> {
+    return this.httpClient.get<Array<PharmacyModel>>(Constants.API + '/promotion/getAllPharmacyForPatient');
+  }
+
 
 }

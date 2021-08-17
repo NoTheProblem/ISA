@@ -29,11 +29,22 @@ public class Promotion {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Pharmacy pharmacy;
 
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Patient patient;
+
 
     public Promotion() {
     }
 
-    public Promotion(Long id, String title, String text, Date startDate, Date endDate, String type, Pharmacy pharmacy) {
+    public Promotion(Long id, String title, String text, Date startDate, Date endDate, String type, Pharmacy pharmacy, Patient patient) {
         this.id = id;
         this.title = title;
         this.text = text;
@@ -41,6 +52,7 @@ public class Promotion {
         this.endDate = endDate;
         this.type = type;
         this.pharmacy = pharmacy;
+        this.patient = patient;
     }
 
     public Promotion(Long id, String title, String text, String type, Date startDate, Date endDate) {

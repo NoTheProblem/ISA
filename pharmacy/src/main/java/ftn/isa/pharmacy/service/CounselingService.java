@@ -10,6 +10,8 @@ public interface CounselingService {
     List<Counseling> getAll();
 
     Collection<Counseling> getAllScheduledAppointmentForPatient();
+
+    Collection<Counseling> getAllHistoryPha();
 }
 
 

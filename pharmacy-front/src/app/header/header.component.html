@@ -1,9 +1,7 @@
 <header>
   <nav class="navbar navbar-ligh navbar-expand-md" style="background-color: #e3f2fd;">
 
-    <div>
-      <a *ngIf="isLoggedIn" class="navbar-brand">{{ username }}</a>
-    </div>
+
 
     <ul class="navbar-nav" *ngIf="!isLoggedIn || (isLoggedIn && role==='ROLE_USER')" >
       <li><a class="nav-link" routerLink="pharmacies">Apoteke</a></li>
@@ -21,6 +19,9 @@
       <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
       <li><a class="nav-link" routerLink="availableMedicines">Rezervacija leka</a></li>
       <li><a class="nav-link" routerLink="reservedMedicines">Rezervisani lekovi</a></li>
+      <li><a class="nav-link" routerLink="historyDerma">Istorija dermatolog</a></li>
+      <li><a class="nav-link" routerLink="historyPha">Istorija farmaceut</a></li>
+      <li><a class="nav-link" routerLink="promotion">Akcije/Promocije</a></li>
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_ADMIN'" >

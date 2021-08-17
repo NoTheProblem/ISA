@@ -5,6 +5,7 @@ import ftn.isa.pharmacy.dto.CounselingDTO;
 import ftn.isa.pharmacy.dto.ExaminationDto;
 import ftn.isa.pharmacy.dto.MedicineDto;
 import ftn.isa.pharmacy.dto.ReservationDTO;
+import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.CounselingMapper;
 import ftn.isa.pharmacy.mapper.ExaminationMapper;
 import ftn.isa.pharmacy.mapper.MedicineMapper;
@@ -97,6 +98,7 @@ public class PatientServiceImpl implements PatientService {
             Patient patient = patientOptional.get();
             examination.setPatient(patient);
             examination.setFree(false);
+            examination.setPenalty(true);
 
             JavaMailSenderImpl mailSender = getJMS();
             SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -197,6 +199,32 @@ public class PatientServiceImpl implements PatientService {
         dateAddTime.setHours(hours);
         dateAddTime.setMinutes(minutes);
         counseling.setDate(dateAddTime);
+        counseling.setDurationMinutes(30);
+
+        Date startDate = new Date();
+        startDate.setTime(dateAddTime.getTime());
+        startDate.setHours(1);
+        Date nextDay =  new Date();
+        nextDay.setTime(dateAddTime.getTime());
+        nextDay.setHours(23);
+        Date endDate = dateAddTime;
+        endDate.setMinutes(dateAddTime.getMinutes()+counseling.getDurationMinutes());
+
+        Collection<Counseling> counselingsOnThatDay = counselingRepository.findAllByDateBetween(startDate, nextDay);
+        for (Counseling exa: counselingsOnThatDay) {
+            Date exaDate = exa.getDate();
+            Date exaStart =  new Date();
+            exaStart.setTime(exaDate.getTime());
+            Date exaEnd =  new Date();
+            exaEnd.setTime(exaDate.getTime());
+            exaEnd.setMinutes(exa.getDate().getHours()+ exa.getDurationMinutes());
+            if (dateAddTime.after(exaStart) && dateAddTime.before(exaEnd)){
+                throw new ResourceConflictException(1L,"Preklapa se sa terminom!");
+            }
+            if(endDate.after(exaStart) && endDate.before(exaEnd)){
+                throw new ResourceConflictException(1L,"Preklapa se sa terminom!");
+            }
+        }
 
         JavaMailSenderImpl mailSender = getJMS();
         SimpleMailMessage mailMessage = new SimpleMailMessage();

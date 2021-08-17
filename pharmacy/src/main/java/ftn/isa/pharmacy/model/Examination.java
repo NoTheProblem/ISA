@@ -43,6 +43,7 @@ public class Examination {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Pharmacy pharmacy;
 
+
     public Examination() {
     }
 
@@ -59,6 +60,7 @@ public class Examination {
         this.patient = patient;
         this.dermatologist = dermatologist;
         this.pharmacy = pharmacy;
+
     }
 
     public Long getId() {

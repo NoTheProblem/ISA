@@ -40,4 +40,9 @@ export class ExaminationService {
     return this.httpClient.get<Array<ExaminationModel>>(Constants.API + '/patient/getAllScheduledAppointment');
   }
 
+  public getAllHistoryDerma(): Observable<Array<ExaminationModel>> {
+    return this.httpClient.get<Array<ExaminationModel>>(Constants.API + '/patient/getAllHistoryDerma');
+  }
+
+
 }

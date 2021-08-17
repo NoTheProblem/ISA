@@ -138,4 +138,14 @@ public class ExaminationServiceImpl implements ExaminationService {
         return examinationRepository.customByPatientIdAndDate(patient.getId());
 
     }
+
+    @Override
+    public Collection<Examination> getAllHistoryDerma(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        return examinationRepository.customByPatientIdAndDateAndPenalty(patient.getId());
+
+    }
 }

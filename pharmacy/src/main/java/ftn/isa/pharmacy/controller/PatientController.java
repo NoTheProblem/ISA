@@ -125,6 +125,18 @@ public class PatientController {
         patientService.cancelReservation(reservationDto);
     }
 
+    @GetMapping(value = "getAllHistoryDerma")
+    public ResponseEntity<Collection<ExaminationDto>> getAllHistoryDerma(){
+        Collection<ExaminationDto> examinationsDto = examinationMapper.entity2Bean(examinationService.getAllHistoryDerma());
+        return ResponseEntity.ok(examinationsDto);
+    }
+
+    @GetMapping(value = "getAllHistoryPha")
+    public ResponseEntity<Collection<CounselingDTO>> getAllHistoryPha(){
+        Collection<CounselingDTO> counselingDtos = counselingMapper.entity2Bean(counselingService.getAllHistoryPha());
+        return ResponseEntity.ok(counselingDtos);
+    }
+
 
 
 }

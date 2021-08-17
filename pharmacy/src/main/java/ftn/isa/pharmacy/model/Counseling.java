@@ -54,11 +54,22 @@ public class Counseling {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Pharmacist pharmacist;
 
+    public int getDurationMinutes() {
+        return durationMinutes;
+    }
+
+    public void setDurationMinutes(int durationMinutes) {
+        this.durationMinutes = durationMinutes;
+    }
+
+    @Column
+    private int durationMinutes;
+
 
     public Counseling() {
     }
 
-    public Counseling(Long id, Boolean free, Boolean penalty, String counselingReport, int loyaltyScore, Date date, String time, float price, Patient patient, Pharmacist pharmacist) {
+    public Counseling(Long id, Boolean free, Boolean penalty, String counselingReport, int loyaltyScore, Date date, String time, float price, Patient patient, Pharmacist pharmacist, int durationMinutes) {
         this.id = id;
         this.free = free;
         this.penalty = penalty;
@@ -69,6 +80,7 @@ public class Counseling {
         this.price = price;
         this.patient = patient;
         this.pharmacist = pharmacist;
+        this.durationMinutes = durationMinutes;
     }
 
     public Long getId() {
