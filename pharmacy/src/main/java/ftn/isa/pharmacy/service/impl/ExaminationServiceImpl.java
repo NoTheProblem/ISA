@@ -12,10 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ExaminationServiceImpl implements ExaminationService {
@@ -27,10 +24,11 @@ public class ExaminationServiceImpl implements ExaminationService {
     private final PatientRepository patientRepository;
     private final WorkingHoursRepository workingHoursRepository;
     private final AbsenceRequestRepository absenceRequestRepository;
+    private final EvaluationRepository evaluationRepository;
 
 
     @Autowired
-    public ExaminationServiceImpl(PatientRepository patientRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyAdminRepository pharmacyAdminRepository, DermatologistRepository dermatologistRepository, WorkingHoursRepository workingHoursRepository, AbsenceRequestRepository absenceRequestRepository) {
+    public ExaminationServiceImpl(EvaluationRepository evaluationRepository, PatientRepository patientRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyAdminRepository pharmacyAdminRepository, DermatologistRepository dermatologistRepository, WorkingHoursRepository workingHoursRepository, AbsenceRequestRepository absenceRequestRepository) {
         this.examinationRepository = examinationRepository;
         this.examinationMapper = examinationMapper;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
@@ -38,6 +36,7 @@ public class ExaminationServiceImpl implements ExaminationService {
         this.workingHoursRepository = workingHoursRepository;
         this.absenceRequestRepository = absenceRequestRepository;
         this.patientRepository  = patientRepository;
+        this.evaluationRepository = evaluationRepository;
     }
 
     @Override
@@ -146,6 +145,37 @@ public class ExaminationServiceImpl implements ExaminationService {
         System.out.println(((User) authentication.getPrincipal()).getId());
         Patient patient = patientOptional.get();
         return examinationRepository.customByPatientIdAndDateAndPenalty(patient.getId());
+
+    }
+
+    @Override
+    public Collection<Dermatologist> getAllHistoryDermaForEvaluation(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        Collection<Dermatologist> dermatologists= new HashSet<>();
+        Collection<Examination> examinations = examinationRepository.customByPatientIdAndDateAndPenalty(patient.getId());
+        for (Examination exa: examinations) {
+            Dermatologist dermatologist = exa.getDermatologist();
+            System.out.println(dermatologist);
+            List<Evaluation> evaluations  = evaluationRepository.findAllByIdOfEvaluatedAndPatientAndTypeOfEvaluation(dermatologist.getId(), patient, "dermatolog");
+            if (evaluations.size() == 0){
+                dermatologists.add(dermatologist);
+            }
+        }
+
+        Collection<Dermatologist> dermatologistUnique = new Stack<>();
+        for (Dermatologist dermatologist : dermatologists) {
+            if (!dermatologistUnique.contains(dermatologist)){
+                dermatologistUnique.add(dermatologist);
+            }
+
+        }
+
+        return dermatologistUnique;
+
+
 
     }
 }

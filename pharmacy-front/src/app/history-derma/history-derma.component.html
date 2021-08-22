@@ -9,6 +9,7 @@
     <th scope="row" (click)="sort('price')" >Cena pregleda</th>
     <th scope="row" (click)="sort('date')">Datum pregleda</th>
     <th scope="row" (click)="sort('durationMinutes')">Trajanje pregleda</th>
+    <th scope="row">Ocenjen</th>
 
 
 
@@ -24,6 +25,7 @@
     <th >{{ examination.price }}</th>
     <th >{{ change(examination.date)}}</th>
     <th >{{ examination.durationMinutes }}</th>
+    <th >{{ examination.evaluationType }}</th>
     <th ><button  (click)="evaluate(examination)">Oceni</button></th>
 
 

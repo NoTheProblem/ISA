@@ -1,0 +1,96 @@
+<div style="text-align: center;"><h2>Ocenjeni dermatolozi</h2> </div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime</th>
+    <th scope="row" >Ocena</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let evaluation of evaluations | orderBy: key: reverse" >
+
+    <th *ngIf="evaluation.typeOfEvaluation == 'dermatolog'">{{ evaluation.id}}</th>
+    <th *ngIf="evaluation.typeOfEvaluation == 'dermatolog'">{{ evaluation.name}}</th>
+    <th *ngIf="evaluation.typeOfEvaluation == 'dermatolog'">{{ evaluation.grade}}</th>
+    <td *ngIf="evaluation.typeOfEvaluation == 'dermatolog'">
+      <button class="btn btn-primary" (click)="changeEvaluation(evaluation.id)">Promeni ocenu</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div style="text-align: center;"><h2>Ocenjeni farmaceuti</h2> </div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime</th>
+    <th scope="row" >Ocena</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let evaluation of evaluations | orderBy: key: reverse" >
+
+    <th *ngIf="evaluation.typeOfEvaluation == 'farmaceut'">{{ evaluation.id}}</th>
+    <th *ngIf="evaluation.typeOfEvaluation == 'farmaceut'">{{ evaluation.name}}</th>
+    <th *ngIf="evaluation.typeOfEvaluation == 'farmaceut'">{{ evaluation.grade}}</th>
+    <td *ngIf="evaluation.typeOfEvaluation == 'farmaceut'">
+      <button class="btn btn-primary" (click)="changeEvaluation(evaluation.id)">Promeni ocenu</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div style="text-align: center;"><h2>Ocenjeni lekovi</h2> </div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime</th>
+    <th scope="row" >Ocena</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let evaluation of evaluations | orderBy: key: reverse" >
+
+    <th *ngIf="evaluation.typeOfEvaluation == 'lek'">{{ evaluation.id}}</th>
+    <th *ngIf="evaluation.typeOfEvaluation == 'lek'">{{ evaluation.name}}</th>
+    <th *ngIf="evaluation.typeOfEvaluation == 'lek'">{{ evaluation.grade}}</th>
+    <td *ngIf="evaluation.typeOfEvaluation == 'lek'">
+      <button class="btn btn-primary" (click)="changeEvaluation(evaluation.id)">Promeni ocenu</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div style="text-align: center;"><h2>Ocenjene apoteke</h2> </div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime</th>
+    <th scope="row" >Ocena</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let evaluation of evaluations | orderBy: key: reverse" >
+
+    <th *ngIf="evaluation.typeOfEvaluation == 'apoteka'">{{ evaluation.id}}</th>
+    <th *ngIf="evaluation.typeOfEvaluation == 'apoteka'">{{ evaluation.name}}</th>
+    <th *ngIf="evaluation.typeOfEvaluation == 'apoteka'">{{ evaluation.grade}}</th>
+    <td *ngIf="evaluation.typeOfEvaluation == 'apoteka'">
+      <button class="btn btn-primary" (click)="changeEvaluation(evaluation.id, evaluation.grade)">Promeni ocenu</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+<label *ngIf="showInput">Unesi ocenu:</label>
+<input *ngIf="showInput" type="text" [ngModel]="input" (ngModelChange)="modelChangeFn($event)">
+<button class="Zakaži" (click)="changeGrade()" *ngIf="showInput">Potvrda ocene</button>

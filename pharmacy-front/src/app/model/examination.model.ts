@@ -20,6 +20,7 @@ export class ExaminationModel {
     public pharmacy: PharmacyModel,
     public dermatologist: DermatologistModel,
     public visited: boolean = false,
+    public evaluationType: string = ''
   ) {
   }
 }

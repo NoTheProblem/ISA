@@ -76,4 +76,10 @@ export class MedicineService {
   public getAllAvailableMedicines(): Observable<Array<MedicineModel>> {
     return this.httpClient.get<Array<MedicineModel>>(Constants.API + '/medicine/getAvailableMedicines');
   }
+
+  public getAllHistoryReservationForEvaluation(): Observable<Array<MedicineModel>> {
+    return this.httpClient.get<Array<MedicineModel>>(Constants.API + '/medicine/getAllHistoryReservationForEvaluation');
+  }
+
+
 }

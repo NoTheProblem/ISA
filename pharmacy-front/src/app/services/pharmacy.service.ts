@@ -82,7 +82,8 @@ export class PharmacyService {
     return this.httpClient.get<Array<PharmacyModel>>(this.path);
   }
 
-
-
+  public getAllHistoryPharmacyForEvaluation(): Observable<Array<PharmacyModel>> {
+    return this.httpClient.get<Array<PharmacyModel>>(Constants.API + '/pharmacy/unauth/getAllHistoryPharmacyForEvaluation');
+  }
 }
 

@@ -32,4 +32,6 @@ public interface PharmacyService {
     Collection<Pharmacy> getAvailablePharmacies(String time, String date) throws ParseException;
 
     List<Pharmacy> getAllPharmacyForMedicine(Long id);
+
+    Collection<Pharmacy> getAllHistoryPharmacyForEvaluation();
 }

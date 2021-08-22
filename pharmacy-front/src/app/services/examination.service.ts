@@ -45,4 +45,10 @@ export class ExaminationService {
   }
 
 
+  public getAllHistoryDermaForEvaluation(): Observable<Array<DermatologistModel>> {
+    return this.httpClient.get<Array<DermatologistModel>>(Constants.API + '/patient/getAllHistoryDermaForEvaluation');
+  }
+
+
+
 }

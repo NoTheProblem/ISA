@@ -1,6 +1,7 @@
 package ftn.isa.pharmacy.service;
 
 import ftn.isa.pharmacy.dto.ExaminationDto;
+import ftn.isa.pharmacy.model.Dermatologist;
 import ftn.isa.pharmacy.model.Examination;
 
 import java.util.Collection;
@@ -18,4 +19,6 @@ public interface ExaminationService {
     Collection<Examination> getAllScheduledAppointmentForPatient();
 
     Collection<Examination> getAllHistoryDerma();
+
+    Collection<Dermatologist> getAllHistoryDermaForEvaluation();
 }

@@ -126,6 +126,12 @@ public class PharmacyController {
         return ResponseEntity.ok(pharmacyDtos);
     }
 
+    @GetMapping(value = "/unauth/getAllHistoryPharmacyForEvaluation")
+    public ResponseEntity<Collection<PharmacyDto>> getAllHistoryPharmacyForEvaluation() {
+        Collection<PharmacyDto> pharmacyDtos = pharmacyMapper.entity2Bean(pharmacyService.getAllHistoryPharmacyForEvaluation());
+        return ResponseEntity.ok(pharmacyDtos);
+    }
+
 
 }
 

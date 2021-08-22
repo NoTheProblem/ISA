@@ -4,13 +4,9 @@ import ftn.isa.pharmacy.dto.*;
 import ftn.isa.pharmacy.exception.ResourceConflictException;
 import ftn.isa.pharmacy.mapper.PriceMediceMapper;
 import ftn.isa.pharmacy.mapper.impl.MedicineMapperImpl;
-import ftn.isa.pharmacy.repository.MedicineQuantityPharmacyRepository;
-import ftn.isa.pharmacy.repository.MedicineRepository;
-import ftn.isa.pharmacy.repository.PharmacyAdminRepository;
-import ftn.isa.pharmacy.repository.PriceMediceListRepository;
+import ftn.isa.pharmacy.repository.*;
 import ftn.isa.pharmacy.mapper.MedicineRegisterMapper;
 import ftn.isa.pharmacy.model.*;
-import ftn.isa.pharmacy.repository.SysAdminRepository;
 import ftn.isa.pharmacy.service.MedicineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -31,9 +27,13 @@ public class MedicineServiceImpl implements MedicineService {
     private final MedicineMapperImpl medicineMapper;
     private final PriceMediceMapper priceMediceMapper;
     private final MedicineRegisterMapper medicineRegisterMapper;
+    private final PatientRepository patientRepository;
+    private final ReservationRepository reservationRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final EPrescriptionRepository ePrescriptionRepository;
 
     @Autowired
-    public MedicineServiceImpl(MedicineRepository medicineRepository, PharmacyAdminRepository pharmacyAdminRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, PriceMediceListRepository priceMediceListRepository, MedicineMapperImpl medicineMapper, PriceMediceMapper priceMediceMapper,MedicineRegisterMapper medicineRegisterMapper) {
+    public MedicineServiceImpl(EPrescriptionRepository ePrescriptionRepository, EvaluationRepository evaluationRepository, ReservationRepository reservationRepository, PatientRepository patientRepository,MedicineRepository medicineRepository, PharmacyAdminRepository pharmacyAdminRepository, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, PriceMediceListRepository priceMediceListRepository, MedicineMapperImpl medicineMapper, PriceMediceMapper priceMediceMapper,MedicineRegisterMapper medicineRegisterMapper) {
         this.medicineRepository = medicineRepository;
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
@@ -41,6 +41,10 @@ public class MedicineServiceImpl implements MedicineService {
         this.medicineMapper = medicineMapper;
         this.priceMediceMapper = priceMediceMapper;
         this.medicineRegisterMapper = medicineRegisterMapper;
+        this.patientRepository  = patientRepository;
+        this.reservationRepository  = reservationRepository;
+        this.evaluationRepository = evaluationRepository;
+        this.ePrescriptionRepository = ePrescriptionRepository;
     }
 
     @Override
@@ -156,6 +160,44 @@ public class MedicineServiceImpl implements MedicineService {
             medicines.add(medicineQuantityPharmacy.getMedicine());
         }
         return medicines;
+    }
+
+    @Override
+    public Collection<Medicine> getAllHistoryReservationForEvaluation() {
+        Collection<Medicine> medicines = new Stack<>();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        Collection<Reservation> reservations = reservationRepository.findAllByPatientAndPickedUp(patient, true);
+        for (Reservation reservation: reservations) {
+            Medicine medicine = reservation.getMedicine();
+
+            List<Evaluation> evaluations  = evaluationRepository.findAllByIdOfEvaluatedAndPatientAndTypeOfEvaluation(medicine.getId(), patient, "lek");
+            if (evaluations.size() == 0){
+                medicines.add(medicine);
+            }
+        }
+
+        Collection<EPrescription> ePrescriptions = ePrescriptionRepository.findAllByPatient(patient);
+        for (EPrescription ePrescription: ePrescriptions) {
+            Medicine medicine = ePrescription.getMedicine();
+
+            List<Evaluation> evaluations  = evaluationRepository.findAllByIdOfEvaluatedAndPatientAndTypeOfEvaluation(medicine.getId(), patient, "lek");
+            if (evaluations.size() == 0){
+                medicines.add(medicine);
+            }
+        }
+
+        Collection<Medicine> medicinesUnique = new Stack<>();
+        for (Medicine medicine : medicines) {
+            if (!medicinesUnique.contains(medicine)){
+                medicinesUnique.add(medicine);
+            }
+
+        }
+
+        return medicinesUnique;
     }
 
 

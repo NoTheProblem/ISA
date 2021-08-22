@@ -1,14 +1,13 @@
 package ftn.isa.pharmacy.service;
 
-import ftn.isa.pharmacy.dto.CounselingDTO;
-import ftn.isa.pharmacy.dto.ExaminationDto;
-import ftn.isa.pharmacy.dto.MedicineDto;
-import ftn.isa.pharmacy.dto.ReservationDTO;
+import ftn.isa.pharmacy.dto.*;
+import ftn.isa.pharmacy.model.Evaluation;
 import ftn.isa.pharmacy.model.LoyaltyProgram;
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.Patient;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface PatientService {
 
@@ -30,4 +29,10 @@ public interface PatientService {
     void addReservation(ReservationDTO reservationDTO);
 
     boolean cancelReservation(ReservationDTO reservationDto);
+
+    void addGrade(EvaluationDTO evaluationDTO);
+
+    List<Evaluation> getAllHistoryEvaluation();
+
+    void changeEvaluation(EvaluationDTO evaluationDTO);
 }

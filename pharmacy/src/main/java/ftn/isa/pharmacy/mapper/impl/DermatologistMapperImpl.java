@@ -14,6 +14,7 @@ public class DermatologistMapperImpl  extends AbstractMapper<Dermatologist, Derm
     public DermatologistDto entity2Bean(Dermatologist entity) {
         DermatologistDto bean = new DermatologistDto();
         BeanUtils.copyProperties(entity, bean);
+        System.out.println(bean.getFirstName());
 
         return bean;
     }

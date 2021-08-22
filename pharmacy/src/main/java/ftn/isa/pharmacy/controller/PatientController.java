@@ -1,8 +1,7 @@
 package ftn.isa.pharmacy.controller;
 
 import ftn.isa.pharmacy.dto.*;
-import ftn.isa.pharmacy.mapper.LoyaltyProgramMapper;
-import ftn.isa.pharmacy.mapper.MedicineMapper;
+import ftn.isa.pharmacy.mapper.*;
 import ftn.isa.pharmacy.mapper.impl.*;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.service.CounselingService;
@@ -34,10 +33,13 @@ public class PatientController {
     private final CounselingService counselingService;
     private final ReservationMapperImpl reservationMapper;
     private final ReservationService reservationService;
+    private final DermatologistMapper dermatologistMapper;
+    private final PharmacistMapper pharmacistMapper;
+    private final EvaluationMapper evaluationMapper;
 
     @Autowired
-    public PatientController(ReservationService reservationService, ReservationMapperImpl reservationMapper, CounselingService counselingService, CounselingMapperImpl counselingMapper, PatientService patientService, PatientMapperImpl patientMapper, MedicineMapperImpl medicineMapper, LoyaltyProgramMapperImpl loyaltyProgramMapper,
-                             ExaminationMapperImpl examinationMapper, ExaminationService examinationService     ) {
+    public PatientController(EvaluationMapper evaluationMapper, PharmacistMapper pharmacistMapper, ReservationService reservationService, ReservationMapperImpl reservationMapper, CounselingService counselingService, CounselingMapperImpl counselingMapper, PatientService patientService, PatientMapperImpl patientMapper, MedicineMapperImpl medicineMapper, LoyaltyProgramMapperImpl loyaltyProgramMapper,
+                             ExaminationMapperImpl examinationMapper, ExaminationService examinationService, DermatologistMapper dermatologistMapper    ) {
         this.patientService = patientService;
         this.patientMapper = patientMapper;
         this.medicineMapper = medicineMapper;
@@ -48,6 +50,9 @@ public class PatientController {
         this.counselingService = counselingService;
         this.reservationMapper = reservationMapper;
         this.reservationService = reservationService;
+        this.dermatologistMapper = dermatologistMapper;
+        this.pharmacistMapper = pharmacistMapper;
+        this.evaluationMapper = evaluationMapper;
     }
 
     @PostMapping("/addAllergy")
@@ -136,6 +141,36 @@ public class PatientController {
         Collection<CounselingDTO> counselingDtos = counselingMapper.entity2Bean(counselingService.getAllHistoryPha());
         return ResponseEntity.ok(counselingDtos);
     }
+
+    @GetMapping(value = "getAllHistoryDermaForEvaluation")
+    public ResponseEntity<Collection<DermatologistDto>> getAllHistoryDermaForEvaluation(){
+        Collection<DermatologistDto> dermatologistsDto = dermatologistMapper.entity2Bean(examinationService.getAllHistoryDermaForEvaluation());
+        return ResponseEntity.ok(dermatologistsDto);
+    }
+
+    @GetMapping(value = "getAllHistoryPhaForEvaluation")
+    public ResponseEntity<Collection<PharmacistDTO>> getAllHistoryPhaForEvaluation(){
+        Collection<PharmacistDTO> pharmacistDTOS = pharmacistMapper.entity2Bean(counselingService.getAllHistoryPhaForEvaluation());
+        return ResponseEntity.ok(pharmacistDTOS);
+    }
+    @PostMapping("/confirmEvaluation")
+    public void confirmEvaluation(@RequestBody EvaluationDTO evaluationDTO) {
+        System.out.println("Kontroler");
+        System.out.println(evaluationDTO);
+        patientService.addGrade(evaluationDTO);
+    }
+
+    @GetMapping(value = "getAllHistoryEvaluation")
+    public ResponseEntity<Collection<EvaluationDTO>> getAllHistoryEvaluation(){
+        Collection<EvaluationDTO> evaluationDTOS = evaluationMapper.entity2Bean(patientService.getAllHistoryEvaluation());
+        return ResponseEntity.ok(evaluationDTOS);
+    }
+
+    @PostMapping("/changeEvaluation")
+    public void changeEvaluation(@RequestBody EvaluationDTO evaluationDTO) {
+        patientService.changeEvaluation(evaluationDTO);
+    }
+
 
 
 

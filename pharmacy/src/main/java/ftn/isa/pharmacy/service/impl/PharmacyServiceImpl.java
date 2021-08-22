@@ -43,11 +43,14 @@ public class PharmacyServiceImpl implements PharmacyService {
     private final PharmacistRepository pharmacistRepository;
     private final AbsenceRequestRepository absenceRequestRepository;
     private final CounselingRepository counselingRepository;
+    private final ReservationRepository reservationRepository;
+    private final EvaluationRepository evaluationRepository;
+    private final EPrescriptionRepository ePrescriptionRepository;
 
 
     // https://www.vojtechruzicka.com/field-dependency-injection-considered-harmful/#gatsby-focus-wrapper
     @Autowired
-    public PharmacyServiceImpl(CounselingRepository counselingRepository, AbsenceRequestRepository absenceRequestRepository ,WorkingHoursPharmacistRepository workingHoursPharmacistRepository ,PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyMapper pharmacyMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, DermatologistRepository dermatologistRepository, PharmacistRepository pharmacistRepository) {
+    public PharmacyServiceImpl(EPrescriptionRepository ePrescriptionRepository, EvaluationRepository evaluationRepository, ReservationRepository reservationRepository, CounselingRepository counselingRepository, AbsenceRequestRepository absenceRequestRepository ,WorkingHoursPharmacistRepository workingHoursPharmacistRepository ,PharmacyRepository pharmacyRepository, PharmacyAdminRepository pharmacyAdminRepository, PatientRepository patientRepository, MailServiceImpl mailService, DermatologistMapperImpl dermatologistMapper, WorkingHoursMapperImpl workingHoursMapper, WorkingHoursRepository workingHoursRepository, ExaminationRepository examinationRepository, ExaminationMapperImpl examinationMapper, PharmacyMapper pharmacyMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, DermatologistRepository dermatologistRepository, PharmacistRepository pharmacistRepository) {
         this.pharmacyAdminRepository = pharmacyAdminRepository;
         this.pharmacyRepository = pharmacyRepository;
         this.patientRepository = patientRepository;
@@ -64,6 +67,9 @@ public class PharmacyServiceImpl implements PharmacyService {
         this.workingHoursPharmacistRepository = workingHoursPharmacistRepository;
         this.absenceRequestRepository = absenceRequestRepository;
         this.counselingRepository  = counselingRepository;
+        this.reservationRepository  = reservationRepository;
+        this.evaluationRepository  = evaluationRepository;
+        this.ePrescriptionRepository = ePrescriptionRepository;
     }
 
     @Override
@@ -301,6 +307,66 @@ public class PharmacyServiceImpl implements PharmacyService {
             pharmacies.add(medicineQuantityPharmacy.getPharmacy());
         }
         return pharmacies;
+    }
+
+    @Override
+    public Collection<Pharmacy> getAllHistoryPharmacyForEvaluation(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        Collection<Pharmacy> pharmacies= new HashSet<>();
+        Collection<Reservation> reservations = reservationRepository.findAllByPatientAndPickedUp(patient, true);
+        for (Reservation reservation: reservations) {
+            Pharmacy pharmacy = reservation.getPharmacy();
+            System.out.println(pharmacy);
+            List<Evaluation> evaluations  = evaluationRepository.findAllByIdOfEvaluatedAndPatientAndTypeOfEvaluation(pharmacy.getId(), patient, "apoteka");
+            if (evaluations.size() == 0){
+                pharmacies.add(pharmacy);
+            }
+        }
+
+        Collection<EPrescription> ePrescriptions = ePrescriptionRepository.findAllByPatient(patient);
+        for (EPrescription ePrescription: ePrescriptions) {
+            Pharmacy pharmacy = ePrescription.getPharmacy();
+            System.out.println(pharmacy);
+            List<Evaluation> evaluations  = evaluationRepository.findAllByIdOfEvaluatedAndPatientAndTypeOfEvaluation(pharmacy.getId(), patient, "apoteka");
+            if (evaluations.size() == 0){
+                pharmacies.add(pharmacy);
+            }
+        }
+
+        Collection<Counseling> counselings = counselingRepository.customByPatientIdAndDateAndPenalty(patient.getId());
+        for (Counseling counseling: counselings) {
+
+            Pharmacist pharmacist = counseling.getPharmacist();
+            List<Evaluation> evaluations  = evaluationRepository.findAllByIdOfEvaluatedAndPatientAndTypeOfEvaluation(pharmacist.getPharmacy().getId(), patient, "apoteka");
+            if (evaluations.size() == 0){
+                pharmacies.add(pharmacist.getPharmacy());
+            }
+        }
+
+        Collection<Examination> examinations = examinationRepository.customByPatientIdAndDateAndPenalty(patient.getId());
+        for (Examination examination: examinations) {
+            Pharmacy pharmacy = examination.getPharmacy();
+            System.out.println(4);
+            List<Evaluation> evaluations  = evaluationRepository.findAllByIdOfEvaluatedAndPatientAndTypeOfEvaluation(pharmacy.getId(), patient, "apoteka");
+            if (evaluations.size() == 0){
+                pharmacies.add(pharmacy);
+            }
+        }
+
+        Collection<Pharmacy> pharmacyUnique = new Stack<>();
+        for (Pharmacy pharmacy : pharmacies) {
+            if (!pharmacyUnique.contains(pharmacy)){
+                pharmacyUnique.add(pharmacy);
+            }
+
+        }
+
+        return pharmacyUnique;
+
+
     }
 
 

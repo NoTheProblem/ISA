@@ -86,6 +86,12 @@ public class MedicineController {
         return ResponseEntity.ok(medicineDtoList);
     }
 
+    @GetMapping(value = "/getAllHistoryReservationForEvaluation")
+    public ResponseEntity<Collection<MedicineDto>> getAllHistoryReservationForEvaluation() {
+        Collection<MedicineDto> medicineDtoList = medicineMapper.entity2Bean(medicineService.getAllHistoryReservationForEvaluation());
+        return ResponseEntity.ok(medicineDtoList);
+    }
+
 
 
 }
