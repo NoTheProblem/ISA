@@ -24,23 +24,43 @@ public class EPrescription {
     @Column
     private Date dateOfIssue;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<PersList> medicines = new HashSet<PersList>();
+    @OneToOne(cascade = CascadeType.ALL)
+    private Medicine medicine;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Patient patient;
 
+    public Pharmacy getPharmacy() {
+        return pharmacy;
+    }
+
+    public Medicine getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(Medicine medicine) {
+        this.medicine = medicine;
+    }
+
+    public void setPharmacy(Pharmacy pharmacy) {
+        this.pharmacy = pharmacy;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Pharmacy pharmacy;
+
     public EPrescription() {
     }
 
-    public EPrescription(Long id, String code, float price, String status, Date dateOfIssue, Set<PersList> medicines, Patient patient) {
+    public EPrescription(Long id, String code, float price, String status, Date dateOfIssue, Medicine medicines, Patient patient, Pharmacy pharmacy) {
         this.id = id;
         this.code = code;
         this.price = price;
         this.status = status;
         this.dateOfIssue = dateOfIssue;
-        this.medicines = medicines;
+        this.medicine = medicines;
         this.patient = patient;
+        this.pharmacy = pharmacy;
     }
 
     public Long getId() {
@@ -83,13 +103,7 @@ public class EPrescription {
         this.dateOfIssue = dateOfIssue;
     }
 
-    public Set<PersList> getMedicines() {
-        return medicines;
-    }
 
-    public void setMedicines(Set<PersList> medicines) {
-        this.medicines = medicines;
-    }
 
     public Patient getPatient() {
         return patient;

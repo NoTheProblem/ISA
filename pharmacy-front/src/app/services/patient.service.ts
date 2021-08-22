@@ -11,9 +11,12 @@ import {ExaminationModel} from '../model/examination.model';
 import {PharmacyModel} from '../model/pharmacy.model';
 import {CounselingModel} from '../model/counseling.model';
 import {ReservationModel} from '../model/reservation.model';
+import {EvaluationModel} from '../model/evaluation.model';
 
 @Injectable()
 export class PatientService {
+
+  private path: string;
 
   constructor(
     private httpClient: HttpClient,
@@ -125,7 +128,37 @@ export class PatientService {
     );
   }
 
+  public addGrade(evaluation: EvaluationModel): void {
+    this.path = Constants.API + '/patient/confirmEvaluation/';
+    this.httpClient.post(this.path, evaluation).subscribe(
+      (response: true) => {
+        this.toast.success(`Potvrdjena ocena ${evaluation.idOfEvaluated}, ${evaluation.grade}, ${evaluation.typeOfEvaluation} `);
+      },
+      (error => {
+        this.toast.error(`Ocena nije prihvacena`);
+      }),
+    );
 
+
+  }
+
+  public getAllHistoryEvaluation(): Observable<Array<EvaluationModel>> {
+    return this.httpClient.get<Array<EvaluationModel>>(Constants.API + '/patient/getAllHistoryEvaluation');
+  }
+
+  public change(evaluation: EvaluationModel): void {
+    this.path = Constants.API + '/patient/changeEvaluation/';
+    this.httpClient.post(this.path, evaluation).subscribe(
+      (response: true) => {
+        this.toast.success(`Potvrdjena ocena ${evaluation.idOfEvaluated}, ${evaluation.grade}, ${evaluation.typeOfEvaluation} `);
+      },
+      (error => {
+        this.toast.error(`Ocena nije prihvacena`);
+      }),
+    );
+
+
+  }
 
 
 

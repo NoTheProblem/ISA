@@ -33,6 +33,8 @@ import {ReservedMedicinesComponent} from './reserved-medicines/reserved-medicine
 import {HistoryDermaComponent} from './history-derma/history-derma.component';
 import {HistoryPharmacistComponent} from './history-pharmacist/history-pharmacist.component';
 import {PromotionsPatientComponent} from './promotions-patient/promotions-patient.component';
+import {EvaluationComponent} from './evaluation/evaluation.component';
+import {ChangeEvaluationComponent} from './change-evaluation/change-evaluation.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -68,6 +70,8 @@ const routes: Routes = [
   {path: 'historyDerma', component: HistoryDermaComponent},
   {path: 'historyPha', component: HistoryPharmacistComponent},
   {path: 'promotion', component: PromotionsPatientComponent},
+  {path: 'evaluation', component: EvaluationComponent},
+  {path: 'changeEvaluation', component: ChangeEvaluationComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

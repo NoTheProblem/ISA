@@ -1,0 +1,84 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime dermatologa</th>
+    <th scope="row" >Prezime dermatologa</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let derma of dermas | orderBy: key: reverse" >
+
+    <th >{{ derma.id}}</th>
+    <th >{{ derma.firstName}}</th>
+    <th >{{ derma.lastName }}</th>
+    <td>
+      <button class="btn btn-primary" (click)="evaluate(derma.id, 'dermatolog')">Oceni</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime farmaceuta</th>
+    <th scope="row" >Prezime farmaceuta</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pharma of pharmas | orderBy: key: reverse" >
+    <th >{{ pharma.id}}</th>
+    <th >{{ pharma.firstName}}</th>
+    <th >{{ pharma.lastName }}</th>
+    <td>
+      <button class="btn btn-primary" (click)="evaluate(pharma.id, 'farmaceut')">Oceni</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime leka</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let medicine of medicines | orderBy: key: reverse" >
+    <th >{{ medicine.id}}</th>
+    <th >{{ medicine.name}}</th>
+    <td>
+      <button class="btn btn-primary" (click)="evaluate(medicine.id, 'lek')">Oceni</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Ime apoteke</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let pharmacy of pharmacies | orderBy: key: reverse" >
+    <th >{{ pharmacy.id}}</th>
+    <th >{{ pharmacy.name}}</th>
+    <td>
+      <button class="btn btn-primary" (click)="evaluate(pharmacy.id, 'apoteka')">Oceni</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+
+<label *ngIf="showInput">Unesi ocenu:</label>
+<input *ngIf="showInput" type="text" [ngModel]="input" (ngModelChange)="modelChangeFn($event)">
+<button class="Zakaži" (click)="addGrade()" *ngIf="showInput">Potvrda ocene</button>
+

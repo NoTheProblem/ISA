@@ -23,4 +23,6 @@ public interface MedicineService {
     void removeMedicineFromPhamracy(MedicineDto medicineDto);
 
     Collection<Medicine> getAvailableMedicines();
+
+    Collection<Medicine> getAllHistoryReservationForEvaluation();
 }

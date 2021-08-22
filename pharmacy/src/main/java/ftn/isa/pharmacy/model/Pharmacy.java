@@ -8,6 +8,35 @@ import java.util.Set;
 @Entity(name ="pharmacy")
 public class Pharmacy {
 
+    @Override
+    public String toString() {
+        return "Pharmacy{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", address='" + address + '\'' +
+                ", pharmacyDescription='" + pharmacyDescription + '\'' +
+                ", evaluationGrade=" + evaluationGrade +
+                ", counselingPrice=" + counselingPrice +
+                ", medicationQuantities=" + medicationQuantities +
+                ", pharmacists=" + pharmacists +
+                ", perscirptions=" + perscirptions +
+                ", dermatologists=" + dermatologists +
+                ", priceMediceLists=" + priceMediceLists +
+                ", priceExaminationLists=" + priceExaminationLists +
+                ", workingHours=" + workingHours +
+                ", promotions=" + promotions +
+                ", absenceRequests=" + absenceRequests +
+                ", pharmacyAdmins=" + pharmacyAdmins +
+                ", listOfFreeExamination=" + listOfFreeExamination +
+                ", reservations=" + reservations +
+                ", purchaseOrders=" + purchaseOrders +
+                ", subscribedPatients=" + subscribedPatients +
+                ", missingMedicine=" + missingMedicine +
+                '}';
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

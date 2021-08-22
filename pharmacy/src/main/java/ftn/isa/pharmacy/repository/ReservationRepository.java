@@ -15,4 +15,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> getAllByPickedUpAndPatient(boolean b, Patient patient);
 
     Reservation findByPharmacyAndMedicineAndPatient(Pharmacy pharmacy, Medicine medicine, Patient patient);
+
+
+
+    Collection<Reservation> findAllByPatientAndPickedUp(Patient patient, boolean b);
 }

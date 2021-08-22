@@ -30,6 +30,7 @@ insert into registeredusers (tip,first_name,last_name,username,password,email,co
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id,evaluation_grade) values ('ROLE_PHARMACIST','Pera','Savic','ris11','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','risfifdfszika@gmail.com','Srbija','Jagodina','despotovac',true, '2021-01-02 18:57:58.508-07',3,0);
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id,evaluation_grade) values ('ROLE_PHARMACIST','Kristijan','Peric','ris12','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','risfizfdsfdsfdsfsdika@gmail.com','Srbija','Jagodina','despotovac',true, '2021-01-02 18:57:58.508-07',3,2);
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date, pharmacy_id,evaluation_grade) values ('ROLE_PHARMACIST','Pera','Peric','ris13','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','risffsfsfizika@gmail.com','Srbija','Jagodina','despotovac',true, '2021-01-02 18:57:58.508-07',3,4);
+insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date,loyalty_score, penalty_score) values ('ROLE_USER','Zorana','Stamenkovic','zora','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','zoranastamenkovic1998@gmail.com','Srbija','Novi Sad','Negde u NS',true, '2021-01-02 18:57:58.508-07',0,0);
 
 insert into absence_request(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name,pharmacy_id) values ('zahtev za godisnji', '2021-01-11', '2021-03-30','nov', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris',1);
 insert into absence_request(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name,pharmacy_id) values ('zahtev za godisnji', '2021-05-05', '2021-12-12','Odobreno', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris',1);
@@ -88,7 +89,7 @@ insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pha
 insert into examination(date,duration_minutes,is_free,penalty,price,dermatologist_id,patient_id, pharmacy_id,loyalty_score) values ('2021-06-07 10:00:00',30,false,false,400,2,5,1,0);
 insert into examination(date,duration_minutes,is_free,penalty,price,dermatologist_id,patient_id, pharmacy_id,loyalty_score) values ('2021-06-08 10:00:00',40,false,false,500,2,5,1,0);
 
-insert into reservation(end_date, pick_up_date, picked_up, price, patient_id, pharmacy_id) values ('2021-06-05','2021-06-05', true, 1000, 5,1);
+insert into reservation(end_date, pick_up_date, picked_up, price, patient_id, pharmacy_id, medicine_id) values ('2021-06-05','2021-06-05', true, 1000, 5,1, 1);
 insert into medicine_quantity_reservation(quantity,medicine_id,reservation_id) values (10,1,1);
 insert into medicine_quantity_reservation(quantity,medicine_id,reservation_id) values (10,2,1);
 
@@ -101,4 +102,12 @@ insert into loyalty_program values (2,1.0, 101, 'bronzani', 500);
 insert into loyalty_program values (3,3.0, 501, 'zlatni' ,99999);
 
 insert into counseling(date,duration_minutes,free,penalty,price,pharmacist_id,patient_id,loyalty_score) values ('2021-06-07 10:00:00',30,false,true,400,4,5,0);
-insert into counseling(date,duration_minutes,free,penalty,price,pharmacist_id,patient_id,loyalty_score) values ('2021-06-08 10:00:00',30,false,true,500,7,5,0);
+
+
+insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (200,1,13,1);
+insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (300,2,13,2);
+insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (400,3,13,1);
+
+insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (200,1,5,1);
+insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (300,2,5,2);
+insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (400,3,5,1);

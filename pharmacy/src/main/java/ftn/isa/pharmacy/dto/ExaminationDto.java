@@ -35,10 +35,20 @@ public class ExaminationDto {
 
     private boolean visited;
 
+    private String evaluationType;
+
     public ExaminationDto() {
     }
 
-    public ExaminationDto(Long id, Boolean penalty, Boolean isFree, String examinationReport, int loyaltyScore, Date date, String time, int durationMinutes, float price, DermatologistDto dermatologistDto, Long patientId, String dermatologistName, String dermatologistLastname, Long dermatologistId, Float dermatologistEvaluationGrade, boolean visited) {
+    public String getEvaluationType() {
+        return evaluationType;
+    }
+
+    public void setEvaluationType(String evaluationType) {
+        this.evaluationType = evaluationType;
+    }
+
+    public ExaminationDto(Long id, Boolean penalty, Boolean isFree, String examinationReport, int loyaltyScore, Date date, String time, int durationMinutes, float price, DermatologistDto dermatologistDto, Long patientId, String dermatologistName, String dermatologistLastname, Long dermatologistId, Float dermatologistEvaluationGrade, boolean visited, String evaluationType) {
         this.id = id;
         this.penalty = penalty;
         this.isFree = isFree;
@@ -55,6 +65,7 @@ public class ExaminationDto {
         this.dermatologistId = dermatologistId;
         this.dermatologistEvaluationGrade = dermatologistEvaluationGrade;
         this.visited = visited;
+        this.evaluationType = evaluationType;
     }
 
     public Long getDermatologistId() {

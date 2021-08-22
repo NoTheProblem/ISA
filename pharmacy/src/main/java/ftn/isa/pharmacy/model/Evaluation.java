@@ -18,15 +18,63 @@ public class Evaluation {
     @Column
     private String typeOfEvaluation;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column
+    private String name;
+
+    public int getNumberOfEvaluation() {
+        return numberOfEvaluation;
+    }
+
+    public void setNumberOfEvaluation(int numberOfEvaluation) {
+        this.numberOfEvaluation = numberOfEvaluation;
+    }
+
+    @Column
+    private int numberOfEvaluation;
+
+    public float getGrade() {
+        return grade;
+    }
+
+    public void setGrade(float grade) {
+        this.grade = grade;
+    }
+
+    @Column
+    private float grade;
+
+    public Boolean getValid() {
+        return valid;
+    }
+
+    public void setValid(Boolean valid) {
+        this.valid = valid;
+    }
+
+    @Column
+    private Boolean valid;
+
 
     public Evaluation() {
     }
 
-    public Evaluation(Long id, Patient patient, Long idOfEvaluated, String typeOfEvaluation) {
+    public Evaluation(Long id, Patient patient, Long idOfEvaluated, String typeOfEvaluation, int numberOfEvaluation, float grade, Boolean valid, String name) {
         this.id = id;
         this.patient = patient;
         this.idOfEvaluated = idOfEvaluated;
         this.typeOfEvaluation = typeOfEvaluation;
+        this.numberOfEvaluation  = numberOfEvaluation;
+        this.grade = grade;
+        this.valid = valid;
+        this.name = name;
     }
 
     public Long getId() {

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {DermatologistModel} from '../model/dermatologist.model';
 import {Constants} from './constants';
 import {CounselingModel} from '../model/counseling.model';
+import {PharmacistModel} from '../model/pharmacist.model';
 
 
 @Injectable()
@@ -23,6 +24,11 @@ export class AppointmentService {
   public getAllHistoryPha(): Observable<Array<CounselingModel>> {
     return this.httpClient.get<Array<CounselingModel>>(Constants.API + '/patient/getAllHistoryPha');
   }
+
+  public getAllHistoryPhaForEvaluation(): Observable<Array<PharmacistModel>> {
+    return this.httpClient.get<Array<PharmacistModel>>(Constants.API + '/patient/getAllHistoryPhaForEvaluation');
+  }
+
 
 
 }

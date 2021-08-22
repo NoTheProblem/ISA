@@ -1,18 +1,13 @@
 package ftn.isa.pharmacy.service.impl;
 
 import ftn.isa.pharmacy.config.MailConfig;
-import ftn.isa.pharmacy.dto.CounselingDTO;
-import ftn.isa.pharmacy.dto.ExaminationDto;
-import ftn.isa.pharmacy.dto.MedicineDto;
-import ftn.isa.pharmacy.dto.ReservationDTO;
+import ftn.isa.pharmacy.dto.*;
 import ftn.isa.pharmacy.exception.ResourceConflictException;
-import ftn.isa.pharmacy.mapper.CounselingMapper;
-import ftn.isa.pharmacy.mapper.ExaminationMapper;
-import ftn.isa.pharmacy.mapper.MedicineMapper;
-import ftn.isa.pharmacy.mapper.ReservationMapper;
+import ftn.isa.pharmacy.mapper.*;
 import ftn.isa.pharmacy.model.*;
 import ftn.isa.pharmacy.repository.*;
 import ftn.isa.pharmacy.service.PatientService;
+import ftn.isa.pharmacy.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -22,10 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Time;
 import java.time.LocalTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -44,9 +36,12 @@ public class PatientServiceImpl implements PatientService {
     private final PharmacyRepository pharmacyRepository;
     private final MedicineRepository medicineRepository;
     private final MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository;
+    private final EvaluationMapper evaluationMapper;
+    private final EvaluationRepository evaluationRepository;
+    private final DermatologistRepository dermatologistRepository;
 
     @Autowired
-    public PatientServiceImpl(MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository, PharmacyRepository pharmacyRepository, ReservationMapper reservationMapper, ReservationRepository reservationRepository,PharmacistRepository pharmacistRepository, CounselingRepository counselingRepository, CounselingMapper counselingMapper, MailConfig mailConfig, MedicineMapper medicineMapper, PatientRepository patientRepository, LoyaltyProgramRepository loyaltyProgramRepository, ExaminationMapper examinationMapper, ExaminationRepository examinationRepository) {
+    public PatientServiceImpl(DermatologistRepository dermatologistRepository, EvaluationRepository evaluationRepository, EvaluationMapper evaluationMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository, PharmacyRepository pharmacyRepository, ReservationMapper reservationMapper, ReservationRepository reservationRepository,PharmacistRepository pharmacistRepository, CounselingRepository counselingRepository, CounselingMapper counselingMapper, MailConfig mailConfig, MedicineMapper medicineMapper, PatientRepository patientRepository, LoyaltyProgramRepository loyaltyProgramRepository, ExaminationMapper examinationMapper, ExaminationRepository examinationRepository) {
         this.medicineMapper = medicineMapper;
         this.patientRepository = patientRepository;
         this.loyaltyProgramRepository = loyaltyProgramRepository;
@@ -61,6 +56,9 @@ public class PatientServiceImpl implements PatientService {
         this.pharmacyRepository = pharmacyRepository;
         this.medicineRepository = medicineRepository;
         this.medicineQuantityPharmacyRepository = medicineQuantityPharmacyRepository;
+        this.evaluationMapper = evaluationMapper;
+        this.evaluationRepository = evaluationRepository;
+        this.dermatologistRepository = dermatologistRepository;
     }
 
     private JavaMailSenderImpl getJMS(){
@@ -353,4 +351,163 @@ public class PatientServiceImpl implements PatientService {
         }
         return false;
     }
+
+    @Override
+    public void addGrade(EvaluationDTO evaluationDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        if(patientOptional.isPresent()) {
+            Evaluation evaluation = evaluationMapper.bean2Entity(evaluationDTO);
+            evaluation.setValid(true);
+            evaluation.setPatient(patientOptional.get());
+            evaluation.setGrade(evaluationDTO.getGrade());
+            Patient patient = patientOptional.get();
+
+            Optional<Dermatologist> dermatologist = dermatologistRepository.findById(evaluationDTO.getIdOfEvaluated());
+            System.out.println(dermatologist.isPresent());
+            Optional<Pharmacist> pharmacist = pharmacistRepository.findById(evaluationDTO.getIdOfEvaluated());
+            System.out.println(pharmacist.isPresent());
+            Optional<Medicine> medicine = medicineRepository.findById(evaluationDTO.getIdOfEvaluated());
+            System.out.println(pharmacist.isPresent());
+            Optional<Pharmacy> pharmacy = pharmacyRepository.findById(evaluationDTO.getIdOfEvaluated());
+            System.out.println(pharmacy.isPresent());
+            if(evaluation.getTypeOfEvaluation().equals("farmaceut")){
+                Optional<Pharmacist> pharmacistChoosen = pharmacistRepository.findById(evaluationDTO.getIdOfEvaluated());
+                evaluation.setName(pharmacistChoosen.get().getFirstName() + ' ' + pharmacistChoosen.get().getLastName());
+            }
+            if(evaluation.getTypeOfEvaluation().equals("dermatolog")){
+                Optional<Dermatologist> dermatologistChoosen = dermatologistRepository.findById(evaluationDTO.getIdOfEvaluated());
+                evaluation.setName(dermatologistChoosen.get().getFirstName() + ' ' + dermatologistChoosen.get().getLastName());
+            }
+            if(evaluation.getTypeOfEvaluation().equals("lek")){
+                Optional<Medicine> medicineChoosen = medicineRepository.findById(evaluationDTO.getIdOfEvaluated());
+                evaluation.setName(medicineChoosen.get().getName());
+            }
+            if(evaluation.getTypeOfEvaluation().equals("apoteka")){
+                Optional<Pharmacy> pharmacyChoosen = pharmacyRepository.findById(evaluationDTO.getIdOfEvaluated());
+                evaluation.setName(pharmacyChoosen.get().getName());
+            }
+            evaluationRepository.saveAndFlush(evaluation);
+            //List<Evaluation> evaluations = evaluationRepository.findByIdOfEvaluatedAndValid(evaluationDTO.getIdOfEvaluated(), true);
+            if ((pharmacist.isPresent()) & evaluation.getTypeOfEvaluation().equals("farmaceut")) {
+                Set<Evaluation> evaluations = evaluationRepository.findByIdOfEvaluatedAndValidAndTypeOfEvaluation(evaluationDTO.getIdOfEvaluated(), true, "farmaceut");
+                float new_grade = 0;
+                for (Evaluation eva : evaluations) {
+                    new_grade = new_grade + eva.getGrade();
+                }
+                new_grade = new_grade / evaluations.size();
+                Pharmacist pharmacist_help = new Pharmacist();
+                pharmacist_help  = pharmacist.get();
+                pharmacist_help.setEvaluationGrade(new_grade);
+                pharmacistRepository.saveAndFlush(pharmacist_help);
+            }
+            if (dermatologist.isPresent() & evaluation.getTypeOfEvaluation().equals("dermatolog")) {
+                Set<Evaluation> evaluations = evaluationRepository.findByIdOfEvaluatedAndValidAndTypeOfEvaluation(evaluationDTO.getIdOfEvaluated(), true, "dermatolog");
+                float new_grade = 0;
+                for (Evaluation eva : evaluations) {
+                    new_grade = new_grade + eva.getGrade();
+                }
+                new_grade = new_grade / evaluations.size();
+                dermatologist.get().setEvaluationGrade(new_grade);
+                Dermatologist dermatologist_help = new Dermatologist();
+                dermatologist_help  = dermatologist.get();
+                dermatologist_help.setEvaluationGrade(new_grade);
+                dermatologistRepository.saveAndFlush(dermatologist_help);
+            }
+            if (medicine.isPresent() & evaluation.getTypeOfEvaluation().equals("lek")){
+                Set<Evaluation> evaluations = evaluationRepository.findByIdOfEvaluatedAndValidAndTypeOfEvaluation(evaluationDTO.getIdOfEvaluated(), true, "lek");
+                float new_grade = 0;
+                for (Evaluation eva : evaluations) {
+                    new_grade = new_grade + eva.getGrade();
+                }
+                new_grade = new_grade / evaluations.size();
+                System.out.println(evaluations.size());
+                medicine.get().setEvaluationGrade(new_grade);
+                Medicine medicine_help = new Medicine();
+                medicine_help  = medicine.get();
+                medicine_help.setEvaluationGrade(new_grade);
+                medicineRepository.saveAndFlush(medicine_help);
+            }
+            if (pharmacy.isPresent() & evaluation.getTypeOfEvaluation().equals("apoteka")){
+                Set<Evaluation> evaluations = evaluationRepository.findByIdOfEvaluatedAndValidAndTypeOfEvaluation(evaluationDTO.getIdOfEvaluated(), true, "apoteka");
+                float new_grade = 0;
+                for (Evaluation eva : evaluations) {
+                    new_grade = new_grade + eva.getGrade();
+                }
+                new_grade = new_grade / evaluations.size();
+                pharmacy.get().setEvaluationGrade(new_grade);
+                Pharmacy pharmacy_help = new Pharmacy();
+                pharmacy_help  = pharmacy.get();
+                pharmacy_help.setEvaluationGrade(new_grade);
+                pharmacyRepository.saveAndFlush(pharmacy_help);
+            }
+
+
+
+
+        }
+
+
+
+    }
+
+    @Override
+    public List<Evaluation> getAllHistoryEvaluation() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        List<Evaluation> evaluations = evaluationRepository.findAllByPatient(patient);
+        return evaluations;
+
+    }
+
+    @Override
+    public void changeEvaluation(EvaluationDTO evaluationDTO){
+        Optional<Evaluation> evaluationOpt = evaluationRepository.findById(evaluationDTO.getId());
+        if (evaluationOpt.isPresent()){
+                Evaluation evaluation = evaluationOpt.get();
+                evaluation.setGrade(evaluationDTO.getGrade());
+                evaluationRepository.saveAndFlush(evaluation);
+                String type = evaluation.getTypeOfEvaluation();
+                Long idOfEvaluated = evaluation.getIdOfEvaluated();
+                List<Evaluation> evaluations = evaluationRepository.findAllByIdOfEvaluatedAndTypeOfEvaluation(idOfEvaluated,type);
+                float new_grade = 0;
+                for(Evaluation evaluation1: evaluations){
+                    new_grade = new_grade + evaluation1.getGrade();
+                }
+                new_grade = new_grade / evaluations.size();
+
+                if(type.equals("dermatolog")){
+                    Optional<Dermatologist> dermatologistOpt = dermatologistRepository.findById(evaluation.getIdOfEvaluated());
+                    Dermatologist dermatologist = dermatologistOpt.get();
+                    dermatologist.setEvaluationGrade(new_grade);
+                    dermatologistRepository.saveAndFlush(dermatologist);
+                }
+
+                if(type.equals("farmaceut")){
+                    Optional<Pharmacist> pharmacistOpt = pharmacistRepository.findById(evaluation.getIdOfEvaluated());
+                    Pharmacist pharmacist = pharmacistOpt.get();
+                    pharmacist.setEvaluationGrade(new_grade);
+                    pharmacistRepository.saveAndFlush(pharmacist);
+                }
+
+                if(type.equals("lek")){
+                    Optional<Medicine> medicineOptional = medicineRepository.findById(evaluation.getIdOfEvaluated());
+                    Medicine medicine = medicineOptional.get();
+                    medicine.setEvaluationGrade(new_grade);
+                    medicineRepository.saveAndFlush(medicine);
+                }
+
+                if(type.equals("apoteka")){
+                    Optional<Pharmacy> pharmacyOptional = pharmacyRepository.findById(evaluation.getIdOfEvaluated());
+                    Pharmacy pharmacy = pharmacyOptional.get();
+                    pharmacy.setEvaluationGrade(new_grade);
+                    pharmacyRepository.saveAndFlush(pharmacy);
+                }
+
+        }
+    }
+
 }

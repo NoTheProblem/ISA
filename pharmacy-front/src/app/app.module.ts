@@ -61,6 +61,8 @@ import { HistoryDermaComponent } from './history-derma/history-derma.component';
 import { HistoryPharmacistComponent } from './history-pharmacist/history-pharmacist.component';
 import { PromotionsPatientComponent } from './promotions-patient/promotions-patient.component';
 import { EReceptComponent } from './erecept/erecept.component';
+import { EvaluationComponent } from './evaluation/evaluation.component';
+import { ChangeEvaluationComponent } from './change-evaluation/change-evaluation.component';
 
 const mapConfig: YaConfig = {
   apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
@@ -120,7 +122,9 @@ const mapConfig: YaConfig = {
     HistoryDermaComponent,
     HistoryPharmacistComponent,
     PromotionsPatientComponent,
-    EReceptComponent
+    EReceptComponent,
+    EvaluationComponent,
+    ChangeEvaluationComponent
 
   ],
   imports: [

@@ -4,6 +4,7 @@ import {ExaminationService} from '../services/examination.service';
 import {PatientService} from '../services/patient.service';
 import {DermatologistModel} from '../model/dermatologist.model';
 import {PharmacistModel} from '../model/pharmacist.model';
+import {PharmacyModel} from '../model/pharmacy.model';
 
 @Component({
   selector: 'app-history-derma',
@@ -53,6 +54,7 @@ export class HistoryDermaComponent implements OnInit {
   public evaluate(examination: ExaminationModel): void {
     this.dermaId = examination.dermatologistId;
     this.showInput  = true;
+
 
   }
 
