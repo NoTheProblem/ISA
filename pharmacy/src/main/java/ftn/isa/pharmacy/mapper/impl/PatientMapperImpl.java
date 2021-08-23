@@ -15,6 +15,7 @@ public class PatientMapperImpl  extends AbstractMapper<Patient, PatientDTO> impl
     public PatientDTO entity2Bean(Patient entity) {
         PatientDTO bean = new PatientDTO();
         BeanUtils.copyProperties(entity, bean);
+        bean.setPenalty(entity.getPenaltyScore());
         return bean;
     }
 

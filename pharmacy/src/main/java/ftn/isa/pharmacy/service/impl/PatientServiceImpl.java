@@ -11,11 +11,13 @@ import ftn.isa.pharmacy.service.PharmacyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.*;
 
@@ -451,6 +453,7 @@ public class PatientServiceImpl implements PatientService {
 
     }
 
+
     @Override
     public List<Evaluation> getAllHistoryEvaluation() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -508,6 +511,83 @@ public class PatientServiceImpl implements PatientService {
                 }
 
         }
+    }
+
+    @Override
+    @Scheduled(cron = "0 0 0 * * *")
+    public void Scheduler() {
+        Date date = new Date();
+
+        Date day_end = date;
+        day_end.setMinutes(0);
+        day_end.setHours(0);
+        day_end.setSeconds(0);
+
+        Date previous_day = new Date();
+        previous_day.setDate(previous_day.getDate()-1);
+        Date day_begin = previous_day;
+        day_begin.setMinutes(0);
+        day_begin.setHours(0);
+        day_begin.setSeconds(0);
+
+        System.out.println(day_begin );
+        System.out.println(day_end );
+
+        Collection<Counseling> counselings  = counselingRepository.findAllByDateBetweenAndPenalty(day_begin, day_end, false);
+        for (Counseling counseling: counselings){
+            System.out.println(counseling);
+            Patient patient = counseling.getPatient();
+            if (patient != null) {
+                patient.setPenaltyScore(patient.getPenaltyScore() + 1);
+                patientRepository.saveAndFlush(patient);
+            }
+        }
+
+        Collection<Examination> examinations  = examinationRepository.findAllByDateBetweenAndPenalty(day_begin, day_end, true);
+        for (Examination examination: examinations){
+            System.out.println(examinations);
+            Patient patient = examination.getPatient();
+            if (patient != null) {
+                patient.setPenaltyScore(patient.getPenaltyScore() + 1);
+                patientRepository.saveAndFlush(patient);
+            }
+        }
+
+        Collection<Reservation> reservations  = reservationRepository.findAllByEndDateBetweenAndPickedUp(day_begin, day_end, false);
+        for (Reservation reservation: reservations){
+            System.out.println(reservation);
+            Patient patient = reservation.getPatient();
+            if (patient != null) {
+                patient.setPenaltyScore(patient.getPenaltyScore() + 1);
+                patientRepository.saveAndFlush(patient);
+            }
+        }
+
+        return;
+
+    }
+
+    @Override
+    public Patient getPatient() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        return patient;
+    }
+
+    @Override
+    @Scheduled(cron = "0 0 0 1 * *")
+    public void PenaltyScheduler() {
+        List<Patient> patients = patientRepository.findAll();
+        for (Patient patient: patients){
+            patient.setPenaltyScore(0);
+            patientRepository.saveAndFlush(patient);
+        }
+
+
     }
 
 }

@@ -160,6 +160,7 @@ export class PatientService {
 
   }
 
-
-
+  public getPatient(): Observable<PatientModel> {
+    return this.httpClient.get<PatientModel>(Constants.API + '/patient/getPatient');
+  }
 }
