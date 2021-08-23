@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import ftn.isa.pharmacy.model.Medicine;
 import ftn.isa.pharmacy.model.User;
 
+import javax.persistence.LockModeType;
 import java.util.*;
 
 @Service
@@ -155,7 +156,7 @@ public class MedicineServiceImpl implements MedicineService {
     @Override
     public Collection<Medicine> getAvailableMedicines() {
         List<Medicine> medicines = new Stack<>();
-        List<MedicineQuantityPharmacy> mqps= medicineQuantityPharmacyRepository.findByQuantity(0);
+        List<MedicineQuantityPharmacy> mqps= medicineQuantityPharmacyRepository.findByQuantity(0, LockModeType.OPTIMISTIC);
         for (MedicineQuantityPharmacy medicineQuantityPharmacy: mqps) {
             medicines.add(medicineQuantityPharmacy.getMedicine());
         }

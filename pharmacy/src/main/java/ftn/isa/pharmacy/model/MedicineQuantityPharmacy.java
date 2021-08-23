@@ -11,6 +11,8 @@ public class MedicineQuantityPharmacy {
     private Long id;
 
     @Column
+
+
     private int quantity;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.LockModeType;
 import java.sql.Time;
 import java.util.*;
 
@@ -41,7 +42,7 @@ public class ExaminationServiceImpl implements ExaminationService {
 
     @Override
     public List<Examination> getAllFree(Boolean free) {
-        return examinationRepository.findAllByIsFree(free);
+        return examinationRepository.findAllFree(free, LockModeType.PESSIMISTIC_READ);
     }
 
     @Override

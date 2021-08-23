@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.LockModeType;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public interface MedicineQuantityPharmacyRepository extends JpaRepository<Medici
 
     @Query(value = "select * from medicine_quantity_pharmacy where quantity > ?1 ",
             nativeQuery = true)
-    List<MedicineQuantityPharmacy> findByQuantity(int quantity);
+    List<MedicineQuantityPharmacy> findByQuantity(int quantity, LockModeType optimistic);
 
     @Query(value = "select * from medicine_quantity_pharmacy where quantity > ?1 and medicine_id = ?2",
             nativeQuery = true)

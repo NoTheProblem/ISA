@@ -15,6 +15,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -88,12 +90,18 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void addExamination(ExaminationDto examinationDto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        // Patient patient = (Patient) authentication.getPrincipal(); --> ovo radi, ali ne povuce allergicMedicines jer je lazy
         Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
         if(patientOptional.isPresent()) {
             Examination examination = examinationMapper.bean2Entity(examinationDto);
             Optional<Examination> examination1 = examinationRepository.findById(examinationDto.getId());
             examination = examination1.get();
+            System.out.println(examination.getFree());
+            if (!examination.getFree()){
+                System.out.println("Promenjen!");
+                throw new ResourceConflictException(1L,"Promenjen u medjuvremenu!");
+
+
+            }
 
             Patient patient = patientOptional.get();
             examination.setPatient(patient);
@@ -280,8 +288,14 @@ public class PatientServiceImpl implements PatientService {
         Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
         if(patientOptional.isPresent()) {
             Optional<Pharmacy> pharmacy= pharmacyRepository.findById((long) reservationDto.getPharmacyid());
-            reservation.setPharmacy(pharmacy.get());
             Optional<Medicine> medicine= medicineRepository.findById((long) reservationDto.getMedicineid());
+            MedicineQuantityPharmacy mqp = medicineQuantityPharmacyRepository.findAllByPharmacyAndMedicine(pharmacy.get(),medicine.get());
+            if (mqp.getQuantity() == 0){
+                System.out.println("Promenjen!");
+                throw new ResourceConflictException(1L,"Promenjen u medjuvremenu!");
+
+            }
+            reservation.setPharmacy(pharmacy.get());
             reservation.setMedicine(medicine.get());
             reservation.setEndDate(reservationDto.getEndDate());
             reservation.setPickUpTime(reservationDto.getPickedUpTime());
@@ -291,8 +305,6 @@ public class PatientServiceImpl implements PatientService {
 
             reservationRepository.saveAndFlush(reservation);
 
-            Reservation reservation1 = reservationRepository.findByPharmacyAndMedicineAndPatient(pharmacy.get(),medicine.get(),patient);
-
             JavaMailSenderImpl mailSender = getJMS();
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setFrom("apoteka@gmail.com");
@@ -300,12 +312,12 @@ public class PatientServiceImpl implements PatientService {
             mailMessage.setSubject("Rezervisanje leka");
             mailMessage.setText("Postovani " + patient.getFirstName() + ",\n"+ "\n"+
                     "Uspesno ste rezervisali lek " + reservation.getMedicine().getName() +
-                    " broj rezervacije" + reservation1.getId() +  "\n"+ "\n"+
+                    " broj rezervacije" + reservation.getId() +  "\n"+ "\n"+
                     "Pozdrav," + "\n"+
                     "AP tim");
             mailSender.send(mailMessage);
 
-            MedicineQuantityPharmacy mqp = medicineQuantityPharmacyRepository.findAllByPharmacyAndMedicine(pharmacy.get(),medicine.get());
+
             mqp.setQuantity(mqp.getQuantity() - 1);
 
             medicineQuantityPharmacyRepository.saveAndFlush(mqp);
@@ -359,6 +371,9 @@ public class PatientServiceImpl implements PatientService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
         if(patientOptional.isPresent()) {
+            if (evaluationRepository.findAllByPatient(patientOptional.get()).size()!=0){
+                throw new ResourceConflictException(1L,"Ocenio si ga vec!");
+            }
             Evaluation evaluation = evaluationMapper.bean2Entity(evaluationDTO);
             evaluation.setValid(true);
             evaluation.setPatient(patientOptional.get());
