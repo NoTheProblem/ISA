@@ -26,4 +26,7 @@ public interface CounselingRepository extends JpaRepository<Counseling, Long> {
     @Query(value = "select * from counseling where patient_id = ?1 and date < current_date and penalty = true ",
             nativeQuery = true)
     Collection<Counseling> customByPatientIdAndDateAndPenalty(Long id);
+
+
+    Collection<Counseling> findAllByDateBetweenAndPenalty(Date day_begin, Date day_end, boolean b);
 }

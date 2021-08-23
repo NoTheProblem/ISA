@@ -35,4 +35,10 @@ public interface PatientService {
     List<Evaluation> getAllHistoryEvaluation();
 
     void changeEvaluation(EvaluationDTO evaluationDTO);
+
+    void Scheduler();
+
+    void PenaltyScheduler();
+
+    Patient getPatient();
 }

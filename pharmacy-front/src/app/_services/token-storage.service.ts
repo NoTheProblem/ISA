@@ -54,6 +54,12 @@ export class TokenStorageService {
     return this.decoded.id;
   }
 
+  public getPenalty(): number{
+    this.user = this.getToken();
+    this.decoded = jwt_decode(this.user);
+    return this.decoded.penalty;
+  }
+
   public permissionForPage(role: string): boolean{
     if (!this.isLoggedIn()) {
       return false;

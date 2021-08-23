@@ -41,5 +41,7 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
     @Query(value = "select * from examination where patient_id = ?1 and date <= current_date and penalty=false",
             nativeQuery = true)
     Collection<Examination> customByPatientIdAndDateAndPenalty(Long id);
+
+    Collection<Examination> findAllByDateBetweenAndPenalty(Date day_begin, Date day_end, boolean b);
 }
 

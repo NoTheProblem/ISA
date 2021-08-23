@@ -171,6 +171,12 @@ public class PatientController {
         patientService.changeEvaluation(evaluationDTO);
     }
 
+    @GetMapping(value = "getPatient")
+    public ResponseEntity<PatientDTO> getPatient(){
+        PatientDTO patientDTO = patientMapper.entity2Bean(patientService.getPatient());
+        return ResponseEntity.ok(patientDTO);
+    }
+
 
 
 

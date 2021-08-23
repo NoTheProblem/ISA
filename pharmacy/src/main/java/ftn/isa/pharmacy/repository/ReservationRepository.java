@@ -19,4 +19,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
 
 
     Collection<Reservation> findAllByPatientAndPickedUp(Patient patient, boolean b);
+
+    Collection<Reservation> findAllByEndDateBetweenAndPickedUp(Date day_begin, Date day_end, boolean b);
 }

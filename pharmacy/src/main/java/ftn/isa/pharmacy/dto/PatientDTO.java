@@ -8,10 +8,21 @@ public class PatientDTO {
     private String firstName;
     private String lastName;
 
-    public PatientDTO(Long id, String firstName, String lastName) {
+    public int getPenalty() {
+        return penalty_score;
+    }
+
+    public void setPenalty(int penalty_score) {
+        this.penalty_score = penalty_score;
+    }
+
+    private int penalty_score;
+
+    public PatientDTO(Long id, String firstName, String lastName, int penalty_score) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.penalty_score = penalty_score;
     }
 
     public void setId(Long id) {
