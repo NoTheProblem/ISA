@@ -34,6 +34,7 @@ public class Examination {
     @Column
     private float price;
 
+
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Patient patient;
 

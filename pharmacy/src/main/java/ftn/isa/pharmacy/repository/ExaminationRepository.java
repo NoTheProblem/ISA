@@ -8,13 +8,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 
+import javax.persistence.LockModeType;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 public interface ExaminationRepository extends JpaRepository<Examination, Long> {
 
-    List<Examination> findAllByIsFree(Boolean isFree);
     List<Examination> findAllByPharmacyAndIsFree(Pharmacy pharmacy, Boolean isFree);
     List<Examination> findAllByDermatologist(Dermatologist dermatologist);
     List<Examination> findAllByDateBetween(Date startDate, Date endDate);
@@ -43,5 +43,9 @@ public interface ExaminationRepository extends JpaRepository<Examination, Long> 
     Collection<Examination> customByPatientIdAndDateAndPenalty(Long id);
 
     Collection<Examination> findAllByDateBetweenAndPenalty(Date day_begin, Date day_end, boolean b);
+
+    @Query(value = "select * from examination where is_free=true",
+            nativeQuery = true)
+    List<Examination> findAllFree(Boolean free, LockModeType pessimisticRead);
 }
 
