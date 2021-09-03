@@ -1,9 +1,10 @@
-<table class="table table-striped">
+<h1>Zakazani pregledi kod farmaceuta</h1>
+
+<table *ngIf="counselings.length > 0"  class="table table-striped">
   <thead>
   <tr>
     <th scope="row" >#</th>
     <th scope="row" >Ime farmaceuta</th>
-    <th scope="row" >Prezime farmaceuta</th>
     <th scope="row"  >Ocena farmaceuta</th>
     <th scope="row"  >Cena farmaceuta</th>
     <th scope="row" >Datum pregleda</th>
@@ -18,7 +19,6 @@
   <tr *ngFor="let counseling of counselings " >
     <th ></th>
     <th >{{ counseling.pharmacistName }}</th>
-    <th >{{ counseling.pharmacistLastname }}</th>
     <th >{{ counseling.pharmacistEvaluationGrade }}</th>
     <th >{{ counseling.price }}</th>
     <th >{{ change(counseling.date)}}</th>
@@ -31,3 +31,5 @@
   </tr>
   </tbody>
 </table>
+
+<h4 *ngIf="counselings.length == 0 " >Nemate ni jedan zakazan pregled kod farmaceuta </h4>

@@ -1,1 +1,38 @@
-<p>erecept works!</p>
+<div class="m-3">
+  <h1>ERecepti</h1>
+  <div class="wrap">
+    <div class="search">
+      <label >Pretraga po statusu: </label>
+      <input type="text" name="name" [(ngModel)]="status" (ngModelChange)="search()"  class="searchTerm" placeholder="">
+    </div>
+  </div>
+
+</div>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="row" >#</th>
+    <th scope="row" >Kod recepta</th>
+    <th scope="row" >Cena leka</th>
+    <th scope="row" >Status recepta</th>
+    <th scope="row" (click)="sort('dateOfIssue')">Datum izdavanja</th>
+
+
+
+  </tr>
+  </thead>
+  <tbody>
+
+  <tr *ngFor="let erecept of erecepts | orderBy: key: reverse" >
+    <th ></th>
+    <th >{{ erecept.code }}</th>
+    <th >{{ erecept.price }}</th>
+    <th >{{ erecept.status }}</th>
+    <th >{{ change(erecept?.dateOfIssue)}}</th>
+    <th >{{ erecept.medicine}}</th>
+
+
+
+  </tr>
+  </tbody>
+</table>

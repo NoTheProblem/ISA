@@ -35,6 +35,8 @@ import {HistoryPharmacistComponent} from './history-pharmacist/history-pharmacis
 import {PromotionsPatientComponent} from './promotions-patient/promotions-patient.component';
 import {EvaluationComponent} from './evaluation/evaluation.component';
 import {ChangeEvaluationComponent} from './change-evaluation/change-evaluation.component';
+import {EReceptComponent} from './erecept/erecept.component';
+import {ComplaintsComponent} from './complaints/complaints.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -72,6 +74,8 @@ const routes: Routes = [
   {path: 'promotion', component: PromotionsPatientComponent},
   {path: 'evaluation', component: EvaluationComponent},
   {path: 'changeEvaluation', component: ChangeEvaluationComponent},
+  {path: 'erecept', component: EReceptComponent},
+  {path: 'complatints', component: ComplaintsComponent},
   {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
 

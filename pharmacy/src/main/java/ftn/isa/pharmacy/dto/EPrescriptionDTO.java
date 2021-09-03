@@ -4,12 +4,22 @@ import java.util.Date;
 
 public class EPrescriptionDTO {
     private Long id;
+
+    public String getMedicine() {
+        return medicine;
+    }
+
+    public void setMedicine(String medicine) {
+        this.medicine = medicine;
+    }
+
     private String code;
+    private String medicine;
 
     public EPrescriptionDTO() {
     }
 
-    public EPrescriptionDTO(Long id, String code, float price, String status, Date dateOfIssue, MedicineDto medicineDto, PharmacyDto pharmacyDto, PatientDTO patientDTO) {
+    public EPrescriptionDTO(Long id, String code, float price, String status, Date dateOfIssue, MedicineDto medicineDto, PharmacyDto pharmacyDto, PatientDTO patientDTO, String medicine) {
         this.id = id;
         this.code = code;
         this.price = price;
@@ -18,6 +28,7 @@ public class EPrescriptionDTO {
         this.medicineDto = medicineDto;
         this.pharmacyDto = pharmacyDto;
         this.patientDTO = patientDTO;
+        this.medicine = medicine;
     }
 
     private float price;

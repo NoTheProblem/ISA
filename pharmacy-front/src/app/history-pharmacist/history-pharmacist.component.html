@@ -1,9 +1,9 @@
+<h1 >Istorija pregleda kod farmaceuta</h1>
 <table class="table table-striped">
   <thead>
   <tr>
     <th scope="row" >#</th>
     <th scope="row" >Ime farmaceuta</th>
-    <th scope="row" >Prezime farmaceuta</th>
     <th scope="row" >Ocena farmaceuta</th>
     <th scope="row" (click)="sort('price')" >Cena pregleda</th>
     <th scope="row" (click)="sort('date')">Datum pregleda</th>
@@ -18,7 +18,6 @@
   <tr *ngFor="let counsling of counselings | orderBy: key: reverse" >
     <th ></th>
     <th >{{ counsling.pharmacistName }}</th>
-    <th >{{ counsling.pharmacistLastname }}</th>
     <th >{{ counsling.pharmacistEvaluationGrade }}</th>
     <th >{{ counsling.price }}</th>
     <th >{{ change(counsling.date)}}</th>

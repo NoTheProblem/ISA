@@ -33,7 +33,6 @@ insert into registeredusers (tip,first_name,last_name,username,password,email,co
 insert into registeredusers (tip,first_name,last_name,username,password,email,country,city,address, enabled, last_password_reset_date,loyalty_score, penalty_score) values ('ROLE_USER','Zorana','Stamenkovic','zora','$2a$10$gIodpuRGSH.7RUeBAMtX2OCrsSdqjBlRuLdTeqz5svZZcKHoQSwUK','zoranastamenkovic1998@gmail.com','Srbija','Novi Sad','Negde u NS',true, '2021-01-02 18:57:58.508-07',0,0);
 
 insert into absence_request(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name,pharmacy_id) values ('zahtev za godisnji', '2021-01-11', '2021-03-30','nov', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris',1);
-insert into absence_request(request_text, start_date,end_date, status,type_of_absence, employee_id,type_of_employee, employee_name,pharmacy_id) values ('zahtev za godisnji', '2021-05-05', '2021-12-12','Odobreno', 'Godisnji odmor', 4,'ROLE_PHARMACIST', 'Kristijan Savic - ris',1);
 
 insert into pharmacy_dermatologist(pharmacy_id, dermatologist_id) values (1,2);
 
@@ -80,16 +79,18 @@ insert into bid(end_date,price,status,purchase_order_id,supplier_id) values('202
 insert into bid(end_date,price,status,purchase_order_id,supplier_id) values('2021-07-09',1300,'obrada',2,9);
 insert into bid(end_date,price,status,purchase_order_id,supplier_id) values('2021-07-08',1750,'obrada',2,9);
 
-insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-31 08:00:00',30,false,400,2,1,0);
-insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-31 10:00:00',30,false,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-09-04 08:00:00',30,false,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-09-04 10:00:00',30,false,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-09-05 10:00:00',30,false,400,2,1,0);
 
-insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-14 08:00:00',30,true,400,2,1,0);
-insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-08-10 10:00:00',30,true,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-09-04 08:00:00',30,true,400,2,1,0);
+insert into examination(date,duration_minutes,is_free,price,dermatologist_id,pharmacy_id,loyalty_score) values ('2021-09-05 10:00:00',30,true,400,2,1,0);
 
 insert into examination(date,duration_minutes,is_free,penalty,price,dermatologist_id,patient_id, pharmacy_id,loyalty_score) values ('2021-06-07 10:00:00',30,false,false,400,2,5,1,0);
 insert into examination(date,duration_minutes,is_free,penalty,price,dermatologist_id,patient_id, pharmacy_id,loyalty_score) values ('2021-06-08 10:00:00',40,false,false,500,2,5,1,0);
 
 insert into reservation(end_date, pick_up_date, picked_up, price, patient_id, pharmacy_id, medicine_id) values ('2021-06-05','2021-06-05', true, 1000, 5,1, 1);
+insert into reservation(end_date, pick_up_date, picked_up, price, patient_id, pharmacy_id, medicine_id) values ('2021-09-05','2021-06-05', false, 1000, 5,1, 1);
 insert into medicine_quantity_reservation(quantity,medicine_id,reservation_id) values (10,1,1);
 insert into medicine_quantity_reservation(quantity,medicine_id,reservation_id) values (10,2,1);
 
@@ -105,10 +106,7 @@ insert into counseling(date,duration_minutes,free,penalty,price,pharmacist_id,pa
 insert into counseling(date,duration_minutes,free,penalty,price,pharmacist_id,patient_id,loyalty_score) values ('2021-08-22 10:00:00',30,false,false,400,4,5,0);
 
 
-insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (200,1,13,1);
-insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (300,2,13,2);
-insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (400,3,13,1);
+insert into eprescription (date_of_issue, status, code, price, medicine_id, patient_id, pharmacy_id) values ('2021-08-22 10:00:00', 'nov', 'neki tamo', 200,1,5,1);
+insert into eprescription (date_of_issue, status, code, price, medicine_id, patient_id, pharmacy_id) values ('2021-08-22 10:00:00', 'obrađen', 'neki tamo',300,2,5,2);
+insert into eprescription (date_of_issue, status, code, price, medicine_id, patient_id, pharmacy_id) values ('2021-08-22 10:00:00', 'odbijen', 'neki tamo',400,3,5,1);
 
-insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (200,1,5,1);
-insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (300,2,5,2);
-insert into eprescription (price, medicine_id, patient_id, pharmacy_id) values (400,3,5,1);
