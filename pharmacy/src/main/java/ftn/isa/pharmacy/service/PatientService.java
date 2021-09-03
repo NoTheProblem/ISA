@@ -1,10 +1,7 @@
 package ftn.isa.pharmacy.service;
 
 import ftn.isa.pharmacy.dto.*;
-import ftn.isa.pharmacy.model.Evaluation;
-import ftn.isa.pharmacy.model.LoyaltyProgram;
-import ftn.isa.pharmacy.model.Medicine;
-import ftn.isa.pharmacy.model.Patient;
+import ftn.isa.pharmacy.model.*;
 
 import java.util.Collection;
 import java.util.List;
@@ -41,4 +38,6 @@ public interface PatientService {
     void PenaltyScheduler();
 
     Patient getPatient();
+
+    Collection<EPrescription> getAllRecepts();
 }

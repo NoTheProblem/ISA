@@ -43,9 +43,10 @@ public class PatientServiceImpl implements PatientService {
     private final EvaluationMapper evaluationMapper;
     private final EvaluationRepository evaluationRepository;
     private final DermatologistRepository dermatologistRepository;
+    private final EPrescriptionRepository ePrescriptionRepository;
 
     @Autowired
-    public PatientServiceImpl(DermatologistRepository dermatologistRepository, EvaluationRepository evaluationRepository, EvaluationMapper evaluationMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository, PharmacyRepository pharmacyRepository, ReservationMapper reservationMapper, ReservationRepository reservationRepository,PharmacistRepository pharmacistRepository, CounselingRepository counselingRepository, CounselingMapper counselingMapper, MailConfig mailConfig, MedicineMapper medicineMapper, PatientRepository patientRepository, LoyaltyProgramRepository loyaltyProgramRepository, ExaminationMapper examinationMapper, ExaminationRepository examinationRepository) {
+    public PatientServiceImpl(EPrescriptionRepository ePrescriptionRepository, DermatologistRepository dermatologistRepository, EvaluationRepository evaluationRepository, EvaluationMapper evaluationMapper, MedicineQuantityPharmacyRepository medicineQuantityPharmacyRepository, MedicineRepository medicineRepository, PharmacyRepository pharmacyRepository, ReservationMapper reservationMapper, ReservationRepository reservationRepository,PharmacistRepository pharmacistRepository, CounselingRepository counselingRepository, CounselingMapper counselingMapper, MailConfig mailConfig, MedicineMapper medicineMapper, PatientRepository patientRepository, LoyaltyProgramRepository loyaltyProgramRepository, ExaminationMapper examinationMapper, ExaminationRepository examinationRepository) {
         this.medicineMapper = medicineMapper;
         this.patientRepository = patientRepository;
         this.loyaltyProgramRepository = loyaltyProgramRepository;
@@ -63,6 +64,7 @@ public class PatientServiceImpl implements PatientService {
         this.evaluationMapper = evaluationMapper;
         this.evaluationRepository = evaluationRepository;
         this.dermatologistRepository = dermatologistRepository;
+        this.ePrescriptionRepository = ePrescriptionRepository;
     }
 
     private JavaMailSenderImpl getJMS(){
@@ -371,7 +373,7 @@ public class PatientServiceImpl implements PatientService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
         if(patientOptional.isPresent()) {
-            if (evaluationRepository.findAllByPatient(patientOptional.get()).size()!=0){
+            if (evaluationRepository.findAllByIdOfEvaluatedAndPatientAndTypeOfEvaluation(evaluationDTO.getIdOfEvaluated(), patientOptional.get(), evaluationDTO.getTypeOfEvaluation() ).size()!=0){
                 throw new ResourceConflictException(1L,"Ocenio si ga vec!");
             }
             Evaluation evaluation = evaluationMapper.bean2Entity(evaluationDTO);
@@ -603,6 +605,17 @@ public class PatientServiceImpl implements PatientService {
         }
 
 
+    }
+
+    @Override
+    public Collection<EPrescription> getAllRecepts() {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Optional<Patient> patientOptional = patientRepository.findById(((User) authentication.getPrincipal()).getId());
+        System.out.println(((User) authentication.getPrincipal()).getId());
+        Patient patient = patientOptional.get();
+        return ePrescriptionRepository.findAllByPatient(patient);
     }
 
 }

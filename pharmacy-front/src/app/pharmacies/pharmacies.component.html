@@ -1,7 +1,10 @@
+
+
 <div class="m-3">
-  <h3>Apoteke</h3>
+  <h1 >Apoteke</h1>
   <div class="wrap">
     <div class="search">
+      <label >Pretraga apoteka: </label>
       <input type="text" name="name" [(ngModel)]="name" (ngModelChange)="search()"  class="searchTerm" placeholder="">
     </div>
   </div>
@@ -12,7 +15,8 @@
 <div class="m-3">
   <div class="wrap">
     <div class="search">
-      <input type="number" min="0" max='10' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="filterEvaluationGrade()"  class="searchTerm" placeholder="">
+      <label >Filtriranje po oceni apoteke: </label>
+      <input type="number" min="0" max='1000' name="name"  [(ngModel)]="lowerGrade" (ngModelChange)="filterEvaluationGrade()"  class="searchTerm" placeholder="">
     </div>
   </div>
 </div>

@@ -36,9 +36,10 @@ public class PatientController {
     private final DermatologistMapper dermatologistMapper;
     private final PharmacistMapper pharmacistMapper;
     private final EvaluationMapper evaluationMapper;
+    private final EPrescriptionMapper ePrescriptionMapper;
 
     @Autowired
-    public PatientController(EvaluationMapper evaluationMapper, PharmacistMapper pharmacistMapper, ReservationService reservationService, ReservationMapperImpl reservationMapper, CounselingService counselingService, CounselingMapperImpl counselingMapper, PatientService patientService, PatientMapperImpl patientMapper, MedicineMapperImpl medicineMapper, LoyaltyProgramMapperImpl loyaltyProgramMapper,
+    public PatientController(EPrescriptionMapper ePrescriptionMapper, EvaluationMapper evaluationMapper, PharmacistMapper pharmacistMapper, ReservationService reservationService, ReservationMapperImpl reservationMapper, CounselingService counselingService, CounselingMapperImpl counselingMapper, PatientService patientService, PatientMapperImpl patientMapper, MedicineMapperImpl medicineMapper, LoyaltyProgramMapperImpl loyaltyProgramMapper,
                              ExaminationMapperImpl examinationMapper, ExaminationService examinationService, DermatologistMapper dermatologistMapper    ) {
         this.patientService = patientService;
         this.patientMapper = patientMapper;
@@ -53,6 +54,7 @@ public class PatientController {
         this.dermatologistMapper = dermatologistMapper;
         this.pharmacistMapper = pharmacistMapper;
         this.evaluationMapper = evaluationMapper;
+        this.ePrescriptionMapper = ePrescriptionMapper;
     }
 
     @PostMapping("/addAllergy")
@@ -175,6 +177,12 @@ public class PatientController {
     public ResponseEntity<PatientDTO> getPatient(){
         PatientDTO patientDTO = patientMapper.entity2Bean(patientService.getPatient());
         return ResponseEntity.ok(patientDTO);
+    }
+
+    @GetMapping(value = "getAllERecepts")
+    public ResponseEntity<Collection<EPrescriptionDTO>> getAllRecepts(){
+        Collection<EPrescriptionDTO> ePrescriptionDTO = ePrescriptionMapper.entity2Bean(patientService.getAllRecepts());
+        return ResponseEntity.ok(ePrescriptionDTO);
     }
 
 

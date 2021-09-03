@@ -1,4 +1,4 @@
-
+<h1 >Istorija pregleda kod dermatologa</h1>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -9,8 +9,6 @@
     <th scope="row" (click)="sort('price')" >Cena pregleda</th>
     <th scope="row" (click)="sort('date')">Datum pregleda</th>
     <th scope="row" (click)="sort('durationMinutes')">Trajanje pregleda</th>
-    <th scope="row">Ocenjen</th>
-
 
 
   </tr>
@@ -26,7 +24,6 @@
     <th >{{ change(examination.date)}}</th>
     <th >{{ examination.durationMinutes }}</th>
     <th >{{ examination.evaluationType }}</th>
-    <th ><button  (click)="evaluate(examination)">Oceni</button></th>
 
 
 

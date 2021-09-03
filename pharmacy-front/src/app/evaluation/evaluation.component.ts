@@ -39,6 +39,7 @@ export class EvaluationComponent implements OnInit {
   public grade: any;
   input: any;
   public type: string;
+  private dermaShow: boolean;
 
   constructor( private pharmacyService: PharmacyService,
                private medicineService: MedicineService, private examinationService: ExaminationService, private patientService: PatientService, private appointmentService: AppointmentService, private readonly router: Router
@@ -97,6 +98,11 @@ export class EvaluationComponent implements OnInit {
 
   public modelChangeFn($event: any): void {
     this.input = $event.toString();
+
+  }
+
+  public evaluateDerma(): void {
+    this.dermaShow = true;
 
   }
 }

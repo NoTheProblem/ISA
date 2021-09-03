@@ -11,11 +11,13 @@
       <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
     </ul>
 
+
+
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_USER'" >
       <li><a class="nav-link" routerLink="freeExamination" *ngIf="penalty <= 3">Termini dermatolog</a></li>
       <li><a class="nav-link" routerLink="freeCounseling" *ngIf="penalty <= 3">Termini farmaceut</a></li>
-      <li><a class="nav-link" routerLink="scheduledAppointment">Zakazani termini dermatolog</a></li>
-      <li><a class="nav-link" routerLink="appointmentp">Zakazani termini farmaceut</a></li>
+      <li><a class="nav-link" routerLink="scheduledAppointment">Zakazani dermatolog</a></li>
+      <li><a class="nav-link" routerLink="appointmentp">Zakazani farmaceut</a></li>
       <li><a class="nav-link" routerLink="medicines">Lekovi</a></li>
       <li><a class="nav-link" routerLink="availableMedicines" *ngIf="penalty <= 3">Rezervacija leka</a></li>
       <li><a class="nav-link" routerLink="reservedMedicines">Rezervisani lekovi</a></li>
@@ -24,6 +26,9 @@
       <li><a class="nav-link" routerLink="evaluation">Oceni</a></li>
       <li><a class="nav-link" routerLink="changeEvaluation">Promeni ocenu</a></li>
       <li><a class="nav-link" routerLink="promotion">Akcije/Promocije</a></li>
+      <li><a class="nav-link" routerLink="erecept">ERecepti</a></li>
+      <li><a class="nav-link" routerLink="complatints">Žalbe</a></li>
+      <li><label class="nav-link">{{ penalty }}</label></li>
     </ul>
 
     <ul class="navbar-nav " *ngIf="isLoggedIn && role==='ROLE_ADMIN'" >

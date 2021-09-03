@@ -1,4 +1,4 @@
-<div style="text-align: center;"> <h2>Vas korisnicki profil</h2></div>
+<div style="text-align: center;"> <h1>Vas korisnički profil</h1></div>
 
 <div class="container">
   <div class="main-body">
@@ -38,7 +38,7 @@
             </div>
             <div class="row mb-3">
               <div class="col-sm-3">
-                <h6 class="mb-0">Korisnicko ime</h6>
+                <h6 class="mb-0">Korisničko ime</h6>
               </div>
               <div class="col-sm-9 text-secondary">
                 <input type="text" class="form-control"
@@ -63,7 +63,7 @@
             </div>
             <div class="row mb-3">
               <div class="col-sm-3">
-                <h6 class="mb-0">Drzava</h6>
+                <h6 class="mb-0">Država</h6>
               </div>
               <div class="col-sm-9 text-secondary">
                 <input type="text" class="form-control"
@@ -132,7 +132,7 @@
               </div>
               <div class="row mb-3">
                 <div class="col-sm-3">
-                  <h6 class="mb-0">Ponoviste sifru</h6>
+                  <h6 class="mb-0">Ponovite sifru</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                   <input type="password" class="form-control"
@@ -155,8 +155,8 @@
 
   </div>
 </div>
-    <button *ngIf="isLoggedIn && role==='ROLE_USER'" class="btn btn-primary" (click)="showMyLoyalty()">Prikazi moj lojalti</button>
-    <button *ngIf="isLoggedIn && role==='ROLE_USER'" class="btn btn-primary" (click)="showAllergyForPatient()">Prikazi moje alergije</button>
+    <button class="btn btn-primary" style="margin-right: 10px;" *ngIf="isLoggedIn && role==='ROLE_USER'" class="btn btn-primary" (click)="showMyLoyalty()">Prikaži moj lojalti</button>
+    <button class="btn btn-primary" style="margin-right: 10px;" *ngIf="isLoggedIn && role==='ROLE_USER'" class="btn btn-primary" (click)="showAllergyForPatient()">Prikaži moje alergije</button>
 <div>
 
 
@@ -198,7 +198,9 @@
         <br><br>
         <h2>Prikaz lojaliti</h2>
 
-        <label>{{ loyalty.typeOfLoyalty}}</label>
+        <label >Vrsta lojalti: </label>
+        <label>{{ loyalty.typeOfLoyalty}}</label> <br>
+        <label >Broj bodova: </label>
         <label>{{ loyalty.discountPercentage}}</label>
         <label>{{ user.loyaltyScore}}</label>
 

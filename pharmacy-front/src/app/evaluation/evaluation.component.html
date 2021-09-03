@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table *ngIf="dermas.length > 0 " class="table table-striped">
   <thead>
   <tr>
     <th scope="row" >#</th>
@@ -19,7 +19,7 @@
   </tbody>
 </table>
 
-<table class="table table-striped">
+<table *ngIf="pharmas.length > 0 " class="table table-striped">
   <thead>
   <tr>
     <th scope="row" >#</th>
@@ -40,7 +40,7 @@
   </tbody>
 </table>
 
-<table class="table table-striped">
+<table *ngIf="medicines.length > 0 "  class="table table-striped">
   <thead>
   <tr>
     <th scope="row" >#</th>
@@ -58,7 +58,7 @@
   </tbody>
 </table>
 
-<table class="table table-striped">
+<table *ngIf="pharmacies.length > 0 "  class="table table-striped">
   <thead>
   <tr>
     <th scope="row" >#</th>
@@ -81,4 +81,5 @@
 <label *ngIf="showInput">Unesi ocenu:</label>
 <input *ngIf="showInput" type="text" [ngModel]="input" (ngModelChange)="modelChangeFn($event)">
 <button class="Zakaži" (click)="addGrade()" *ngIf="showInput">Potvrda ocene</button>
+
 

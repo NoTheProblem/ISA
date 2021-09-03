@@ -63,6 +63,7 @@ import { PromotionsPatientComponent } from './promotions-patient/promotions-pati
 import { EReceptComponent } from './erecept/erecept.component';
 import { EvaluationComponent } from './evaluation/evaluation.component';
 import { ChangeEvaluationComponent } from './change-evaluation/change-evaluation.component';
+import { ComplaintsComponent } from './complaints/complaints.component';
 
 const mapConfig: YaConfig = {
   apikey: '3c15c704-3d48-482f-8f18-5aacd24c1975',
@@ -124,7 +125,8 @@ const mapConfig: YaConfig = {
     PromotionsPatientComponent,
     EReceptComponent,
     EvaluationComponent,
-    ChangeEvaluationComponent
+    ChangeEvaluationComponent,
+    ComplaintsComponent
 
   ],
   imports: [

@@ -12,6 +12,7 @@ import {PharmacyModel} from '../model/pharmacy.model';
 import {CounselingModel} from '../model/counseling.model';
 import {ReservationModel} from '../model/reservation.model';
 import {EvaluationModel} from '../model/evaluation.model';
+import {EreceptModel} from '../model/erecept.model';
 
 @Injectable()
 export class PatientService {
@@ -38,10 +39,10 @@ export class PatientService {
   public addExamination(examination: ExaminationModel): void {
     this.httpClient.post(Constants.API + '/patient/addExamination', examination).subscribe(
       (response: any) => {
-        this.toast.success(`Termin je zakazan za ${examination.date}`);
+        this.toast.success(`Termin je zakazan`);
       },
       (error => {
-        this.toast.error(`Termin nije zakazan za ${examination.date}`);
+        this.toast.error(`Termin je u međuvremenu zauzet`);
       })
     );
   }
@@ -78,10 +79,10 @@ export class PatientService {
   public scheduledCounseling(counseling: CounselingModel): void {
     this.httpClient.post(Constants.API + '/patient/addCounseling', counseling).subscribe(
       (response: any) => {
-        this.toast.success(`Termin je zakazan za ${counseling.date}`);
+        this.toast.success(`Termin je zakazan `);
       },
       (error => {
-        this.toast.error(`Termin nije zakazan za ${counseling.date}`);
+        this.toast.error(`Termin je u međuvremenu zauzet`);
       })
     );
 
@@ -108,7 +109,7 @@ export class PatientService {
         this.toast.success(`Rezervisan je lek `);
       },
       (error => {
-        this.toast.error(`Rezervisan je lek `);
+        this.toast.error(`Lek je rezervisan u međuvremenu`);
       }),
     );
   }
@@ -123,7 +124,7 @@ export class PatientService {
         this.toast.success(`Rezervacija je otkazana za ${reservation.id}`);
       },
       (error => {
-        this.toast.error(`Termin nije otkazan za ${reservation.id}`);
+        this.toast.error(`Rezervacija nije otkazana za ${reservation.id}`);
       }),
     );
   }
@@ -162,5 +163,9 @@ export class PatientService {
 
   public getPatient(): Observable<PatientModel> {
     return this.httpClient.get<PatientModel>(Constants.API + '/patient/getPatient');
+  }
+
+  public getAllEReceptForPatient(): Observable<Array<EreceptModel>> {
+    return this.httpClient.get<Array<EreceptModel>>(Constants.API + '/patient/getAllERecepts');
   }
 }

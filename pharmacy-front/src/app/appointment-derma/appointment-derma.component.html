@@ -1,4 +1,5 @@
-<table class="table table-striped">
+<h1>Zakazani pregledi kod dermatologa</h1>
+<table *ngIf="examinations.length > 0 " class="table table-striped">
   <thead>
   <tr>
     <th scope="row" >#</th>
@@ -26,6 +27,10 @@
     <th ><label *ngIf="(examination.date-86400000) < currentDate">Nije moguće otkazati termin,manje od 24h</label></th>
     <th ><button class="Otkazi" (click)="cancelAppointment(examination) " *ngIf="(examination.date-86400000) > currentDate">Otkazi</button></th>
 
+  </tr>
+  </tbody>
+</table>
 
+<h4 *ngIf="examinations.length == 0 " >Nemate ni jedan zakazan pregled kod dermatologa </h4>
 
 
